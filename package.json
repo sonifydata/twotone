@@ -19,7 +19,7 @@
 		"dev": "NODE_ENV=development webpack",
 		"build": "NODE_ENV=production webpack",
 		"serve": "firebase serve -p 9000",
-		"github-labels": "node -r dotenv/config ./node_modules/github-label-sync/bin/github-label-sync.js -l ./devops/labels.json datavized/sonification",
+		"github-labels": "node -r dotenv/config ./node_modules/github-label-sync/bin/github-label-sync.js -l ./devops/labels.json datavized/twotone",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"license": "UNLICENSED",
