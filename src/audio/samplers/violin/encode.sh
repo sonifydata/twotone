@@ -1,0 +1,15 @@
+ffmpeg -i "LLVln_ArcoVib_A3_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-A3.mp3
+ffmpeg -i "LLVln_ArcoVib_A4_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-A4.mp3
+ffmpeg -i "LLVln_ArcoVib_A5_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-A5.mp3
+ffmpeg -i "LLVln_ArcoVib_A6_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-A6.mp3
+ffmpeg -i "LLVln_ArcoVib_C4_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-C4.mp3
+ffmpeg -i "LLVln_ArcoVib_C5_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-C5.mp3
+ffmpeg -i "LLVln_ArcoVib_C6_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-C6.mp3
+ffmpeg -i "LLVln_ArcoVib_C7_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-C7.mp3
+ffmpeg -i "LLVln_ArcoVib_E4_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-E4.mp3
+ffmpeg -i "LLVln_ArcoVib_E5_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-E5.mp3
+ffmpeg -i "LLVln_ArcoVib_E6_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-E6.mp3
+ffmpeg -i "LLVln_ArcoVib_G3_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-G3.mp3
+ffmpeg -i "LLVln_ArcoVib_G4_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-G4.mp3
+ffmpeg -i "LLVln_ArcoVib_G5_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-G5.mp3
+ffmpeg -i "LLVln_ArcoVib_G6_f.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 violin-G6.mp3

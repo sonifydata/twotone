@@ -1,0 +1,10 @@
+ffmpeg -i "Marimba_hit_Outrigger_B2_loud_01.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 marimba-B2.mp3
+ffmpeg -i "Marimba_hit_Outrigger_B4_loud_01.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 marimba-B4.mp3
+ffmpeg -i "Marimba_hit_Outrigger_C2_loud_01.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 marimba-C2.mp3
+ffmpeg -i "Marimba_hit_Outrigger_C4_loud_01.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 marimba-C4.mp3
+ffmpeg -i "Marimba_hit_Outrigger_C6_loud_01.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 marimba-C6.mp3
+ffmpeg -i "Marimba_hit_Outrigger_F1_loud_01.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 marimba-F1.mp3
+ffmpeg -i "Marimba_hit_Outrigger_F3_loud_01.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 marimba-F3.mp3
+ffmpeg -i "Marimba_hit_Outrigger_F5_loud_01.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 marimba-F5.mp3
+ffmpeg -i "Marimba_hit_Outrigger_G2_loud_01.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 marimba-G2.mp3
+ffmpeg -i "Marimba_hit_Outrigger_G4_loud_01.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 marimba-G4.mp3

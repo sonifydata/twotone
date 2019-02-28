@@ -1,0 +1,14 @@
+ffmpeg -i "mandolin A3#.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-As3.mp3
+ffmpeg -i "mandolin A4#.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-As4.mp3
+ffmpeg -i "mandolin A5.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-A5.mp3
+ffmpeg -i "mandolin A6.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-A6.mp3
+ffmpeg -i "mandolin C4#.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-Cs4.mp3
+ffmpeg -i "mandolin C5.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-C5.mp3
+ffmpeg -i "mandolin C6.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-C6.mp3
+ffmpeg -i "mandolin D5#.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-Ds5.mp3
+ffmpeg -i "mandolin D6#.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-Ds6.mp3
+ffmpeg -i "mandolin E4.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-E4.mp3
+ffmpeg -i "mandolin F5#.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-Fs5.mp3
+ffmpeg -i "mandolin F6#.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-Fs6.mp3
+ffmpeg -i "mandolin G3.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-G3.mp3
+ffmpeg -i "mandolin G4.wav" -acodec libmp3lame -q:a 0 -map 0:a:0 mandolin-G4.mp3

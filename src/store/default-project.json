@@ -1,0 +1,18 @@
+{
+  "dataSourceId": ":sample:seven-count",
+  "tracks": [
+    {
+      "id": "track@1531842472862",
+      "type": "scale",
+      "intensityField": 1,
+      "volume": 0.78,
+      "config": {
+        "clip": {
+          "audioId": ":sample:jeff-mcspadden:forest"
+        }
+      }
+    }
+  ],
+  "rowDuration": 2,
+  "speechTitle": ""
+}

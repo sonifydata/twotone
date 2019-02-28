@@ -1,0 +1,172 @@
+[
+	{
+		"name": "duplicate",
+		"color": "ededed"
+	},
+	{
+		"name": "help wanted",
+		"color": "e99695"
+	},
+	{
+		"name": "good first issue",
+		"color": "7057ff",
+		"aliases": [
+			"beginner-friendly",
+			"beginner",
+			"good-starter-issue",
+			"good for beginner",
+			"Good for beginners",
+			"starter-issue",
+			"starter"
+		]
+	},
+	{
+		"name": "Priority: Critical",
+		"color": "ee0701"
+	},
+	{
+		"name": "Priority: High",
+		"color": "d93f0b"
+	},
+	{
+		"name": "Priority: Low",
+		"color": "0e8a16"
+	},
+	{
+		"name": "Priority: Medium",
+		"color": "fbca04"
+	},
+	{
+		"name": "Status: Abandoned",
+		"color": "000000",
+		"aliases": [
+			"wontfix",
+			"invalid"
+		]
+	},
+	{
+		"name": "Status: Blocked",
+		"color": "ee0701",
+		"aliases": [
+			"blocked",
+			"waiting"
+		]
+	},
+	{
+		"name": "Status: In Progress",
+		"color": "cccccc"
+	},
+	{
+		"name": "Status: Proposal",
+		"color": "d4c5f9",
+		"aliases": [
+			"idea",
+			"Idea",
+			"proposal",
+			"Proposal",
+			"discussion"
+		]
+	},
+	{
+		"name": "Status: PR Welcome",
+		"color": "c2e0c6",
+		"aliases": [
+			"Patch Welcome",
+			"Status: Ready for PR"
+		]
+	},
+	{
+		"name": "Status: Review Needed",
+		"color": "fbca04"
+	},
+	{
+		"name": "Type: Breaking Change",
+		"color": "b60205",
+		"aliases": [
+			"breaking",
+			"breaking-change"
+		]
+	},
+	{
+		"name": "Type: Bug",
+		"color": "ee0701",
+		"aliases": [
+			"bug"
+		]
+	},
+	{
+		"name": "Type: Documentation",
+		"color": "5319e7",
+		"aliases": [
+			"documents",
+			"document"
+		]
+	},
+	{
+		"name": "Type: Feature",
+		"color": "1d76db",
+		"aliases": [
+			"enhancement",
+			"feature"
+		]
+	},
+	{
+		"name": "Type: Refactoring",
+		"color": "fbca04"
+	},
+	{
+		"name": "Type: Maintenance",
+		"color": "0e8a16",
+		"aliases": [
+			"greenkeeper",
+			"maintenance",
+			"refactor",
+			"testing",
+			"test"
+		]
+	},
+	{
+		"name": "Type: Question",
+		"color": "cc317c",
+		"aliases": [
+			"question"
+		]
+	},
+
+	{
+		"name": "content",
+		"color": "5319e7"
+	},
+	{
+		"name": "devops",
+		"color": "d4c5f9"
+	},
+	{
+		"name": "performance",
+		"color": "009800"
+	},
+	{
+		"name": "security",
+		"color": "222222"
+	},
+	{
+		"name": "usability",
+		"color": "f7eb80"
+	},
+	{
+		"name": "asset",
+		"color": "aa112f"
+	},
+	{
+		"name": "ethical",
+		"color": "bdecfc"
+	},
+	{
+		"name": "legal",
+		"color": "ededed"
+	},
+	{
+		"name": "Mobile",
+		"color": "be0ece"
+	}
+]
