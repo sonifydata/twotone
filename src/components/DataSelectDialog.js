@@ -135,6 +135,7 @@ const styles = theme => ({
 
 const uploadRequirements = [
 	'File types supported: .xls, .xlsx, .csv, .ods',
+	`Column headers are required to detect fields.`,
 	`Maximum file size: ${Math.round(MAX_DATA_FILE_SIZE / (1024 * 1024) * 100) / 100}MB`,
 	`Up to ${UPLOAD_ROW_LIMIT} rows of data`
 ].map((text, i) =>

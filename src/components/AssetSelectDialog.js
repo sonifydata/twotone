@@ -60,15 +60,13 @@ const styles = theme => ({
 	},
 	importSection: {
 		flexGrow: 0.4,
-		flexShring: 0,
-		flexBasis: 160,
+		flexShrink: 0,
 		display: 'flex',
 		flexDirection: 'row'
 	},
 	dropZone: {
 		border: `2px dashed ${theme.palette.divider}`,
 		cursor: 'pointer',
-		maxHeight: theme.spacing.unit * 20,
 		minHeight: theme.spacing.unit * 4,
 		padding: theme.spacing.unit,
 
