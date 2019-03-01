@@ -15,6 +15,12 @@ const tourStepDefaults = {
 
 const tourSteps = [
 	{
+		title: 'Select Data',
+		content: `Upload your own data or select one of the sample spreadsheets`,
+		target: '[data-tour-id="upload-data"]'
+	},
+
+	{
 		title: 'Audio Track',
 		content: `${APP_TITLE} has automatically generated an audio track from your data set. You can change your track's data source or instrument.`,
 		// target: '#track-0',

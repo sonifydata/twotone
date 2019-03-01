@@ -116,7 +116,7 @@ const Def = class AppHeader extends React.Component {
 						<span className={classes.titleText} onClick={selectDataSource}>
 							{dataSource.metadata.title}
 						</span>
-						<IconButton label="Select Data Source" color="inherit" onClick={selectDataSource}>
+						<IconButton label="Select Data Source" color="inherit" onClick={selectDataSource} data-tour-id="upload-data">
 							<EditIcon/>
 						</IconButton>
 					</React.Fragment> : null
