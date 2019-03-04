@@ -29,7 +29,7 @@ const styles = theme => ({
 		alignItems: 'center',
 		position: 'relative',
 		padding: `${theme.spacing.unit}px 0`,
-		overflow: 'hidden'
+		maxWidth: '100%'
 	},
 	offscreen: {
 		position: 'absolute',
