@@ -2,6 +2,7 @@
 import * as idbKeyval from 'idb-keyval';
 import { genders } from '../constants';
 import capitalize from '../util/capitalize';
+import reportError from '../util/reportError';
 
 const VOICES_URL = `https://texttospeech.googleapis.com/v1beta1/voices?key=${SPEECH_API_KEY || ''}`;
 
@@ -19,6 +20,10 @@ function fetchVoices() {
 	})
 		.then(response => response.json())
 		.then(response => {
+			if (response.error) {
+				throw new Error(response.error.message);
+			}
+
 			const voices = new Map();
 			response.voices.forEach(voice => {
 				voice.isWaveNet = voice.name.indexOf('Wavenet') >= 0;
@@ -44,6 +49,7 @@ function fetchVoices() {
 		})
 		.catch(err => {
 			console.warn('Error getting voices', err);
+			reportError(err);
 
 			// retrieve from indexed DB
 			return idbKeyval.keys(voicesCacheDB)
