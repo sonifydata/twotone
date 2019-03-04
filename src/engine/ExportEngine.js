@@ -23,13 +23,29 @@ const fetchIcon = () =>
 		.then(response => response.arrayBuffer());
 
 /*
+MS Edge doesn't support options object in constructor
+*/
+function createOfflineContext(options) {
+	const { OfflineAudioContext } = requirements.AudioContext;
+	try {
+		const context = new OfflineAudioContext(options);
+		return context;
+	} catch (e) {}
+
+	const {
+		numberOfChannels,
+		length,
+		sampleRate
+	} = options;
+	return new OfflineAudioContext(numberOfChannels, length, sampleRate);
+}
+
+/*
 May want to add opus
 - https://github.com/psirenny/opus-encode
 - https://github.com/Rillke/opusenc.js
 */
 export default function ExportEngine(state, options = {}) {
-	const { OfflineAudioContext } = requirements.AudioContext;
-
 	const sampleRate = options.sampleRate || 44100;
 	const format = (options.format || 'mp3').toLowerCase();
 	const bitRate = options.bitRate || 128; // in kb, only for mp3
@@ -65,7 +81,7 @@ export default function ExportEngine(state, options = {}) {
 
 		const duration = state.duration;
 
-		const context = new OfflineAudioContext({
+		const context = createOfflineContext({
 			numberOfChannels: 2,
 			length: sampleRate * duration,
 			sampleRate
