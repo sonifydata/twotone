@@ -100,9 +100,7 @@ const VERSION = (() => {
 
 const plugins = [
 	new CaseSensitivePathsPlugin(),
-	new CleanWebpackPlugin(['build/**/*'], {
-		verbose: false
-	})
+	new CleanWebpackPlugin()
 ];
 
 const config = {
