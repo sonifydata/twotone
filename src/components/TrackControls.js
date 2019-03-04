@@ -58,6 +58,11 @@ const styles = theme => ({
 	}
 });
 
+// step is adjusted until bug in rc-slider is fixed
+// https://github.com/react-component/slider/issues/533
+function rcSliderStepHack(val) {
+	return Math.round(val * 10e18) / 10e18;
+}
 
 const Def = class TrackControls extends React.Component {
 	static propTypes = {
@@ -224,7 +229,7 @@ const Def = class TrackControls extends React.Component {
 								value={track.filterRange || [0, 1]}
 								min={0}
 								max={1.01}
-								step={filterStep || 0.001}
+								step={rcSliderStepHack(filterStep || 0.001)}
 								allowCross={false}
 								tipFormatter={value => {
 									return tipFormatter(value * filterRange + filterMin);

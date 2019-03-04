@@ -5,6 +5,11 @@ import reportError from './util/reportError';
 Temporarily override toFixed
 We're seeing a lot of errors logged, but don't have an exact file and line.
 I think it's somewhere in a dependency. This override should force better logging.
+
+Seems to be this issue:
+https://github.com/react-component/slider/issues/533
+
+I'll leave this in here for at least a few days to see if it goes away.
 */
 const nativeToFixed = Number.prototype.toFixed;
 // eslint-disable-next-line no-extend-native
