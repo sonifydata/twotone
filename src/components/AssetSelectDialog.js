@@ -50,10 +50,7 @@ const styles = theme => ({
 	},
 	dialogContent: {
 		display: 'flex',
-		flexDirection: 'column',
-		'& > *': {
-			flex: 1
-		}
+		flexDirection: 'column'
 	},
 	dialogActions: {
 		flex: '0 0 0%'

@@ -14,7 +14,6 @@ import classNames from 'classnames';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-// import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import WelcomeDialog from './WelcomeDialog';
 import AssetSelectDialog from './AssetSelectDialog';
@@ -68,20 +67,12 @@ function assetSort(a, b) {
 const styles = theme => ({
 	table: {
 		display: 'flex',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		overflowY: 'scroll',
+		flex: 2
 	},
 	tableSection: {
 		display: 'block'
-	},
-	tableHead: {
-		'& > tr > th': {
-			fontWeight: 'bold',
-			color: theme.palette.text.primary
-		}
-	},
-	tableBody: {
-		overflowY: 'scroll',
-		flex: 1
 	},
 	tr: {
 		// todo: don't use a table or grid if only one column
@@ -310,11 +301,6 @@ const Def = class DataSelectDialog extends React.Component {
 		>
 			<Typography variant="subtitle1">Pick a data source by choosing a sample or uploading a spreadsheet of your own.</Typography>
 			<Table className={classes.table}>
-				{/*<TableHead className={classNames(classes.tableSection, classes.tableHead)}>
-					<TableRow className={classes.tr} span="2">
-						<TableCell className={classes.colTitle}>Name</TableCell>
-					</TableRow>
-				</TableHead>*/}
 				<TableBody className={classNames(classes.tableSection, classes.tableBody)}>{assets.map(({id, ...assetData}) => {
 					const { title } = assetData.metadata;
 					const selected = id === selectedId;
