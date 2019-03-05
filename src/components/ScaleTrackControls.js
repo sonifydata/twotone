@@ -58,7 +58,7 @@ const octaveRangeOptions = range => Array.from(Array(range), (n, i) => {
 
 const octaveOptions = (note, min, max) => Array.from(Array(1 + max - min), (n, i) => {
 	const value = i + min;
-	const label = note + i;
+	const label = note + value;
 	return <MenuItem value={value} key={value}>{label}</MenuItem>;
 });
 
@@ -135,6 +135,7 @@ const Def = class ScaleTrackControls extends React.Component {
 
 		const config = track.config && track.config.scale || {};
 		const scaleRange = num(config.scaleRange, DEFAULT_SCALE_RANGE);
+		const scaleRangeOctaves = Math.max(1, Math.floor(scaleRange / 7));
 		const tempoFactor = num(config.tempoFactor, 1);
 		// const beatOffset = num(config.beatOffset, 0);
 		const arpeggioMode = config.arpeggioMode === undefined ? DEFAULT_ARPEGGIO_MODE : config.arpeggioMode || '';
@@ -142,11 +143,9 @@ const Def = class ScaleTrackControls extends React.Component {
 		const mode = config.mode || DEFAULT_MODE;
 		const { minOctave, maxOctave } = instruments[config.instrument] || instruments[DEFAULT_INSTRUMENT];
 		const startOctave = num(config.startOctave, DEFAULT_START_OCTAVE);
-		const configStartOctave = Math.max(minOctave, Math.min(maxOctave, startOctave));
-		const effectiveMinOctave = startOctave >= 0 ?
-			configStartOctave :
-			minOctave;
-		const maxOctaveRange = 1 + maxOctave - effectiveMinOctave;
+		const effectiveMaxOctave = maxOctave - scaleRangeOctaves + 1;
+		const configStartOctave = Math.max(minOctave, Math.min(effectiveMaxOctave, startOctave));
+		const maxOctaveRange = 1 + maxOctave - minOctave;
 
 		return <div className={classes.root}>
 			<FormControl className={classes.keyControlGroup}>
@@ -175,7 +174,7 @@ const Def = class ScaleTrackControls extends React.Component {
 			{maxOctaveRange > 1 ? <FormControl className={classes.keyControlGroup}>
 				<InputLabel htmlFor={'track-scale-range-' + track.id}>Scale Range</InputLabel>
 				<Select
-					value={Math.min(maxOctaveRange, Math.floor(scaleRange / 7))}
+					value={Math.min(maxOctaveRange, scaleRangeOctaves)}
 					onChange={this.handleChangeScaleRange}
 					inputProps={{
 						name: 'track-scale-range',
@@ -185,10 +184,11 @@ const Def = class ScaleTrackControls extends React.Component {
 					{octaveRangeOptions(maxOctaveRange)}
 				</Select>
 			</FormControl> : null}
-			{maxOctaveRange > 1 ? <FormControl className={classes.keyControlGroup}>
+			<FormControl className={classes.keyControlGroup}>
 				<InputLabel htmlFor={'track-start-octave-' + track.id}>Start Octave</InputLabel>
 				<Select
 					value={startOctave >= 0 ? configStartOctave : -1}
+					disabled={effectiveMaxOctave <= minOctave}
 					onChange={this.handleChangeStartOctave}
 					inputProps={{
 						name: 'track-start-octave',
@@ -196,9 +196,9 @@ const Def = class ScaleTrackControls extends React.Component {
 					}}
 				>
 					<MenuItem value={-1} key={-1}>Auto</MenuItem>
-					{octaveOptions(key, minOctave, maxOctave)}
+					{octaveOptions(key, minOctave, effectiveMaxOctave)}
 				</Select>
-			</FormControl> : null}
+			</FormControl>
 			<FormControl className={classes.keyControlGroup}>
 				<InputLabel htmlFor={'track-tempo-factor-' + track.id}>Track Tempo</InputLabel>
 				<Select
