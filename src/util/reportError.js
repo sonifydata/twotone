@@ -1,5 +1,16 @@
 import ErrorStackParser from 'error-stack-parser';
 
+function errorString(obj) {
+	let str = obj.toString();
+	if (str === '[object Object]') {
+		try {
+			str = JSON.stringify(obj);
+		} catch (e) {}
+	}
+
+	return str;
+}
+
 export default function reportError(event, stackLevel = 0) {
 	const error = event.error ||
 		event.reason ||
@@ -33,10 +44,10 @@ export default function reportError(event, stackLevel = 0) {
 			event.colno
 		].join(':');
 	} else if (error && error.toString) {
-		details = error.toString();
+		details = errorString(error);
 	} else {
 		console.error('failed to parse error', event);
-		details = event.toString();
+		details = errorString(event);
 	}
 
 	if (window.ga) {
