@@ -62,9 +62,13 @@ const Def = class BarChart extends React.Component {
 		const { width, height } = ctx.canvas;
 		const { normalized, rows } = data;
 		const rowCount = normalized.length;
-		const adjustedHeight = height - ratio;
 		const horizSpacing = width / rowCount;
 		const w = Math.max(horizSpacing - ratio, 1);
+
+		const field = data.fields[fieldIndex];
+		const zero = Math.max(0, Math.min(1, -field.min * field.scale));
+		const y = height * (1 - zero);
+		const zeroHeight = zero < 0.5 ? -ratio : ratio;
 
 		const {
 			main,
@@ -94,8 +98,9 @@ const Def = class BarChart extends React.Component {
 				}
 
 				const x = i * horizSpacing;
-				const h = ratio + adjustedHeight * val;
-				const y = height - h;
+				const valueHeight = height * (zero - val);
+				const h = Math.abs(valueHeight) < ratio ? zeroHeight : valueHeight; // so bar is at least 1px high
+
 				ctx.fillRect(x, y, w, h);
 			}
 		}
