@@ -188,12 +188,17 @@ export default function scaleTrack(soundQ, destination) {
 
 			// adjust octave to fit range
 			const { minOctave, maxOctave } = instrument;
+
+			const scaleRangeOctaves = Math.max(1, Math.floor(scaleRange / 7));
+			if (startOctave >= 0 && startOctave + scaleRangeOctaves > maxOctave) {
+				startOctave = Math.max(minOctave, maxOctave - scaleRangeOctaves);
+			}
+
 			const configStartOctave = Math.max(minOctave, Math.min(maxOctave, startOctave));
 			const effectiveMinOctave = startOctave >= 0 ?
 				configStartOctave :
 				minOctave;
 			const octaveRange = 1 + maxOctave - effectiveMinOctave;
-			const scaleRangeOctaves = Math.max(1, Math.floor(scaleRange / 7));
 			const octaves = Math.min(octaveRange, scaleRangeOctaves);
 			scaleRange = octaves * 7 + 1; // inclusive
 

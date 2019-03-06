@@ -135,7 +135,6 @@ const Def = class ScaleTrackControls extends React.Component {
 
 		const config = track.config && track.config.scale || {};
 		const scaleRange = num(config.scaleRange, DEFAULT_SCALE_RANGE);
-		const scaleRangeOctaves = Math.max(1, Math.floor(scaleRange / 7));
 		const tempoFactor = num(config.tempoFactor, 1);
 		// const beatOffset = num(config.beatOffset, 0);
 		const arpeggioMode = config.arpeggioMode === undefined ? DEFAULT_ARPEGGIO_MODE : config.arpeggioMode || '';
@@ -143,6 +142,7 @@ const Def = class ScaleTrackControls extends React.Component {
 		const mode = config.mode || DEFAULT_MODE;
 		const { minOctave, maxOctave } = instruments[config.instrument] || instruments[DEFAULT_INSTRUMENT];
 		const startOctave = num(config.startOctave, DEFAULT_START_OCTAVE);
+		const scaleRangeOctaves = Math.max(1, Math.min(maxOctave - minOctave + 1, Math.floor(scaleRange / 7)));
 		const effectiveMaxOctave = maxOctave - scaleRangeOctaves + 1;
 		const configStartOctave = Math.max(minOctave, Math.min(effectiveMaxOctave, startOctave));
 		const maxOctaveRange = 1 + maxOctave - minOctave;
