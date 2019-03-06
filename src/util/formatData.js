@@ -6,7 +6,9 @@ const boolean = v => v ? 'true' : 'false';
 
 const number = v => intlNumberFormat.format(v);
 
-const exponential = v => v.toExponential(2);
+const exponential = v => v !== null && v !== undefined && v.toExponential ?
+	v.toExponential(2) :
+	v;
 
 /*
 Dates and times are all stored in UTC time zone.
