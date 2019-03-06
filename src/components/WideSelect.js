@@ -9,6 +9,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 function blockClick(event) {
 	event.stopPropagation();
@@ -17,14 +18,11 @@ function blockClick(event) {
 const styles = theme => ({
 	root: {
 		margin: theme.spacing.unit
-	},
-	label: {
-		marginRight: theme.spacing.unit
 	}
 });
 
-const Def = ({name, id, label, children, classes, ...props}) => <span className={classes.root}>
-	<InputLabel htmlFor={id || name} shrink={false} className={classes.label}>{label}</InputLabel>
+const Def = ({name, id, label, children, classes, ...props}) => <FormControl className={classes.root}>
+	<InputLabel htmlFor={id || name}>{label}</InputLabel>
 	<Select
 		onClick={blockClick}
 		name={name}
@@ -33,7 +31,7 @@ const Def = ({name, id, label, children, classes, ...props}) => <span className=
 	>
 		{children}
 	</Select>
-</span>;
+</FormControl>;
 
 Def.propTypes = {
 	classes: PropTypes.object.isRequired,

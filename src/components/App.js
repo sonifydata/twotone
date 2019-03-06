@@ -114,14 +114,14 @@ const styles = (theme) => ({
 	},
 	drawerOpen: {
 		'&$drawerDocked': {
-			'@media (max-width: 620px)': {
+			'@media (max-width: 650px)': {
 				minWidth: drawerWidth,
 				width: 300,
 				maxWidth: '100%'
 			}
 		}
 	},
-	'@media (max-width: 620px)': {
+	'@media (max-width: 650px)': {
 		contentShift: {
 			marginRight: '-' + drawerWidth
 		}

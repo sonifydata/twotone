@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 import { connect } from 'unistore/react';
 import { actions } from '../store';
@@ -6,13 +8,22 @@ import num from '../util/num';
 
 import { DEFAULT_INSTRUMENT } from '../constants';
 
-import PropTypes from 'prop-types';
 import MenuItem from '@material-ui/core/MenuItem';
 import WideSelect from './WideSelect';
+
+const styles = () => ({
+	dataSource: {
+		flex: 0.6
+	},
+	instrument: {
+		flex: 0.4
+	}
+});
 
 const Def = class ScaleTrackInstrumentSelect extends React.Component {
 
 	static propTypes = {
+		classes: PropTypes.object.isRequired,
 		track: PropTypes.object.isRequired,
 		setTrack: PropTypes.func.isRequired,
 		data: PropTypes.object
@@ -54,6 +65,7 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 
 	render() {
 		const {
+			classes,
 			track,
 			data
 		} = this.props;
@@ -76,6 +88,9 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				onChange={this.handleChangeIntensityField}
 				name="intensity-field"
 				id={'intensity-field-' + track.id}
+				classes={{
+					root: classes.dataSource
+				}}
 			>
 				<MenuItem value="">
 					<em>None</em>
@@ -91,6 +106,9 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				onChange={this.handleChangeConfig}
 				inputProps={{
 					name: 'instrument'
+				}}
+				classes={{
+					root: classes.instrument
 				}}
 			>
 				{/* todo: get this list from somewhere */}
@@ -110,5 +128,5 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 	}
 };
 
-const ScaleTrackInstrumentSelect = connect(['data'], actions)(Def);
+const ScaleTrackInstrumentSelect = connect(['data'], actions)(withStyles(styles)(Def));
 export default ScaleTrackInstrumentSelect;

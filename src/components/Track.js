@@ -16,7 +16,8 @@ import { lighten, darken } from '@material-ui/core/styles/colorManipulator';
 Material UI components
 */
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ConfirmationDialog from './ConfirmationDialog';
 
@@ -112,7 +113,7 @@ const styles = (theme) => ({
 		}
 	},
 	actionButtons: {
-		flex: 1,
+		flexShrink: 1,
 		textAlign: 'right',
 		whiteSpace: 'nowrap'
 	}
@@ -190,9 +191,14 @@ const Def = class Track extends React.Component {
 						}}
 					>
 						<div className={classes.header} data-tour-id={'track-control-header-' + sortIndex}>
-							<TypeIcon color="action"/><Typography variant="subtitle1" component="h2">{typeDef.name}</Typography>
+							<Tooltip title={typeDef.name}>
+								<TypeIcon color="action"/>
+							</Tooltip>
+							{/*<Typography variant="subtitle1" component="h2">{typeDef.name}</Typography>*/}
 							{TypeHeaderControl && <TypeHeaderControl track={track}/>}
-							<span className={classes.actionButtons}>
+							<span className={classes.actionButtons} style={{
+								flexGrow: !TypeHeaderControl ? 1 : null
+							}}>
 								<IconButton label="Toggle Mute Track" className={classes.volumeButton} onClick={this.handleToggleMuted}>
 									{ track.muted ? <VolumeOffIcon color="disabled" /> : <VolumeUpIcon color="action" /> }
 								</IconButton>

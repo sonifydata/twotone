@@ -58,6 +58,9 @@ const styles = theme => ({
 		'&:hover > $albumCover': {
 			// display: 'none'
 		}*/
+	},
+	playMode: {
+		minWidth: 75
 	}
 });
 
@@ -206,11 +209,11 @@ const Def = class ClipTrackControls extends React.Component {
 					<EditIcon className={classes.audioEditIcon}/>
 				</div>
 				<Typography className={classes.title} variant="subtitle1" onClick={this.selectAudio}>
-					{
+					<span>{
 						!config.audioId ?
 							'Click to select an audio file' :
 							clipName || '[audio file]'
-					}
+					}</span>
 				</Typography>
 				<WideSelect
 					label="Play mode"
@@ -220,6 +223,9 @@ const Def = class ClipTrackControls extends React.Component {
 					onChange={this.handleChangeConfig}
 					inputProps={{
 						name: 'playbackMode'
+					}}
+					classes={{
+						root: classes.playMode
 					}}
 				>
 					<MenuItem value="loop">Loop</MenuItem>
