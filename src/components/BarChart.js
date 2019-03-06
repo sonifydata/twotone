@@ -66,7 +66,9 @@ const Def = class BarChart extends React.Component {
 		const w = Math.max(horizSpacing - ratio, 1);
 
 		const field = data.fields[fieldIndex];
-		const zero = Math.max(0, Math.min(1, -field.min * field.scale));
+		const zero = field.type === 'int' || field.type === 'float' ?
+			Math.max(0, Math.min(1, -field.min * field.scale)) :
+			0;
 		const y = height * (1 - zero);
 		const zeroHeight = zero < 0.5 ? -ratio : ratio;
 
