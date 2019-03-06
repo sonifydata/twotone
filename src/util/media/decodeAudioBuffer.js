@@ -27,6 +27,12 @@ export default function decodeAudioBuffer(buffer) {
 
 	// Safari doesn't support decodeAudioData returning a Promise
 	return new Promise((resolve, reject) =>
-		context.decodeAudioData(buffer, resolve, reject)
-	).finally(cleanUp);
+		context.decodeAudioData(buffer, result => {
+			cleanUp();
+			resolve(result);
+		}, error => {
+			cleanUp();
+			reject(error);
+		})
+	);
 }
