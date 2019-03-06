@@ -230,6 +230,7 @@ const Def = class ClipTrackControls extends React.Component {
 				>
 					<MenuItem value="loop">Loop</MenuItem>
 					<MenuItem value="active">Active sections</MenuItem>
+					<MenuItem value="row">Once per row</MenuItem>
 				</WideSelect>
 			</div>
 			{this.state.editing ? <AudioSelectDialog

@@ -69,7 +69,26 @@ export default function clipTrack(soundQ, destination) {
 			const currentTime = soundQ.currentTime;
 			const duration = this.duration;
 			const minRangeTime = Math.max(0, currentTime - contextStartTime);
-			playRanges.forEach(([begin, end]) => {
+
+			const playInstances = playbackMode !== 'row' ?
+				playRanges :
+				playRanges.reduce((list, [begin, end]) => {
+					if (end <= minRangeTime) {
+						return list;
+					}
+
+					const ranges = [];
+					for (let t0 = begin; t0 < end; t0 += this.rowDuration) {
+						const t1 = t0 + this.rowDuration;
+						if (t1 > minRangeTime) {
+							ranges.push([t0, t1]);
+						}
+					}
+
+					return ranges.length ? list.concat(ranges) : list;
+				}, []);
+
+			playInstances.forEach(([begin, end]) => {
 				const scaleIn = Math.min(begin, HALF_CROSS_FADE_TIME) / HALF_CROSS_FADE_TIME;
 				const scaleOut = Math.min(duration - end, HALF_CROSS_FADE_TIME) / HALF_CROSS_FADE_TIME;
 
