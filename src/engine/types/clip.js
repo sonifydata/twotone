@@ -82,10 +82,18 @@ export default function clipTrack(soundQ, destination) {
 				begin = Math.max(0, begin - HALF_CROSS_FADE_TIME);
 				end = Math.min(duration, end + HALF_CROSS_FADE_TIME);
 
+				const playEndTime = contextStartTime + end;
+				if (playEndTime <= currentTime) {
+					return;
+				}
+
+				const playStartTime = contextStartTime + begin;
+				const late = Math.max(0, currentTime - playStartTime);
+
 				const offset = loop ?
-					begin % buffer.duration :
-					0;
-				shot.start(contextStartTime + begin, {
+					(begin + late) % buffer.duration :
+					late;
+				shot.start(playStartTime + late, {
 					loop,
 					offset
 				}, {
