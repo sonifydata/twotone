@@ -3,7 +3,7 @@ import trapezoid from 'soundq/src/patches/trapezoid';
 import { getBufferRef, freeBufferRef } from './buffers';
 import { DEFAULT_CLIP_PLAY_MODE } from '../../constants';
 
-const CROSS_FADE_TIME = 0.1;
+const CROSS_FADE_TIME = 0.025;
 const HALF_CROSS_FADE_TIME = CROSS_FADE_TIME / 2;
 
 export default function clipTrack(soundQ, destination) {
