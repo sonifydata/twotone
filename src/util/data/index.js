@@ -28,7 +28,11 @@ function receive(event) {
 	}
 
 	if (event.data.error) {
-		const error = new Error('File import error: ' + event.data.error);
+		const errorMessage = typeof event.data.error === 'string' ?
+			event.data.error :
+			JSON.stringify(event.data.error);
+
+		const error = new Error('File import error: ' + errorMessage);
 		reject(error);
 		return;
 	}
