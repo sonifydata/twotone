@@ -299,9 +299,10 @@ const serviceWorkerPlugin = new WorkboxPlugin.GenerateSW({
 	],
 	skipWaiting: true,
 	clientsClaim: true,
+	cleanupOutdatedCaches: true,
 	runtimeCaching: [{
 		urlPattern: mediaFilesRegex,
-		handler: 'cacheFirst',
+		handler: 'CacheFirst',
 		options: {}
 	}]
 });
