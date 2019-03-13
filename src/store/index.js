@@ -104,7 +104,7 @@ async function loadDataSource(state) {
 		}
 
 		/*
-		todo: auto-configure project
+		auto-configure project
 		- create one track
 		*/
 		const newState = {
@@ -128,9 +128,8 @@ async function loadDataSource(state) {
 subscribeDataSource(() => loadDataSource(store.getState()));
 
 /*
-todo:
 - save what we need to pouchdb
-- probably separate this into its own module
+- todo: probably separate this into its own module?
 */
 let persistentState = initialState;
 const stateRevisions = new Map();
