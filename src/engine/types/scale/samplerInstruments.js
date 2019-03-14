@@ -361,7 +361,10 @@ const AbortController = window.AbortController || function () {
 function fetchAudioBuffer(url, fetchOptions) {
 	return fetch(url, fetchOptions)
 		.then(response => response.arrayBuffer())
-		.then(decodeAudioBuffer);
+		.then(decodeAudioBuffer)
+		.catch(error => {
+			throw new Error(`Error decoding sampler (${url}): ${error.message}`);
+		});
 }
 
 function getAudioBuffer(url, receiverSignal) {

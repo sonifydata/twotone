@@ -31,6 +31,8 @@ export function getBufferRef(audioId) {
 		bufferRef.promise = getAudioBuffer(audioId).then(buffer => {
 			bufferRef.buffer = buffer;
 			buffer.source = bufferSource(buffer);
+		}).catch(error => {
+			throw new Error(`Error decoding stored audio (${audioId}): ${error.message}`);
 		});
 	}
 	return bufferRef;
