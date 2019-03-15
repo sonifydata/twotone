@@ -451,8 +451,6 @@ const standalone = window.matchMedia && window.matchMedia('(display-mode: standa
 	window.navigator.standalone; // safari
 
 async function fetchAllSamples() {
-	console.log('fetchAllSamples', {standalone});
-
 	const sampleSets = Object.keys(instruments).map(key => instruments[key].samples);
 	for (let i = 0; i < sampleSets.length; i++) {
 		const samples = sampleSets[i];
@@ -462,8 +460,6 @@ async function fetchAllSamples() {
 			console.log('fetched', urls[j]);
 		}
 	}
-
-	console.log('done fetching samples');
 }
 
 window.addEventListener('appinstalled', fetchAllSamples);
