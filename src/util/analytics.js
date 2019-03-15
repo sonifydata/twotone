@@ -52,7 +52,7 @@ window.addEventListener('appinstalled', () => {
 });
 
 window.addEventListener('beforeinstallprompt', e => {
-	logEvent('A2HS', 'prompt', e.platforms);
+	logEvent('A2HS', 'prompt', e.platforms && e.platforms.join(',') || null);
 	e.userChoice.then(choiceResult => {
 		logEvent('A2HS', choiceResult.outcome);
 	});
