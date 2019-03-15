@@ -1,6 +1,7 @@
 /* global COMMIT_HASH, DEBUG, DEBUG_SERVICE_WORKER, APP_TITLE */
 
 import reportError from './util/reportError';
+import './util/analytics';
 /*
 Temporarily override toFixed
 We're seeing a lot of errors logged, but don't have an exact file and line.

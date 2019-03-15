@@ -7,7 +7,8 @@ const metrics = {
 
 const dimensions = {
 	exportFormat: 1,
-	importFileType: 2
+	importFileType: 2,
+	standalone: 3
 };
 
 const ga = self.ga;
@@ -39,3 +40,25 @@ export function logMetricsEvent(category, action, config) {
 export function logExportEvent(config, action = 'save') {
 	logMetricsEvent('export', action, config);
 }
+
+/*
+Events we want to log every time
+
+Log progressive web app installation status so we have context
+for evaluating performance and reliability of offline support
+*/
+window.addEventListener('appinstalled', () => {
+	logEvent('A2HS', 'install');
+});
+
+window.addEventListener('beforeinstallprompt', e => {
+	logEvent('A2HS', 'prompt', e.platforms);
+	e.userChoice.then(choiceResult => {
+		logEvent('A2HS', choiceResult.outcome);
+	});
+});
+
+const standalone = !!window.matchMedia && !!window.matchMedia('(display-mode: standalone)').matches ||
+	!!window.navigator.standalone; // safari
+
+ga('set', `dimension${dimensions.standalone}`, standalone);

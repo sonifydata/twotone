@@ -441,3 +441,37 @@ export function loadSamples(sampleUrls, signal) {
 		}
 	});
 }
+
+/*
+Fetch all instrument samples, but do not save or decode them.
+This is to cache prime them for offline support, but only when the
+web app is installed.
+*/
+const standalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches ||
+	window.navigator.standalone; // safari
+
+async function fetchAllSamples() {
+	console.log('fetchAllSamples', {standalone});
+
+	const sampleSets = Object.keys(instruments).map(key => instruments[key].samples);
+	for (let i = 0; i < sampleSets.length; i++) {
+		const samples = sampleSets[i];
+		const urls = Object.keys(samples).map(key => samples[key]);
+		for (let j = 0; j < urls.length; j++) {
+			await fetch(urls[j]);
+			console.log('fetched', urls[j]);
+		}
+	}
+
+	console.log('done fetching samples');
+}
+
+window.addEventListener('appinstalled', fetchAllSamples);
+
+if (standalone) {
+	if (document.readyState === 'complete') {
+		fetchAllSamples();
+	} else {
+		window.addEventListener('load', fetchAllSamples);
+	}
+}
