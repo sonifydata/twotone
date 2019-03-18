@@ -216,6 +216,8 @@ const Def = class DataSelectDialog extends React.Component {
 		const matchSample = sampleIdRegex.exec(id);
 		if (matchSample) {
 			logEvent('datasource', 'sample', matchSample[1] || '');
+		} else {
+			logEvent('datasource', 'upload', id);
 		}
 		this.props.setDataSourceId(id);
 	}
