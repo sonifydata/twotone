@@ -20,7 +20,6 @@ let voicesByLanguage = null;
 
 store.subscribe(state => {
 	liveEngine.tracksVolume = state.tracksVolume;
-	liveEngine.speechVolume = state.speechVolume;
 
 	const needChange = changeProperties.some(prop => liveEngine[prop] !== state[prop]);
 
