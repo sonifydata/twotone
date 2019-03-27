@@ -5,7 +5,7 @@ import readFileAsArrayBuffer from '../readFileAsArrayBuffer';
 
 const oggMimeTypeRegex = /^(audio|application)\/ogg$/i;
 const audioMimeTypeRegex = /^(audio|application)\/([a-z0-9-]+)$/i;
-const keepTags = ['title', 'artist', 'album', 'genre', 'track', 'year', 'picture'];
+const keepTags = ['title', 'artist', 'album', 'genre', 'track', 'year'];
 
 function mdOgg(file) {
 	return readFileAsArrayBuffer(file).then(fileBuffer => ogg(fileBuffer));
@@ -52,13 +52,14 @@ async function getAudioMetadata(file) {
 		}
 	}
 
-	const { picture, ...metadata } = tags;
+	const { picture } = tags;
+	const metadata = {};
 
-	Object.keys(metadata).forEach(key => {
-		if (keepTags.indexOf(key) < 0) {
-			delete metadata[key];
-		} else if (typeof metadata[key] === 'string') {
-			metadata[key] = metadata[key].trim();
+	Object.keys(tags).forEach(key => {
+		if (keepTags.indexOf(key) >= 0) {
+			metadata[key] = tags[key];
+		} else if (typeof tags[key] === 'string') {
+			metadata[key] = tags[key].trim();
 		}
 	});
 
