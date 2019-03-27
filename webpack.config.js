@@ -42,7 +42,7 @@ const description = 'TwoTone Data Sonification';
 const eslintConfig = require('./.eslintrc.js');
 const port = '9000';
 const browsers = [
-	'>1%',
+	'>0.25%',
 	'last 4 versions',
 	'Firefox ESR',
 	'ie >= 12', // Web Audio API starts here
