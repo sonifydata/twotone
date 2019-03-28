@@ -85,10 +85,16 @@ const Def = class TrackList extends React.Component {
 			if (newTrackId) {
 				const node = this.trackRefs.get(newTrackId);
 				if (node) {
-					node.scrollIntoView({
-						behavior: 'smooth',
-						block: 'nearest'
-					});
+					try {
+						// block: 'nearest' throws error in some older browsers
+						// e.g. Firefox < 58
+						node.scrollIntoView({
+							behavior: 'smooth',
+							block: 'nearest'
+						});
+					} catch (e) {
+						node.scrollIntoView();
+					}
 				}
 			}
 		}
