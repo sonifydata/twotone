@@ -1,5 +1,5 @@
 {
-	"name": "sonification",
+	"name": "twotone",
 	"version": "0.0.1",
 	"description": "",
 	"author": {
@@ -22,7 +22,7 @@
 		"github-labels": "node -r dotenv/config ./node_modules/github-label-sync/bin/github-label-sync.js -l ./devops/labels.json datavized/twotone",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"license": "UNLICENSED",
+	"license": "MPL-2.0",
 	"devDependencies": {
 		"@babel/core": "^7.4.3",
 		"@babel/plugin-proposal-class-properties": "^7.4.0",
