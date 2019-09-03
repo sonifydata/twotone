@@ -37,7 +37,7 @@ InjectManifestPlugin.prototype.apply = function (compiler) {
 				'InjectManifestPlugin',
 				cb => {
 					for (const name in compilation.assets) {
-						if (compilation.assets.hasOwnProperty(name) && /manifest\.json$/.test(name)) {
+						if (Object.prorotoype.hasOwnProperty.call(compilation.assets, name) && /manifest\.json$/.test(name)) {
 							const asset = compilation.assets[name];
 							try {
 								if (options) {
