@@ -98,7 +98,7 @@ function readWorksheet(worksheet) {
 	let minRow = Infinity;
 	const rows = [];
 	for (const cell in worksheet) {
-		if (Object.prorotoype.hasOwnProperty(worksheet, cell) && cell.charAt(0) !== '!') {
+		if (Object.prototype.hasOwnProperty.call(worksheet, cell) && cell.charAt(0) !== '!') {
 			const c = XLSX.utils.decode_cell(cell);
 			const row = c.r;
 			const col = c.c;

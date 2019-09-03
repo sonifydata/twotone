@@ -41,7 +41,7 @@ export default function AssetLibrary(options) {
 		};
 
 		for (const k in attachments) {
-			if (Object.prorotoype.hasOwnProperty.call(attachments, k)) {
+			if (Object.prototype.hasOwnProperty.call(attachments, k)) {
 				const a = attachments[k];
 				options._attachments[k] = {
 					data: a,
