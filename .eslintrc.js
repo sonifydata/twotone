@@ -1,6 +1,6 @@
 /* eslint-env node, browser: false */
 const eslintConfig = require('datavized-code-style');
-module.exports = Object.assign(eslintConfig, {
+module.exports = Object.assign({}, eslintConfig, {
 	plugins: eslintConfig.plugins.concat([
 		'react',
 		'jsx-a11y'
