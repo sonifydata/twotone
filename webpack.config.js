@@ -259,18 +259,6 @@ const config = {
 			}
 		]
 	},
-	resolve: {
-		// root: path.resolve('./src'),
-		extensions: ['.js', '.jsx'],
-		alias: {
-			'react-dom': '@hot-loader/react-dom',
-			'@material-ui/core': path.resolve(__dirname, 'node_modules/@material-ui/core/es/')
-			// We can restore this later if we solve issue #11
-			// 'preact-compat': 'preact-compat/dist/preact-compat',
-			// react: 'preact-compat/dist/preact-compat',
-			// 'react-dom': 'preact-compat/dist/preact-compat'
-		}
-	},
 	plugins,
 	node: {
 		fs: 'empty'
@@ -318,6 +306,21 @@ const devConfig = {
 	output: {
 		// workaround for https://github.com/facebookincubator/create-react-app/issues/2407
 		sourceMapFilename: '[file].map'
+	},
+	resolve: {
+		// root: path.resolve('./src'),
+		extensions: ['.js', '.jsx'],
+		alias: {
+			// workaround for https://github.com/aadsm/jsmediatags/issues/116
+			'jsmediatags': 'jsmediatags/dist/jsmediatags.min.js',
+
+			'react-dom': '@hot-loader/react-dom',
+			'@material-ui/core': path.resolve(__dirname, 'node_modules/@material-ui/core/es/')
+			// We can restore this later if we solve issue #11
+			// 'preact-compat': 'preact-compat/dist/preact-compat',
+			// react: 'preact-compat/dist/preact-compat',
+			// 'react-dom': 'preact-compat/dist/preact-compat'
+		}
 	},
 	plugins: [
 		new webpack.DefinePlugin({
@@ -376,6 +379,9 @@ const distConfig = {
 	resolve: {
 		extensions: ['.js', '.jsx'],
 		alias: {
+			// workaround for https://github.com/aadsm/jsmediatags/issues/116
+			'jsmediatags': 'jsmediatags/dist/jsmediatags.min.js'
+
 			/*
 			doesn't work:
 			https://github.com/NervJS/nerv/issues/81
