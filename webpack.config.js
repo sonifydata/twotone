@@ -312,7 +312,7 @@ const devConfig = {
 		extensions: ['.js', '.jsx'],
 		alias: {
 			// workaround for https://github.com/aadsm/jsmediatags/issues/116
-			'jsmediatags': 'jsmediatags/dist/jsmediatags.min.js',
+			jsmediatags: 'jsmediatags/dist/jsmediatags.min.js',
 
 			'react-dom': '@hot-loader/react-dom',
 			'@material-ui/core': path.resolve(__dirname, 'node_modules/@material-ui/core/es/')
@@ -380,7 +380,7 @@ const distConfig = {
 		extensions: ['.js', '.jsx'],
 		alias: {
 			// workaround for https://github.com/aadsm/jsmediatags/issues/116
-			'jsmediatags': 'jsmediatags/dist/jsmediatags.min.js'
+			jsmediatags: 'jsmediatags/dist/jsmediatags.min.js'
 
 			/*
 			doesn't work:

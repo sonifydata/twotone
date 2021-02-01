@@ -1,13 +1,13 @@
 export default {
-	'ach': {
+	ach: {
 		// nativeName: 'Lwo',
 		englishName: 'Acholi'
 	},
-	'ady': {
+	ady: {
 		// nativeName: 'Адыгэбзэ',
 		englishName: 'Adyghe'
 	},
-	'af': {
+	af: {
 		// nativeName: 'Afrikaans',
 		englishName: 'Afrikaans'
 	},
@@ -19,11 +19,11 @@ export default {
 		// nativeName: 'Afrikaans (South Africa)',
 		englishName: 'Afrikaans (South Africa)'
 	},
-	'ak': {
+	ak: {
 		// nativeName: 'Tɕɥi',
 		englishName: 'Akan'
 	},
-	'ar': {
+	ar: {
 		// nativeName: 'العربية',
 		englishName: 'Arabic'
 	},
@@ -43,7 +43,7 @@ export default {
 		// nativeName: 'Aymar aru',
 		englishName: 'Aymara'
 	},
-	'az': {
+	az: {
 		// nativeName: 'Azərbaycan dili',
 		englishName: 'Azerbaijani'
 	},
@@ -55,7 +55,7 @@ export default {
 		// nativeName: 'Беларуская',
 		englishName: 'Belarusian'
 	},
-	'bg': {
+	bg: {
 		// nativeName: 'Български',
 		englishName: 'Bulgarian'
 	},
@@ -63,7 +63,7 @@ export default {
 		// nativeName: 'Български',
 		englishName: 'Bulgarian'
 	},
-	'bn': {
+	bn: {
 		// nativeName: 'বাংলা',
 		englishName: 'Bengali'
 	},
@@ -79,7 +79,7 @@ export default {
 		// nativeName: 'Bosanski',
 		englishName: 'Bosnian'
 	},
-	'ca': {
+	ca: {
 		// nativeName: 'Català',
 		englishName: 'Catalan'
 	},
@@ -87,7 +87,7 @@ export default {
 		// nativeName: 'Català',
 		englishName: 'Catalan'
 	},
-	'cak': {
+	cak: {
 		// nativeName: 'Maya Kaqchikel',
 		englishName: 'Kaqchikel'
 	},
@@ -95,7 +95,7 @@ export default {
 		// nativeName: 'ᏣᎳᎩ (tsalagi)',
 		englishName: 'Cherokee'
 	},
-	'cs': {
+	cs: {
 		// nativeName: 'Čeština',
 		englishName: 'Czech'
 	},
@@ -103,7 +103,7 @@ export default {
 		// nativeName: 'Čeština',
 		englishName: 'Czech'
 	},
-	'cy': {
+	cy: {
 		// nativeName: 'Cymraeg',
 		englishName: 'Welsh'
 	},
@@ -111,7 +111,7 @@ export default {
 		// nativeName: 'Cymraeg',
 		englishName: 'Welsh'
 	},
-	'da': {
+	da: {
 		// nativeName: 'Dansk',
 		englishName: 'Danish'
 	},
@@ -119,7 +119,7 @@ export default {
 		// nativeName: 'Dansk',
 		englishName: 'Danish'
 	},
-	'de': {
+	de: {
 		// nativeName: 'Deutsch',
 		englishName: 'German'
 	},
@@ -135,11 +135,11 @@ export default {
 		// nativeName: 'Deutsch (Schweiz)',
 		englishName: 'German (Switzerland)'
 	},
-	'dsb': {
+	dsb: {
 		// nativeName: 'Dolnoserbšćina',
 		englishName: 'Lower Sorbian'
 	},
-	'el': {
+	el: {
 		// nativeName: 'Ελληνικά',
 		englishName: 'Greek'
 	},
@@ -147,7 +147,7 @@ export default {
 		// nativeName: 'Ελληνικά',
 		englishName: 'Greek (Greece)'
 	},
-	'en': {
+	en: {
 		// nativeName: 'English',
 		englishName: 'English'
 	},
@@ -183,7 +183,7 @@ export default {
 		// nativeName: 'English (Pirate)',
 		englishName: 'English (Pirate)'
 	},
-	'eo': {
+	eo: {
 		// nativeName: 'Esperanto',
 		englishName: 'Esperanto'
 	},
@@ -191,7 +191,7 @@ export default {
 		// nativeName: 'Esperanto',
 		englishName: 'Esperanto'
 	},
-	'es': {
+	es: {
 		// nativeName: 'Español',
 		englishName: 'Spanish'
 	},
@@ -239,7 +239,7 @@ export default {
 		// nativeName: 'Español (Venezuela)',
 		englishName: 'Spanish (Venezuela)'
 	},
-	'et': {
+	et: {
 		// nativeName: 'eesti keel',
 		englishName: 'Estonian'
 	},
@@ -247,7 +247,7 @@ export default {
 		// nativeName: 'Eesti (Estonia)',
 		englishName: 'Estonian (Estonia)'
 	},
-	'eu': {
+	eu: {
 		// nativeName: 'Euskara',
 		englishName: 'Basque'
 	},
@@ -255,7 +255,7 @@ export default {
 		// nativeName: 'Euskara',
 		englishName: 'Basque'
 	},
-	'fa': {
+	fa: {
 		// nativeName: 'فارسی',
 		englishName: 'Persian'
 	},
@@ -267,11 +267,11 @@ export default {
 		// nativeName: 'Leet Speak',
 		englishName: 'Leet'
 	},
-	'ff': {
+	ff: {
 		// nativeName: 'Fulah',
 		englishName: 'Fulah'
 	},
-	'fi': {
+	fi: {
 		// nativeName: 'Suomi',
 		englishName: 'Finnish'
 	},
@@ -283,7 +283,7 @@ export default {
 		// nativeName: 'Føroyskt',
 		englishName: 'Faroese'
 	},
-	'fr': {
+	fr: {
 		// nativeName: 'Français',
 		englishName: 'French'
 	},
@@ -307,7 +307,7 @@ export default {
 		// nativeName: 'Frysk',
 		englishName: 'Frisian (West)'
 	},
-	'ga': {
+	ga: {
 		// nativeName: 'Gaeilge',
 		englishName: 'Irish'
 	},
@@ -315,7 +315,7 @@ export default {
 		// nativeName: 'Gaeilge (Gaelic)',
 		englishName: 'Irish (Gaelic)'
 	},
-	'gl': {
+	gl: {
 		// nativeName: 'Galego',
 		englishName: 'Galician'
 	},
@@ -335,7 +335,7 @@ export default {
 		// nativeName: 'Ἑλληνική ἀρχαία',
 		englishName: 'Classical Greek'
 	},
-	'he': {
+	he: {
 		// nativeName: 'עברית‏',
 		englishName: 'Hebrew'
 	},
@@ -343,7 +343,7 @@ export default {
 		// nativeName: 'עברית‏',
 		englishName: 'Hebrew'
 	},
-	'hi': {
+	hi: {
 		// nativeName: 'हिन्दी',
 		englishName: 'Hindi'
 	},
@@ -351,7 +351,7 @@ export default {
 		// nativeName: 'हिन्दी',
 		englishName: 'Hindi'
 	},
-	'hr': {
+	hr: {
 		// nativeName: 'Hrvatski',
 		englishName: 'Croatian'
 	},
@@ -359,15 +359,15 @@ export default {
 		// nativeName: 'Hrvatski',
 		englishName: 'Croatian'
 	},
-	'hsb': {
+	hsb: {
 		// nativeName: 'Hornjoserbšćina',
 		englishName: 'Upper Sorbian'
 	},
-	'ht': {
+	ht: {
 		// nativeName: 'Kreyòl',
 		englishName: 'Haitian Creole'
 	},
-	'hu': {
+	hu: {
 		// nativeName: 'Magyar',
 		englishName: 'Hungarian'
 	},
@@ -379,7 +379,7 @@ export default {
 		// nativeName: 'Հայերեն',
 		englishName: 'Armenian'
 	},
-	'id': {
+	id: {
 		// nativeName: 'Bahasa Indonesia',
 		englishName: 'Indonesian'
 	},
@@ -387,7 +387,7 @@ export default {
 		// nativeName: 'Bahasa Indonesia',
 		englishName: 'Indonesian'
 	},
-	'is': {
+	is: {
 		// nativeName: 'Íslenska',
 		englishName: 'Icelandic'
 	},
@@ -395,7 +395,7 @@ export default {
 		// nativeName: 'Íslenska (Iceland)',
 		englishName: 'Icelandic (Iceland)'
 	},
-	'it': {
+	it: {
 		// nativeName: 'Italiano',
 		englishName: 'Italian'
 	},
@@ -403,7 +403,7 @@ export default {
 		// nativeName: 'Italiano',
 		englishName: 'Italian'
 	},
-	'ja': {
+	ja: {
 		// nativeName: '日本語',
 		englishName: 'Japanese'
 	},
@@ -423,7 +423,7 @@ export default {
 		// nativeName: 'Қазақша',
 		englishName: 'Kazakh'
 	},
-	'km': {
+	km: {
 		// nativeName: 'ភាសាខ្មែរ',
 		englishName: 'Khmer'
 	},
@@ -431,11 +431,11 @@ export default {
 		// nativeName: 'ភាសាខ្មែរ',
 		englishName: 'Khmer'
 	},
-	'kab': {
+	kab: {
 		// nativeName: 'Taqbaylit',
 		englishName: 'Kabyle'
 	},
-	'kn': {
+	kn: {
 		// nativeName: 'ಕನ್ನಡ',
 		englishName: 'Kannada'
 	},
@@ -443,7 +443,7 @@ export default {
 		// nativeName: 'ಕನ್ನಡ (India)',
 		englishName: 'Kannada (India)'
 	},
-	'ko': {
+	ko: {
 		// nativeName: '한국어',
 		englishName: 'Korean'
 	},
@@ -455,7 +455,7 @@ export default {
 		// nativeName: 'Kurdî',
 		englishName: 'Kurdish'
 	},
-	'la': {
+	la: {
 		// nativeName: 'Latin',
 		englishName: 'Latin'
 	},
@@ -463,7 +463,7 @@ export default {
 		// nativeName: 'Latin',
 		englishName: 'Latin'
 	},
-	'lb': {
+	lb: {
 		// nativeName: 'Lëtzebuergesch',
 		englishName: 'Luxembourgish'
 	},
@@ -471,7 +471,7 @@ export default {
 		// nativeName: 'Lèmbörgs',
 		englishName: 'Limburgish'
 	},
-	'lt': {
+	lt: {
 		// nativeName: 'Lietuvių',
 		englishName: 'Lithuanian'
 	},
@@ -479,7 +479,7 @@ export default {
 		// nativeName: 'Lietuvių',
 		englishName: 'Lithuanian'
 	},
-	'lv': {
+	lv: {
 		// nativeName: 'Latviešu',
 		englishName: 'Latvian'
 	},
@@ -487,7 +487,7 @@ export default {
 		// nativeName: 'Latviešu',
 		englishName: 'Latvian'
 	},
-	'mai': {
+	mai: {
 		// nativeName: 'मैथिली, মৈথিলী',
 		englishName: 'Maithili'
 	},
@@ -495,7 +495,7 @@ export default {
 		// nativeName: 'Malagasy',
 		englishName: 'Malagasy'
 	},
-	'mk': {
+	mk: {
 		// nativeName: 'Македонски',
 		englishName: 'Macedonian'
 	},
@@ -503,7 +503,7 @@ export default {
 		// nativeName: 'Македонски (Македонски)',
 		englishName: 'Macedonian (Macedonian)'
 	},
-	'ml': {
+	ml: {
 		// nativeName: 'മലയാളം',
 		englishName: 'Malayalam'
 	},
@@ -515,7 +515,7 @@ export default {
 		// nativeName: 'Монгол',
 		englishName: 'Mongolian'
 	},
-	'mr': {
+	mr: {
 		// nativeName: 'मराठी',
 		englishName: 'Marathi'
 	},
@@ -523,7 +523,7 @@ export default {
 		// nativeName: 'मराठी',
 		englishName: 'Marathi'
 	},
-	'ms': {
+	ms: {
 		// nativeName: 'Bahasa Melayu',
 		englishName: 'Malay'
 	},
@@ -531,7 +531,7 @@ export default {
 		// nativeName: 'Bahasa Melayu',
 		englishName: 'Malay'
 	},
-	'mt': {
+	mt: {
 		// nativeName: 'Malti',
 		englishName: 'Maltese'
 	},
@@ -539,15 +539,15 @@ export default {
 		// nativeName: 'Malti',
 		englishName: 'Maltese'
 	},
-	'my': {
+	my: {
 		// nativeName: 'ဗမာစကာ',
 		englishName: 'Burmese'
 	},
-	'no': {
+	no: {
 		// nativeName: 'Norsk',
 		englishName: 'Norwegian'
 	},
-	'nb': {
+	nb: {
 		// nativeName: 'Norsk (bokmål)',
 		englishName: 'Norwegian (bokmal)'
 	},
@@ -555,7 +555,7 @@ export default {
 		// nativeName: 'Norsk (bokmål)',
 		englishName: 'Norwegian (bokmal)'
 	},
-	'ne': {
+	ne: {
 		// nativeName: 'नेपाली',
 		englishName: 'Nepali'
 	},
@@ -563,7 +563,7 @@ export default {
 		// nativeName: 'नेपाली',
 		englishName: 'Nepali'
 	},
-	'nl': {
+	nl: {
 		// nativeName: 'Nederlands',
 		englishName: 'Dutch'
 	},
@@ -579,7 +579,7 @@ export default {
 		// nativeName: 'Norsk (nynorsk)',
 		englishName: 'Norwegian (nynorsk)'
 	},
-	'oc': {
+	oc: {
 		// nativeName: 'Occitan',
 		englishName: 'Occitan'
 	},
@@ -587,7 +587,7 @@ export default {
 		// nativeName: 'ଓଡ଼ିଆ',
 		englishName: 'Oriya'
 	},
-	'pa': {
+	pa: {
 		// nativeName: 'ਪੰਜਾਬੀ',
 		englishName: 'Punjabi'
 	},
@@ -595,7 +595,7 @@ export default {
 		// nativeName: 'ਪੰਜਾਬੀ (ਭਾਰਤ ਨੂੰ)',
 		englishName: 'Punjabi (India)'
 	},
-	'pl': {
+	pl: {
 		// nativeName: 'Polski',
 		englishName: 'Polish'
 	},
@@ -607,7 +607,7 @@ export default {
 		// nativeName: 'پښتو',
 		englishName: 'Pashto'
 	},
-	'pt': {
+	pt: {
 		// nativeName: 'Português',
 		englishName: 'Portuguese'
 	},
@@ -627,7 +627,7 @@ export default {
 		// nativeName: 'Rumantsch',
 		englishName: 'Romansh'
 	},
-	'ro': {
+	ro: {
 		// nativeName: 'Română',
 		englishName: 'Romanian'
 	},
@@ -635,7 +635,7 @@ export default {
 		// nativeName: 'Română',
 		englishName: 'Romanian'
 	},
-	'ru': {
+	ru: {
 		// nativeName: 'Русский',
 		englishName: 'Russian'
 	},
@@ -655,7 +655,7 @@ export default {
 		// nativeName: 'පළාත',
 		englishName: 'Sinhala (Sri Lanka)'
 	},
-	'sk': {
+	sk: {
 		// nativeName: 'Slovenčina',
 		englishName: 'Slovak'
 	},
@@ -663,7 +663,7 @@ export default {
 		// nativeName: 'Slovenčina (Slovakia)',
 		englishName: 'Slovak (Slovakia)'
 	},
-	'sl': {
+	sl: {
 		// nativeName: 'Slovenščina',
 		englishName: 'Slovenian'
 	},
@@ -675,7 +675,7 @@ export default {
 		// nativeName: 'Soomaaliga',
 		englishName: 'Somali'
 	},
-	'sq': {
+	sq: {
 		// nativeName: 'Shqip',
 		englishName: 'Albanian'
 	},
@@ -683,7 +683,7 @@ export default {
 		// nativeName: 'Shqip',
 		englishName: 'Albanian'
 	},
-	'sr': {
+	sr: {
 		// nativeName: 'Српски',
 		englishName: 'Serbian'
 	},
@@ -691,11 +691,11 @@ export default {
 		// nativeName: 'Српски (Serbia)',
 		englishName: 'Serbian (Serbia)'
 	},
-	'su': {
+	su: {
 		// nativeName: 'Basa Sunda',
 		englishName: 'Sundanese'
 	},
-	'sv': {
+	sv: {
 		// nativeName: 'Svenska',
 		englishName: 'Swedish'
 	},
@@ -703,7 +703,7 @@ export default {
 		// nativeName: 'Svenska',
 		englishName: 'Swedish'
 	},
-	'sw': {
+	sw: {
 		// nativeName: 'Kiswahili',
 		englishName: 'Swahili'
 	},
@@ -711,7 +711,7 @@ export default {
 		// nativeName: 'Kiswahili',
 		englishName: 'Swahili (Kenya)'
 	},
-	'ta': {
+	ta: {
 		// nativeName: 'தமிழ்',
 		englishName: 'Tamil'
 	},
@@ -719,7 +719,7 @@ export default {
 		// nativeName: 'தமிழ்',
 		englishName: 'Tamil'
 	},
-	'te': {
+	te: {
 		// nativeName: 'తెలుగు',
 		englishName: 'Telugu'
 	},
@@ -727,7 +727,7 @@ export default {
 		// nativeName: 'తెలుగు',
 		englishName: 'Telugu'
 	},
-	'tg': {
+	tg: {
 		// nativeName: 'забо́ни тоҷикӣ́',
 		englishName: 'Tajik'
 	},
@@ -735,7 +735,7 @@ export default {
 		// nativeName: 'тоҷикӣ',
 		englishName: 'Tajik'
 	},
-	'th': {
+	th: {
 		// nativeName: 'ภาษาไทย',
 		englishName: 'Thai'
 	},
@@ -743,7 +743,7 @@ export default {
 		// nativeName: 'ภาษาไทย (ประเทศไทย)',
 		englishName: 'Thai (Thailand)'
 	},
-	'tl': {
+	tl: {
 		// nativeName: 'Filipino',
 		englishName: 'Filipino'
 	},
@@ -751,11 +751,11 @@ export default {
 		// nativeName: 'Filipino',
 		englishName: 'Filipino'
 	},
-	'tlh': {
+	tlh: {
 		// nativeName: 'tlhIngan-Hol',
 		englishName: 'Klingon'
 	},
-	'tr': {
+	tr: {
 		// nativeName: 'Türkçe',
 		englishName: 'Turkish'
 	},
@@ -767,7 +767,7 @@ export default {
 		// nativeName: 'татарча',
 		englishName: 'Tatar'
 	},
-	'uk': {
+	uk: {
 		// nativeName: 'Українська',
 		englishName: 'Ukrainian'
 	},
@@ -775,7 +775,7 @@ export default {
 		// nativeName: 'Українська',
 		englishName: 'Ukrainian'
 	},
-	'ur': {
+	ur: {
 		// nativeName: 'اردو',
 		englishName: 'Urdu'
 	},
@@ -783,7 +783,7 @@ export default {
 		// nativeName: 'اردو',
 		englishName: 'Urdu'
 	},
-	'uz': {
+	uz: {
 		// nativeName: 'O\'zbek',
 		englishName: 'Uzbek'
 	},
@@ -791,7 +791,7 @@ export default {
 		// nativeName: 'O\'zbek',
 		englishName: 'Uzbek'
 	},
-	'vi': {
+	vi: {
 		// nativeName: 'Tiếng Việt',
 		englishName: 'Vietnamese'
 	},
@@ -803,7 +803,7 @@ export default {
 		// nativeName: 'isiXhosa',
 		englishName: 'Xhosa'
 	},
-	'yi': {
+	yi: {
 		// nativeName: 'ייִדיש',
 		englishName: 'Yiddish'
 	},
@@ -811,7 +811,7 @@ export default {
 		// nativeName: 'ייִדיש (German)',
 		englishName: 'Yiddish (German)'
 	},
-	'zh': {
+	zh: {
 		// nativeName: '中文',
 		englishName: 'Chinese'
 	},
