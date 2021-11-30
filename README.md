@@ -1,6 +1,6 @@
 # TwoTone
 
-TwoTone is an open-source web tool for generating sound from data. TwoTone has been developed by [Datavized Technologies](https://datavized.com) with support from [Google News Initiative](https://newsinitiative.withgoogle.com).
+TwoTone is an open-source web tool for generating sound from data. TwoTone has been developed by [Sonify.io](https://sonify.io) with support from [Google News Initiative](https://newsinitiative.withgoogle.com).
 
 ## How does TwoTone work?
 
@@ -24,7 +24,7 @@ For the user, the experience is "interaction as an instrument." When a selection
 
 TwoTone is designed to be seamlessly integrated into the workflow of a newsroom and used either as a standalone tool for publishing sonification on the web or as a soundtrack builder for multimedia projects. The tool is fully customizable to enable creators to map any data input to the desired audio output.
 
-- Web App: https://app.twotone.io
+- Web App: https://datavized.github.io/twotone/
 - Project official page: https://twotone.io
 - Documentation: https://github.com/datavized/twotone/
 
@@ -50,7 +50,7 @@ Then, use the following features to customize your data sonification.
 
 7. **Export Audio** - Export your project to an audio file in MP3 or Waveform (PCM) format. MP3 Bit Rate export options are 64 kbps, 128 kbps,, 192 kbps, and 320 kbps.
 
-Share your creations with the community [@datavized on Twitter](https://twitter.com/datavized).
+Share your creations with the community [@sonifydata on Twitter](https://twitter.com/sonifydata).
 
 ### Creating a Track
 
@@ -192,13 +192,13 @@ npm run build
 - [Material UI](https://material-ui.com/)
 
 ## Core Team
-TwoTone is maintained by [Datavized Technologies](https://datavized.com) with support from [Google News Initiative](https://newsinitiative.withgoogle.com) and key advisor [Alberto Cairo](http://www.thefunctionalart.com/).
+TwoTone is maintained by [Sonify.io](https://sonify.io) with support from [Google News Initiative](https://newsinitiative.withgoogle.com) and key advisor [Alberto Cairo](http://www.thefunctionalart.com/).
 
-If you want to know more about TwoTone, how it works and future developments, please visit the official website. For any specific request or comment we suggest you to use Github. You can also write to us at contact@datavized.com.
+If you want to know more about TwoTone, how it works and future developments, please visit the official website. For any specific request or comment we suggest you to use Github. You can also write to us at contact@sonify.io.
 
 ## Contributing
 
-We welcome and appreciate contributions, in the form of code pull requests, bug reports, feature requests or additions to our gallery. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our [Code of Conduct](CODE_OF_CONDUCT.md) and submission process. By participating, you are expected to uphold this code. Please report unacceptable behavior to support@datavized.com.
+We welcome and appreciate contributions, in the form of code pull requests, bug reports, feature requests or additions to our gallery. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our [Code of Conduct](CODE_OF_CONDUCT.md) and submission process. By participating, you are expected to uphold this code. Please report unacceptable behavior to contact@sonify.io.
 
 ## License
 
