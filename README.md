@@ -24,9 +24,9 @@ For the user, the experience is "interaction as an instrument." When a selection
 
 TwoTone is designed to be seamlessly integrated into the workflow of a newsroom and used either as a standalone tool for publishing sonification on the web or as a soundtrack builder for multimedia projects. The tool is fully customizable to enable creators to map any data input to the desired audio output.
 
-- Web App: https://datavized.github.io/twotone/
+- Hosted Web App: https://ekometic.design/twotone
 - Project official page: https://twotone.io
-- Documentation: https://github.com/datavized/twotone/
+- Documentation: https://github.com/sonifydata/twotone/
 
 ## Usage
 
@@ -40,7 +40,7 @@ Then, use the following features to customize your data sonification.
 
 2. **Play Audio** - Click the Play button to hear the sound generated from your data.
 
-3. **Speak Title** - Enter a Title to automatically generate text-to-speech, toggle to turn speech on or off. Customize settings for language, gender and voice options.
+~~3. **Speak Title** - Enter a Title to automatically generate text-to-speech, toggle to turn speech on or off. Customize settings for language, gender and voice options.~~
 
 4. **Add Audio Track** - Generate another audio track automatically from your data set or upload an audio track of your own.
 
