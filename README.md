@@ -1,6 +1,6 @@
 # TwoTone
 
-TwoTone is an open-source web tool for generating sound from data. TwoTone has been developed by [Sonify.io](https://sonify.io) with support from [Google News Initiative](https://newsinitiative.withgoogle.com).
+TwoTone is an open-source web tool for generating sound from data. TwoTone is a Sonify project built with support from Google News Initiative. The app was originally developed by Datavized Technologies. 
 
 ## How does TwoTone work?
 
@@ -16,7 +16,7 @@ There is no limit to the type of data that can be uploaded, leaving the tool ope
 
 ## What is TwoTone's goal?
 
-TwoTone explores the potential of turning data into sound, as the primary sense instead of sight, to uncover anomalies and insights through audioscapes rather than a visual chart or graph. In attaching individual time-based data sets and individual columns of data to variables in sound (pitch, volume), the tool can be a useful data communication tool to create a sonic representation of information.
+TwoTone explores the potential of turning data into sound, as the primary sense instead of sight, to uncover anomalies and insights through audioscapes rather than a visual chart or graph. In attaching individual time-based data sets and individual columns of data to variables in sound (pitch, volume), t lolHmm kohe tool can be a useful data communication tool to create a sonic representation of information.
 
 For the user, the experience is "interaction as an instrument." When a selection is made in the dataset it will trigger an audioscape that can be combined with the next interaction to create a realtime composition. Each composition can be recorded and shared easily across web or social channels. The tool therefore allows users to create new and unique pieces of music by exploring a dataset. It is playful but also has practical uses since the representation of the data is as "true" as a visual rendering and any anomalies can be heard, identified and acted upon.
 
@@ -24,13 +24,14 @@ For the user, the experience is "interaction as an instrument." When a selection
 
 TwoTone is designed to be seamlessly integrated into the workflow of a newsroom and used either as a standalone tool for publishing sonification on the web or as a soundtrack builder for multimedia projects. The tool is fully customizable to enable creators to map any data input to the desired audio output.
 
-- Web App: https://datavized.github.io/twotone/
-- Project official page: https://twotone.io
-- Documentation: https://github.com/datavized/twotone/
+- Web App:  http://sonify.io/twotone/ (use Google Chrome web browser for best performance)
+- Project official page: https://twotone.io 
+- Documentation: https://github.com/sonifydata/twotone/
+  
 
 ## Usage
 
-The easiest way to use TwoTone is by accessing the most updated version on the official app page at [twotone.io](https://app.twotone.io). However, TwoTone can also run locally on your machine: see the installation instructions below.
+The easiest way to use TwoTone is by accessing the most updated version on the official app page at [twotone.io](https://twotone.io). However, TwoTone can also run locally on your machine: see the installation instructions below.
 
 First, upload your own data or select one of the sample spreadsheets in the tool. (we've added these to help get you started).
 
@@ -40,9 +41,7 @@ Then, use the following features to customize your data sonification.
 
 2. **Play Audio** - Click the Play button to hear the sound generated from your data.
 
-3. **Speak Title** - Enter a Title to automatically generate text-to-speech, toggle to turn speech on or off. Customize settings for language, gender and voice options.
-
-4. **Add Audio Track** - Generate another audio track automatically from your data set or upload an audio track of your own.
+3. **Add Audio Track** - Generate another audio track automatically from your data set or upload an audio track of your own.
 
 5. **Adjust Duration** - Adjust your total duration, row duration, and tempo (BPM) to speed up or slow down your composition.
 
@@ -192,13 +191,13 @@ npm run build
 - [Material UI](https://material-ui.com/)
 
 ## Core Team
-TwoTone is maintained by [Sonify.io](https://sonify.io) with support from [Google News Initiative](https://newsinitiative.withgoogle.com) and key advisor [Alberto Cairo](http://www.thefunctionalart.com/).
+TwoTone is a Sonify project built with support from Google News Initiative. The app was originally developed by Datavized Technologies with support from [Google News Initiative](https://newsinitiative.withgoogle.com) and key advisor [Alberto Cairo](http://www.thefunctionalart.com/).
 
-If you want to know more about TwoTone, how it works and future developments, please visit the official website. For any specific request or comment we suggest you to use Github. You can also write to us at contact@sonify.io.
+If you want to know more about TwoTone, how it works and future developments, write to us at contact@sonify.io. For any specific request or comment we suggest you use Github or send us an email.
 
 ## Contributing
 
-We welcome and appreciate contributions, in the form of code pull requests, bug reports, feature requests or additions to our gallery. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our [Code of Conduct](CODE_OF_CONDUCT.md) and submission process. By participating, you are expected to uphold this code. Please report unacceptable behavior to contact@sonify.io.
+We welcome and appreciate contributions, in the form of code pull requests, bug reports, feature requests or additions to our gallery. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our [Code of Conduct](CODE_OF_CONDUCT.md) and submission process. By participating, you are expected to uphold this code. Please report unacceptable behavior to support@sonify.io.
 
 ## License
 
