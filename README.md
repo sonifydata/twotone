@@ -16,7 +16,7 @@ There is no limit to the type of data that can be uploaded, leaving the tool ope
 
 ## What is TwoTone's goal?
 
-TwoTone explores the potential of turning data into sound, as the primary sense instead of sight, to uncover anomalies and insights through audioscapes rather than a visual chart or graph. In attaching individual time-based data sets and individual columns of data to variables in sound (pitch, volume), t lolHmm kohe tool can be a useful data communication tool to create a sonic representation of information.
+TwoTone explores the potential of turning data into sound, as the primary sense instead of sight, to uncover anomalies and insights through audioscapes rather than a visual chart or graph. In attaching individual time-based data sets and individual columns of data to variables in sound (pitch, volume), the tool can be a useful data communication tool to create a sonic representation of information.
 
 For the user, the experience is "interaction as an instrument." When a selection is made in the dataset it will trigger an audioscape that can be combined with the next interaction to create a realtime composition. Each composition can be recorded and shared easily across web or social channels. The tool therefore allows users to create new and unique pieces of music by exploring a dataset. It is playful but also has practical uses since the representation of the data is as "true" as a visual rendering and any anomalies can be heard, identified and acted upon.
 
@@ -202,3 +202,4 @@ We welcome and appreciate contributions, in the form of code pull requests, bug 
 ## License
 
 This software is licensed under the [MPL 2.0](LICENSE)
+
