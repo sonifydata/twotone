@@ -1,6 +1,6 @@
 # TwoTone
 
-TwoTone is an open-source web tool for generating sound from data. TwoTone is a Sonify project built with support from Google News Initiative. The app was originally developed by Datavized Technologies. 
+TwoTone is an open-source web tool for generating music from data. TwoTone is a Sonify project built with support from Google News Initiative. The app was originally developed by Datavized Technologies with support from [Google News Initiative](https://newsinitiative.withgoogle.com) and key advisor [Alberto Cairo](http://www.thefunctionalart.com/).
 
 ## How does TwoTone work?
 
@@ -12,17 +12,17 @@ The data uploaded to TwoTone are processed fully in the web browser: no server-s
 
 TwoTone is a playful technology and easy to use, but allows for output to industry-standard formats so that users can export their compositions for use in professional projects.
 
-There is no limit to the type of data that can be uploaded, leaving the tool open for a broad range of users and use cases. The software can be used by journalists, data professionals and researchers as an exploratory tool, or by artists, musicians, media makers and composers as a creative tool. It can also be used to share data with the blind and visually impaired, to help understand data in new ways, totally through the sense of hearing.
+The software can be used by journalists, data professionals and researchers as an exploratory tool; or by artists, musicians, media makers and composers as a creative tool. It can also be used to share data with the blind and visually impaired, to help understand data in new ways, totally through the sense of hearing.
 
 ## What is TwoTone's goal?
 
 TwoTone explores the potential of turning data into sound, as the primary sense instead of sight, to uncover anomalies and insights through audioscapes rather than a visual chart or graph. In attaching individual time-based data sets and individual columns of data to variables in sound (pitch, volume), the tool can be a useful data communication tool to create a sonic representation of information.
 
-For the user, the experience is "interaction as an instrument." When a selection is made in the dataset it will trigger an audioscape that can be combined with the next interaction to create a realtime composition. Each composition can be recorded and shared easily across web or social channels. The tool therefore allows users to create new and unique pieces of music by exploring a dataset. It is playful but also has practical uses since the representation of the data is as "true" as a visual rendering and any anomalies can be heard, identified and acted upon.
+For the user, the experience is "interaction as an instrument." When a selection is made in the dataset it will trigger an audioscape that can be combined with the next interaction to create a realtime composition. Each composition can be recorded and shared easily across web or social channels. The tool therefore allows users to create new and unique pieces of music by exploring a dataset. It is playful but also has practical uses.
 
 ## How can your organization benefit from using TwoTone?
 
-TwoTone is designed to be seamlessly integrated into the workflow of a newsroom and used either as a standalone tool for publishing sonification on the web or as a soundtrack builder for multimedia projects. The tool is fully customizable to enable creators to map any data input to the desired audio output.
+TwoTone is designed to be seamlessly integrated into your workflow and used either as a standalone tool for publishing sonification on the web or as a soundtrack builder for multimedia projects. The tool is fully customizable to enable creators to map any data input to the desired audio output.
 
 - Web App:  http://sonify.io/twotone/ (use Google Chrome web browser for best performance)
 - Project official page: https://twotone.io 
@@ -43,11 +43,11 @@ Then, use the following features to customize your data sonification.
 
 3. **Add Audio Track** - Generate another audio track automatically from your data set or upload an audio track of your own.
 
-5. **Adjust Duration** - Adjust your total duration, row duration, and tempo (BPM) to speed up or slow down your composition.
+4. **Adjust Duration** - Adjust your total duration, row duration, and tempo (BPM) to speed up or slow down your composition.
 
-6. **Advanced Features** - Adjust the volume of your audio track, filter it by data columns or by value, change the key of your musical scale, or adjust octave, scale range and tempo to create an arpeggio.
+5. **Advanced Features** - Adjust the volume of your audio track, filter it by data columns or by value, change the key of your musical scale, or adjust octave, scale range and tempo to create an arpeggio.
 
-7. **Export Audio** - Export your project to an audio file in MP3 or Waveform (PCM) format. MP3 Bit Rate export options are 64 kbps, 128 kbps,, 192 kbps, and 320 kbps.
+6. **Export Audio** - Export your project to an audio file in MP3 or Waveform (PCM) format. MP3 Bit Rate export options are 64 kbps, 128 kbps,, 192 kbps, and 320 kbps.
 
 Share your creations with the community [@sonifydata on Twitter](https://twitter.com/sonifydata).
 
@@ -202,4 +202,3 @@ We welcome and appreciate contributions, in the form of code pull requests, bug 
 ## License
 
 This software is licensed under the [MPL 2.0](LICENSE)
-
