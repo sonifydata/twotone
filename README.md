@@ -24,10 +24,10 @@ For the user, the experience is "interaction as an instrument." When a selection
 
 TwoTone is designed to be seamlessly integrated into your workflow and used either as a standalone tool for publishing sonification on the web or as a soundtrack builder for multimedia projects. The tool is fully customizable to enable creators to map any data input to the desired audio output.
 
-- Web App:  http://sonify.io/twotone/ (use Google Chrome web browser for best performance)
+- Web App:  https://sonify.io/twotone/ (use Google Chrome web browser for best performance)
 - Project official page: https://twotone.io 
 - Documentation: https://github.com/sonifydata/twotone/
-  
+ 
 
 ## Usage
 
