@@ -33,11 +33,11 @@ const tourSteps = [
 		target: '#play-controls [data-tour-id="play-button"]'
 	},
 
-	{
-		title: 'Speak Title',
-		content: 'Enter a title to automatically generate text-to-speech, toggle to turn speech on or off. Customize settings for language, gender and voice options.',
-		target: '[data-tour-id="speech-title"]'
-	},
+	// {
+	// 	title: 'Speak Title',
+	// 	content: 'Enter a title to automatically generate text-to-speech, toggle to turn speech on or off. Customize settings for language, gender and voice options.',
+	// 	target: '[data-tour-id="speech-title"]'
+	// },
 
 	{
 		title: 'Add Audio Track',
