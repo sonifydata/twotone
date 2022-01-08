@@ -48,12 +48,11 @@ function getMidiOutputNames() {
 	return outs;
 }
 
-
-export function playMidiNote( noteName, duration ) {
-	console.log(store.getState());
+export function playMidiNote( noteName = 'C3', duration = 1.0, velocity = 0.5, channel = 1 ) {
 	let output = getOutputByName( store.getState().midiOutPort );
-	let channel = output.channels[1];
-	channel.playNote( noteName, {duration: duration});
+	if (output === undefined) return; 
+	let sendChannel = output.channels[channel];
+	sendChannel.playNote( noteName, {duration: duration});
 }
 
 export { webMidiCheck, enableWebMidi, getMidiOutputs, getMidiOutputNames , getOutputByName };

@@ -18,6 +18,9 @@ import {
 	DEFAULT_ARPEGGIO_MODE
 } from '../../../constants';
 
+import * as midi from '../../midiSetup';
+import { Output, WebMidi } from 'webmidi';
+
 const instruments = {
 	...samplerInstruments,
 	...synthInstruments
@@ -110,6 +113,7 @@ export default function scaleTrack(soundQ, destination) {
 
 	const me = {
 		load(track) {
+
 			const config = track.config && track.config.scale || {};
 			const id = samplerInstruments[config.instrument || ''] ?
 				config.instrument :
@@ -133,23 +137,19 @@ export default function scaleTrack(soundQ, destination) {
 						if (id === instrumentId) {
 							const maxAmplitude = instrument.maxAmplitude || 1;
 							const sustain = 0.7 / maxAmplitude;
-							/*
-							todo: keep notes from cutting off if sample is shorter than note duration
-							- find different duration for each sample
-							- upgrade ADSR to ADHSR and use decay for release so we can finish fade out
-							  by the time the buffer ends
-							*/
-							// const minSampleDuration = Object.keys(sampleBuffers).reduce((prev, k) => {
-							// 	const buf = sampleBuffers[k];
-							// 	return Math.min(prev, buf.duration);
-							// }, Infinity);
+
 							const {release, gain} = instrument;
 							sourceDef = repeater(samplerSource(sampleBuffers), gainEnvelope, () => {
-								// customize envelope per instrument
-								// const shotDuration = shot.stopTime - shot.startTime;
-								// const duration = Math.min(shotDuration, minSampleDuration);
-								// const releaseTime = Math.max(0, duration - instrument.release);
-								// const release = shotDuration - releaseTime;
+								/*
+									midi.playMidiNote( note, length, velocity, midiChannel )
+								*/
+								midi.playMidiNote(
+									 'C3',   // CV: I still can't find where the note is set?!?!?
+									  interval, // this is a timing interval not a pitch interval
+									  gain,
+									  1
+									 );
+
 								return {
 									attack: 0,
 									decay: 0,
@@ -229,18 +229,13 @@ export default function scaleTrack(soundQ, destination) {
 				// nothing to play
 				return;
 			}
-
+			// shot seems to be the main sound event? A function of soundQ ?
 			if (!shot) {
-				/*
-				todo: add a trapezoid window to fade in/out
-				todo: compose before destination
-				*/
+				//console.log('sd:' + sourceDef, 'dest:' + destination);
 				shot = soundQ.shot(sourceDef, destination).set({
 					interval,
 					duration
-				});
-
-							
+				});		
 			}
 
 			const currentTime = soundQ.currentTime;
@@ -256,7 +251,13 @@ export default function scaleTrack(soundQ, destination) {
 				if (end <= begin) {
 					return;
 				}
-				
+				// console.log( 'WMT: ' + WebMidi.time );
+				// console.log( 'CST: ' + contextStartTime );
+				// const midiNoteOnOffset = (contextStartTime + begin).toString();
+				// const midiNoteReleaseOffset = (contextStartTime + end).toString();
+				// WebMidi.outputs[3].channels[1].playNote("C3", {time: "+"+midiNoteOnOffset});
+				// WebMidi.outputs[3].channels[1].stopNote("C3", {time: "+"+midiNoteReleaseOffset});
+
 				shot.start(contextStartTime + begin, optionsCallback);
 				shot.stop(contextStartTime + end);
 

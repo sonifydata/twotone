@@ -46,13 +46,6 @@ const DataTableView = asyncComponent(() => import('./DataTableView'), {
 
 const Tour = asyncComponent(() => import('./Tour'));
 
-/*
-VUMeter todo:
-- replace with more modular section
-- load async, since spectrum viewer will be large
-*/
-import VUMeter from './VUMeter';
-
 const drawerWidth = '40%'; // todo: responsive
 
 const styles = (theme) => ({
@@ -169,7 +162,7 @@ const Def = class App extends React.Component {
 	}
 
 	selectDataSource = () => {
-		tis.props.blockPlayback(this.playBlockClaim);
+		this.props.blockPlayback(this.playBlockClaim);
 		this.setState({
 			activeDialog: 'data'
 		});
@@ -241,7 +234,6 @@ const Def = class App extends React.Component {
 							className={classes.generalControls}
 							selectDataSource={this.selectDataSource}
 						/>}
-						<VUMeter backgroundColor={this.props.theme.palette.background.paper}/>
 					</div>
 					<Drawer
 						variant="persistent"
