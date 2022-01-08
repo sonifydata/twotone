@@ -111,6 +111,7 @@ const Def = class PlayControls extends React.Component {
 		currentTime: PropTypes.number,
 		currentRow: PropTypes.number,
 		data: PropTypes.object
+		// midi?
 	}
 
 	rewindBeginning = () => {

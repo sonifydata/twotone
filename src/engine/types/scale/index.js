@@ -70,6 +70,7 @@ export default function scaleTrack(soundQ, destination) {
 
 	function getRowIndex(time) {
 		const roundedNoteTime = Math.round(time / interval) * interval;
+
 		return Math.floor(roundedNoteTime / rowDuration) % data.rows.length;
 	}
 
@@ -174,7 +175,7 @@ export default function scaleTrack(soundQ, destination) {
 			fieldIndex = track.intensityField;
 			data = this.data;
 			rowDuration = this.rowDuration;
-
+			//console.log( data );
 			const config = track.config && track.config.scale || {};
 			scaleRange = num(config.scaleRange, DEFAULT_SCALE_RANGE);
 			startOctave = num(config.startOctave, DEFAULT_START_OCTAVE);
@@ -212,6 +213,8 @@ export default function scaleTrack(soundQ, destination) {
 			key = config.key === undefined ? DEFAULT_KEY : config.key;
 			mode = config.mode === undefined ? DEFAULT_MODE : config.mode;
 
+			
+
 			if (shot) {
 				shot.set({
 					interval,
@@ -236,6 +239,8 @@ export default function scaleTrack(soundQ, destination) {
 					interval,
 					duration
 				});
+
+							
 			}
 
 			const currentTime = soundQ.currentTime;
@@ -251,9 +256,10 @@ export default function scaleTrack(soundQ, destination) {
 				if (end <= begin) {
 					return;
 				}
-
+				
 				shot.start(contextStartTime + begin, optionsCallback);
 				shot.stop(contextStartTime + end);
+
 			});
 		},
 		stop() {

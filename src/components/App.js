@@ -17,6 +17,8 @@ Material UI components
 import Shell from './Shell';
 import AppLoader from './AppLoader';
 import AppHeader from './AppHeader';
+import MidiPortSelector from './MidiPortSelector';
+import * as midi from '../engine/midiSetup'
 
 import Paper from '@material-ui/core/Paper';
 import Drawer from '@material-ui/core/Drawer';
@@ -31,10 +33,12 @@ import UpgradePrompt from './UpgradePrompt';
 import SectionLoader from './SectionLoader';
 import LoadFailure from './LoadFailure';
 import asyncComponent from './asyncComponent';
+
 const TrackList = asyncComponent(() => import('./TrackList'), {
 	load: SectionLoader,
 	fail: LoadFailure
 });
+
 const DataTableView = asyncComponent(() => import('./DataTableView'), {
 	load: SectionLoader,
 	fail: LoadFailure,
@@ -141,7 +145,9 @@ const Def = class App extends React.Component {
 		setConfig: PropTypes.func.isRequired,
 		loading: PropTypes.bool,
 		upgradeReady: PropTypes.bool,
-		config: PropTypes.object
+		config: PropTypes.object,
+		midiOutPort: PropTypes.string,
+		midiOutPorts: PropTypes.object,
 	}
 
 	playBlockClaim = Symbol()
@@ -164,13 +170,18 @@ const Def = class App extends React.Component {
 	}
 
 	selectDataSource = () => {
-		/*
-		todo: move this into dialog
-		*/
-		this.props.blockPlayback(this.playBlockClaim);
+		tis.props.blockPlayback(this.playBlockClaim);
 		this.setState({
 			activeDialog: 'data'
 		});
+	}
+
+	selectMidiPort =  () => {
+			logEvent('midi', 'ports');
+			midi.webMidiCheck();
+			this.setState({
+				activeDialog: 'midi'
+			});
 	}
 
 	handleCreateTrack = type => {
@@ -200,6 +211,8 @@ const Def = class App extends React.Component {
 			showTour
 		} = config;
 
+		const { webMidiAvailable } = config;
+
 		const showData = config.showData && !!dataSource;
 
 		const { activeDialog } = this.state;
@@ -207,6 +220,8 @@ const Def = class App extends React.Component {
 		const appHeader = <AppHeader
 			onDataToggle={this.handleDataToggle}
 			selectDataSource={this.selectDataSource}
+			webMidiAvailable={this.webMidiAvailable}
+			selectMidiPort={this.selectMidiPort}
 		/>;
 
 		return <Shell header={appHeader}>
@@ -252,12 +267,14 @@ const Def = class App extends React.Component {
 			{activeDialog === 'audio' && <AudioSelectDialog
 				open={true}
 				onClose={this.closeDialog}
+				//  cant find this.handleUpdateTrack anywhere CAV
 				onSelect={id => this.handleUpdateTrack({
 					audioId: id
 				})}
 				disableBackdropClick={false}
 				waiting={false}
 			/>}
+
 			{(activeDialog === 'data' || !dataSource) && <DataSelectDialog
 				open={true}
 				cancelable={!!dataSource}
@@ -266,16 +283,25 @@ const Def = class App extends React.Component {
 				disableBackdropClick={false}
 				waiting={false}
 			/>}
+
+{/*			{activeDialog === 'midi' && <MidiPortSelector
+				open={true}
+				onSelect={this.closeDialog}
+				disableBackdropClick={false}
+				waiting={false}
+			/>}*/}
+
 			{showTour && <Tour
 				run={!loading && showTour && !!dataSource}
 			/>}
+
 			<UpgradePrompt upgradeReady={upgradeReady}/>
 		</Shell>;
 	}
 };
 
 const App = withStyles(styles, { withTheme: true })(
-	connect(['dataSource', 'dataSourceId', 'loading', 'config'], actions)(Def)
+	connect(['dataSource', 'dataSourceId', 'loading', 'config', 'midiOutPorts', 'midiOutPort' ], actions)(Def)
 );
 
 export default App;

@@ -5,12 +5,12 @@ import { connect } from 'unistore/react';
 import { actions } from '../store';
 import { createConfirmation } from 'react-confirm';
 import logEvent from '../util/analytics';
-
+import * as midi from '../engine/midiSetup'
 /*
 Theme/Style stuff
 */
 import withStyles from '@material-ui/core/styles/withStyles';
-
+import classNames from 'classnames'
 /*
 Material UI components
 */
@@ -19,10 +19,12 @@ import IconButton from './IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import HelpIcon from '@material-ui/icons/Help';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
+import SettingsInputSvideoIcon from '@material-ui/icons/SettingsInputSvideo'; 
 import SpreadsheetIcon from '@material-ui/icons/List';
 import ConfirmationDialog from './ConfirmationDialog';
 
 import twoToneLogo from '../images/two-tone-logo.svg';
+import MidiPortSelector from './MidiPortSelector';
 
 const confirm = createConfirmation(ConfirmationDialog);
 
@@ -61,6 +63,7 @@ const styles = theme => ({
 		}
 	}
 });
+console.log(styles);
 
 const Def = class AppHeader extends React.Component {
 	static propTypes = {
@@ -69,8 +72,13 @@ const Def = class AppHeader extends React.Component {
 		setConfig: PropTypes.func.isRequired,
 		selectDataSource: PropTypes.func.isRequired,
 		dataSource: PropTypes.object,
-		onDataToggle: PropTypes.func
+		onDataToggle: PropTypes.func,
+		midiOutPort: PropTypes.string,
+		midiOutPorts: PropTypes.object,
+		midiPortSelector: PropTypes.func.isRequired
 	}
+
+
 
 	handleResetData = evt => {
 		evt.stopPropagation();
@@ -89,6 +97,7 @@ const Def = class AppHeader extends React.Component {
 		});
 	}
 
+
 	handleHelp = () => {
 		logEvent('tour', 'request');
 		this.props.setConfig({
@@ -96,12 +105,22 @@ const Def = class AppHeader extends React.Component {
 		});
 	}
 
+	handleChangeMidiPort =  () => {
+			logEvent('midi', 'ports');
+			this.setState({
+				activeDialog: 'midi'
+			});
+	}
+
 	render() {
 		const {
 			classes,
 			dataSource,
 			selectDataSource,
-			onDataToggle
+			selectMidiPort,
+			onDataToggle,
+			midiOutPort,
+			midiOutPorts
 		} = this.props;
 
 		const logo = <img src={twoToneLogo} alt={APP_TITLE} className={classes.logo}/>;
@@ -122,6 +141,16 @@ const Def = class AppHeader extends React.Component {
 					</React.Fragment> : null
 				}
 			</Typography>
+
+		{ midi.webMidiCheck() ?
+			<React.Fragment>
+				<IconButton label="MIDI Settings" color="inherit" onClick={this.handleChangeMidiPort} >
+					<SettingsInputSvideoIcon/>
+				</IconButton>
+				<MidiPortSelector/>
+			</React.Fragment> : null
+		}
+
 			<span className={classes.resetButton}>
 				<IconButton label="Reset Project" color="inherit" onClick={this.handleResetData}>
 					<DeleteIcon/>
@@ -139,7 +168,7 @@ const Def = class AppHeader extends React.Component {
 
 const AppHeader = withStyles(styles)(
 	connect([
-		'dataSource'
+		'dataSource','midiOutPort','midiOutPorts'
 	], actions)(Def)
 );
 export default AppHeader;

@@ -78,6 +78,9 @@ export default function createTrack(state, type = DEFAULT_TRACK_TYPE, trackData)
 		type,
 		id
 	};
+
+	console.log( autoTrackData );
+
 	tracks.push(newTrack);
 
 	return {

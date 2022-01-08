@@ -7,3 +7,4 @@ export { default as setRowDuration } from './setRowDuration';
 export * from './speechOptions';
 export { default as setTracksVolume } from './setTracksVolume';
 export * from './liveAudio';
+export * from './midi';
