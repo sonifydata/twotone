@@ -20,7 +20,7 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const InjectManifestPlugin = require('./tools/inject-manifest-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+// const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 // const { UnusedFilesWebpackPlugin } = require('unused-files-webpack-plugin');
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
@@ -215,12 +215,12 @@ const config = {
 						test: /\.css$/,
 						use: [
 							require.resolve('style-loader'),
-							{
-								loader: require.resolve('css-loader'),
-								options: {
-									importLoaders: 1
-								}
-							},
+							// {
+							// 	loader: require.resolve('css-loader'),
+							// 	options: {
+							// 		importLoaders: 1
+							// 	}
+							// },
 							{
 								loader: require.resolve('postcss-loader'),
 								options: {
@@ -338,7 +338,7 @@ const devConfig = {
 		}),
 		new webpack.HotModuleReplacementPlugin(),
 
-		new WatchMissingNodeModulesPlugin(resolveApp('node_modules')),
+	//	new WatchMissingNodeModulesPlugin(resolveApp('node_modules')),
 
 		new HtmlWebpackPlugin({
 			inject: true,
@@ -363,11 +363,12 @@ const devConfig = {
 			warnings: true
 		},
 		port,
-		host: '0.0.0.0'
+		host: '127.0.0.1'
 	}
 };
 
 if (DEBUG_SERVICE_WORKER) {
+	process.traceDeprecation = true;
 	devConfig.plugins.push(serviceWorkerPlugin);
 }
 
@@ -422,11 +423,15 @@ const distConfig = {
 				})
 			]
 		}),
-		new CopyWebpackPlugin([{
-			from: __dirname + '/public',
-			to: __dirname + '/build',
-			ignore: ['index.html']
-		}]),
+		new CopyWebpackPlugin( {
+
+			//the from option now can only be a string, if you use { from: { glob: 'directory/**', dot: false } } changed it to { from: 'directory/**', globOptions: { dot: false } }
+			// from: __dirname + '/public',
+			// to: __dirname + '/build',
+			//ignore: ['index.html']
+			      patterns: [
+			        { from: (__dirname + '/public'), to: (__dirname + '/build') },
+			      ]}),
 		new HtmlWebpackPlugin({
 			inject: true,
 			template: __dirname + '/public/index.html',

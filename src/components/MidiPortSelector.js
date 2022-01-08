@@ -31,7 +31,8 @@ const Def = class MidiPortSelector extends React.Component {
 	
 
 	componentDidMount() {
-		midi.webMidiCheck();
+		// maybe don't need to check WebMidi so often
+		//midi.webMidiCheck();
 	}
 
 	componentDidUpdate() {
@@ -40,7 +41,7 @@ const Def = class MidiPortSelector extends React.Component {
 
 	handleChangeMidiPort = (event) => {
 		this.props.setOutputPortByIndex( event.target.value );
-		console.log( "midi port change handler: " + event.target.value);
+		console.log( "midi port changed to: " + event.target.value);
 	}
 
 	render() {
@@ -58,11 +59,11 @@ const Def = class MidiPortSelector extends React.Component {
 		    id: port
 		  }])
 		);
-
+		
 	return <React.Fragment>
 		<WideSelect
 			label = {midiOutPort}
-			value = ""
+			value = "port"
 			onChange = { this.handleChangeMidiPort }
 			name = "midiOut"
 			id= { 'midi-output' }
