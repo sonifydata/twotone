@@ -18,7 +18,6 @@ import Shell from './Shell';
 import AppLoader from './AppLoader';
 import AppHeader from './AppHeader';
 import MidiPortSelector from './MidiPortSelector';
-import * as midi from '../engine/midiSetup'
 
 import Paper from '@material-ui/core/Paper';
 import Drawer from '@material-ui/core/Drawer';

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'unistore/react';
-import { actions } from '../store';
+import { actions, store } from '../store';
 import { createConfirmation } from 'react-confirm';
 import logEvent from '../util/analytics';
 import * as midi from '../engine/midiSetup'
@@ -19,7 +19,8 @@ import IconButton from './IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import HelpIcon from '@material-ui/icons/Help';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
-import SettingsInputSvideoIcon from '@material-ui/icons/SettingsInputSvideo'; 
+import SettingsMidiGo from '@material-ui/icons/SettingsInputSvideo'; 
+import SettingsMidiNo from '@material-ui/icons/SettingsInputSvideoTwoTone'; 
 import SpreadsheetIcon from '@material-ui/icons/List';
 import ConfirmationDialog from './ConfirmationDialog';
 
@@ -27,6 +28,7 @@ import twoToneLogo from '../images/two-tone-logo.svg';
 import MidiPortSelector from './MidiPortSelector';
 
 const confirm = createConfirmation(ConfirmationDialog);
+let webMidiAvailable = store.getState().webMidiAvailable || false;
 
 const styles = theme => ({
 	title: {
@@ -75,10 +77,16 @@ const Def = class AppHeader extends React.Component {
 		onDataToggle: PropTypes.func,
 		midiOutPort: PropTypes.string,
 		midiOutPorts: PropTypes.object,
-		midiPortSelector: PropTypes.func.isRequired
+		midiPortSelector: PropTypes.func.isRequired,
 	}
 
+	componentDidMount() {
+		midi.webMidiCheck();
+	}
 
+	componentDidUpdate() {
+		midi.webMidiCheck();
+	}
 
 	handleResetData = evt => {
 		evt.stopPropagation();
@@ -99,6 +107,7 @@ const Def = class AppHeader extends React.Component {
 
 
 	handleHelp = () => {
+				if (store.getState().webMidiAvailable) midi.playMidiNote('C3', 1000);
 		logEvent('tour', 'request');
 		this.props.setConfig({
 			showTour: true
@@ -142,13 +151,18 @@ const Def = class AppHeader extends React.Component {
 				}
 			</Typography>
 
-		{ midi.webMidiCheck() ?
+		{ (store.getState().webMidiAvailable) ?
 			<React.Fragment>
 				<IconButton label="MIDI Settings" color="inherit" onClick={this.handleChangeMidiPort} >
-					<SettingsInputSvideoIcon/>
+					<SettingsMidiGo/>
 				</IconButton>
 				<MidiPortSelector/>
-			</React.Fragment> : null
+			</React.Fragment> : 
+			<React.Fragment>
+				<IconButton label="MIDI Settings" color="inherit" onClick={this.handleChangeMidiPort} >
+					<SettingsMidiNo/>
+				</IconButton>
+			</React.Fragment>
 		}
 
 			<span className={classes.resetButton}>

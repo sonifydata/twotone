@@ -1,13 +1,15 @@
+import { store } from '../store';
 import { Output, WebMidi } from 'webmidi';
 
-function webMidiCheck() {
+async function webMidiCheck() {
 	 if (WebMidi.enabled) return (true);
 	 if (!("requestMIDIAccess" in navigator)) {
 	  console.log('☹️ WebMIDI is not supported in this browser.')
 	  return (false);
 	} else {
 	  console.log('🙌🏻 YES, happy days! This browser supports WebMIDI!');
-	  const enabled = enableWebMidi();
+	  const enabled = await enableWebMidi();
+	  store.setState( { webMidiAvailable: enabled } );
 	  return (enabled);
 	} 
 }
@@ -46,6 +48,14 @@ function getMidiOutputNames() {
 	return outs;
 }
 
-export { webMidiCheck, enableWebMidi, getMidiOutputs, getMidiOutputNames , getOutputByName};
+
+export function playMidiNote( noteName, duration ) {
+	console.log(store.getState());
+	let output = getOutputByName( store.getState().midiOutPort );
+	let channel = output.channels[1];
+	channel.playNote( noteName, {duration: duration});
+}
+
+export { webMidiCheck, enableWebMidi, getMidiOutputs, getMidiOutputNames , getOutputByName };
 
 

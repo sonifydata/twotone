@@ -45,6 +45,7 @@ const defaultState = Object.assign({
 	speechGender: '',
 	speechVoiceId: '',
 	tracksVolume: 1,
+	webMidiAvailable: false,
 	midiOutPort: '',
 	midiOutPorts: []
 }/*, defaultProject*/);
@@ -52,7 +53,6 @@ const defaultState = Object.assign({
 const initialState = {
 	...defaultState,
 	config: {
-		webMidiAvailable: false,
 		showWelcome: true,
 		showData: false,
 		showTour: true
@@ -200,7 +200,7 @@ async function restoreState() {
 		const { _rev, val } = doc;
 		stateRevisions.set(key, _rev);
 		newState[key] = val;
-		console.log(newState[key]);
+		if (DEBUG) console.log('State change: '+newState[key]);
 	});
 
 	store.setState(newState);
