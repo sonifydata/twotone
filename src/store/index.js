@@ -47,7 +47,8 @@ const defaultState = Object.assign({
 	tracksVolume: 1,
 	webMidiAvailable: false,
 	midiOutPort: '',
-	midiOutPorts: []
+	midiOutPorts: [],
+	activeDialog: ''
 }/*, defaultProject*/);
 
 const initialState = {
@@ -181,7 +182,7 @@ async function stateChanged(state) {
 		// todo: reset speech field and all track filter fields
 		// and currentTime
 		// actually, reset MOST of the state to default
-		loadDataSource(state);
+		await loadDataSource(state);
 	}
 }
 

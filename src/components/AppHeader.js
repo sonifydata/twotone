@@ -6,11 +6,11 @@ import { actions, store } from '../store';
 import { createConfirmation } from 'react-confirm';
 import logEvent from '../util/analytics';
 import * as midi from '../engine/midiSetup'
+import MidiPortSelector from './MidiPortSelector';
 /*
 Theme/Style stuff
 */
 import withStyles from '@material-ui/core/styles/withStyles';
-import classNames from 'classnames'
 /*
 Material UI components
 */
@@ -25,10 +25,8 @@ import SpreadsheetIcon from '@material-ui/icons/List';
 import ConfirmationDialog from './ConfirmationDialog';
 
 import twoToneLogo from '../images/two-tone-logo.svg';
-import MidiPortSelector from './MidiPortSelector';
 
 const confirm = createConfirmation(ConfirmationDialog);
-let webMidiAvailable = store.getState().webMidiAvailable || false;
 
 const styles = theme => ({
 	title: {
@@ -65,7 +63,7 @@ const styles = theme => ({
 		}
 	}
 });
-console.log(styles);
+
 
 const Def = class AppHeader extends React.Component {
 	static propTypes = {
@@ -85,7 +83,7 @@ const Def = class AppHeader extends React.Component {
 	}
 
 	componentDidUpdate() {
-		midi.webMidiCheck();
+
 	}
 
 	handleResetData = evt => {
@@ -107,18 +105,21 @@ const Def = class AppHeader extends React.Component {
 
 
 	handleHelp = () => {
-				if (store.getState().webMidiAvailable) midi.playMidiNote('C3', 1000);
 		logEvent('tour', 'request');
 		this.props.setConfig({
 			showTour: true
 		});
 	}
 
-	handleChangeMidiPort =  () => {
-			logEvent('midi', 'ports');
-			this.setState({
-				activeDialog: 'midi'
-			});
+	handleChangeMidiPort = () => {
+		const status = midi.webMidiCheck();
+		const r = store.getState().webMidiAvailable || status;
+		if (r) {
+			this.props.selectMidiPort();
+			store.setState( {midiOutPorts: midi.getMidiOutputNames()});
+		}
+		logEvent('midi', 'get');
+
 	}
 
 	render() {
@@ -126,10 +127,7 @@ const Def = class AppHeader extends React.Component {
 			classes,
 			dataSource,
 			selectDataSource,
-			selectMidiPort,
-			onDataToggle,
-			midiOutPort,
-			midiOutPorts
+			onDataToggle
 		} = this.props;
 
 		const logo = <img src={twoToneLogo} alt={APP_TITLE} className={classes.logo}/>;
@@ -151,19 +149,12 @@ const Def = class AppHeader extends React.Component {
 				}
 			</Typography>
 
-		{ (store.getState().webMidiAvailable) ?
 			<React.Fragment>
-				<IconButton label="MIDI Settings" color="inherit" onClick={this.handleChangeMidiPort} >
-					<SettingsMidiGo/>
+				<IconButton label="Open MIDI Settings"  color="inherit" onClick={this.handleChangeMidiPort} >
+					{ (store.getState().webMidiAvailable) ? <SettingsMidiGo/> : <SettingsMidiNo/> }
 				</IconButton>
-				<MidiPortSelector/>
-			</React.Fragment> : 
-			<React.Fragment>
-				<IconButton label="MIDI Settings" color="inherit" onClick={this.handleChangeMidiPort} >
-					<SettingsMidiNo/>
-				</IconButton>
+				<MidiPortSelector />
 			</React.Fragment>
-		}
 
 			<span className={classes.resetButton}>
 				<IconButton label="Reset Project" color="inherit" onClick={this.handleResetData}>

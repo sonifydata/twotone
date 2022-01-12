@@ -17,17 +17,17 @@ function blockClick(event) {
 
 const styles = theme => ({
 	root: {
-		margin: theme.spacing.unit
+		margin: theme.spacing.unit,
 	}
 });
 
 const Def = ({name, id, label, children, classes, ...props}) => <FormControl className={classes.root}>
 	<InputLabel htmlFor={id || name}>{label}</InputLabel>
 	<Select
+		{...props}
 		onClick={blockClick}
 		name={name}
 		input={<Input id={id || name} />}
-		{...props}
 	>
 		{children}
 	</Select>

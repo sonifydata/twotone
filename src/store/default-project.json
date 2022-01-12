@@ -9,7 +9,6 @@
             "volume": 0.78,
             "config":
             {
-                "webMidiAvailable": false,
                 "clip":
                 {
                     "audioId": ":sample:jeff-mcspadden:forest"

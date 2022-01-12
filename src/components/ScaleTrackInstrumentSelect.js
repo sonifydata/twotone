@@ -96,7 +96,7 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 					<em>None</em>
 				</MenuItem>
 				{fields
-					.map(({name, i}) => 
+					.map( ( {name, i} ) =>
 						<MenuItem value={i} key={i}>{name}</MenuItem>)
 				}
 			</WideSelect>

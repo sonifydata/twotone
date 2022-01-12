@@ -17,8 +17,8 @@ Material UI components
 import Shell from './Shell';
 import AppLoader from './AppLoader';
 import AppHeader from './AppHeader';
-import MidiPortSelector from './MidiPortSelector';
 
+import { store } from '../store';
 import Paper from '@material-ui/core/Paper';
 import Drawer from '@material-ui/core/Drawer';
 
@@ -142,11 +142,8 @@ const Def = class App extends React.Component {
 		midiOutPorts: PropTypes.object,
 	}
 
-	playBlockClaim = Symbol()
-
-	state = {
-		activeDialog: '' // todo: need this from unistore so track components can use it
-	}
+	playBlockClaim = Symbol();
+	state = store.getState().activeDialog;
 
 	handleDataToggle = () => {
 		this.props.setConfig({
@@ -156,22 +153,20 @@ const Def = class App extends React.Component {
 
 	closeDialog = () => {
 		this.props.releasePlayback(this.playBlockClaim);
-		this.setState({
+		store.setState({
 			activeDialog: ''
 		});
 	}
 
 	selectDataSource = () => {
 		this.props.blockPlayback(this.playBlockClaim);
-		this.setState({
+		store.setState({
 			activeDialog: 'data'
 		});
 	}
 
 	selectMidiPort =  () => {
-			logEvent('midi', 'ports');
-			midi.webMidiCheck();
-			this.setState({
+			store.setState({
 				activeDialog: 'midi'
 			});
 	}
@@ -203,17 +198,15 @@ const Def = class App extends React.Component {
 			showTour
 		} = config;
 
-		const { webMidiAvailable } = config;
-
 		const showData = config.showData && !!dataSource;
 
-		const { activeDialog } = this.state;
+		const { activeDialog } = store.getState();
 
 		const appHeader = <AppHeader
 			onDataToggle={this.handleDataToggle}
 			selectDataSource={this.selectDataSource}
-			webMidiAvailable={this.webMidiAvailable}
 			selectMidiPort={this.selectMidiPort}
+			activeDialog={ ()=>this.activeDialog }
 		/>;
 
 		return <Shell header={appHeader}>
@@ -275,13 +268,6 @@ const Def = class App extends React.Component {
 				waiting={false}
 			/>}
 
-{/*			{activeDialog === 'midi' && <MidiPortSelector
-				open={true}
-				onSelect={this.closeDialog}
-				disableBackdropClick={false}
-				waiting={false}
-			/>}*/}
-
 			{showTour && <Tour
 				run={!loading && showTour && !!dataSource}
 			/>}
@@ -292,7 +278,7 @@ const Def = class App extends React.Component {
 };
 
 const App = withStyles(styles, { withTheme: true })(
-	connect(['dataSource', 'dataSourceId', 'loading', 'config', 'midiOutPorts', 'midiOutPort' ], actions)(Def)
+	connect(['dataSource', 'dataSourceId', 'loading', 'config', 'midiOutPorts', 'midiOutPort', 'activeDialog' ], actions)(Def)
 );
 
 export default App;

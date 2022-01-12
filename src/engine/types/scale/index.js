@@ -19,7 +19,9 @@ import {
 } from '../../../constants';
 
 import * as midi from '../../midiSetup';
-import { Output, WebMidi } from 'webmidi';
+
+import { store } from '../../../store';
+
 
 const instruments = {
 	...samplerInstruments,
@@ -106,6 +108,9 @@ export default function scaleTrack(soundQ, destination) {
 
 		// sampler wants a midi note
 		const midiNote = Math.round(69 + 12 * Math.log2(frequency / 440));
+
+		midi.playMidiNote(midiNote, 150);
+
 		return {
 			note: midiNote
 		};
@@ -140,16 +145,6 @@ export default function scaleTrack(soundQ, destination) {
 
 							const {release, gain} = instrument;
 							sourceDef = repeater(samplerSource(sampleBuffers), gainEnvelope, () => {
-								/*
-									midi.playMidiNote( note, length, velocity, midiChannel )
-								*/
-								midi.playMidiNote(
-									 'C3',   // CV: I still can't find where the note is set?!?!?
-									  interval, // this is a timing interval not a pitch interval
-									  gain,
-									  1
-									 );
-
 								return {
 									attack: 0,
 									decay: 0,
@@ -158,6 +153,7 @@ export default function scaleTrack(soundQ, destination) {
 									gain
 								};
 							});
+
 							resolve();
 						}
 					});
@@ -213,8 +209,6 @@ export default function scaleTrack(soundQ, destination) {
 			key = config.key === undefined ? DEFAULT_KEY : config.key;
 			mode = config.mode === undefined ? DEFAULT_MODE : config.mode;
 
-			
-
 			if (shot) {
 				shot.set({
 					interval,
@@ -222,25 +216,28 @@ export default function scaleTrack(soundQ, destination) {
 				});
 			}
 		},
-		start(cst) {
+		start: function (cst) {
 			contextStartTime = cst;
 
 			if (!(fieldIndex >= 0 && data && data.fields && fieldIndex < data.fields.length)) {
 				// nothing to play
 				return;
 			}
-			// shot seems to be the main sound event? A function of soundQ ?
+			// shot seems to be the main sound event?
 			if (!shot) {
-				//console.log('sd:' + sourceDef, 'dest:' + destination);
+
 				shot = soundQ.shot(sourceDef, destination).set({
 					interval,
 					duration
-				});		
+				});
+
+
 			}
 
 			const currentTime = soundQ.currentTime;
 			const minRangeTime = Math.max(0, currentTime - contextStartTime);
 			playRanges.forEach(([begin, end]) => {
+
 				begin = Math.max(begin + beatOffset / tempoFactor, minRangeTime);
 
 				/*
@@ -251,16 +248,11 @@ export default function scaleTrack(soundQ, destination) {
 				if (end <= begin) {
 					return;
 				}
-				// console.log( 'WMT: ' + WebMidi.time );
-				// console.log( 'CST: ' + contextStartTime );
-				// const midiNoteOnOffset = (contextStartTime + begin).toString();
-				// const midiNoteReleaseOffset = (contextStartTime + end).toString();
-				// WebMidi.outputs[3].channels[1].playNote("C3", {time: "+"+midiNoteOnOffset});
-				// WebMidi.outputs[3].channels[1].stopNote("C3", {time: "+"+midiNoteReleaseOffset});
 
+				//TODO: inject midi here via optionsCallback
 				shot.start(contextStartTime + begin, optionsCallback);
-				shot.stop(contextStartTime + end);
 
+				shot.stop(contextStartTime + end);
 			});
 		},
 		stop() {
