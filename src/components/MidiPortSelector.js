@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import WideSelectMidi from './WideSelectMidi';
 
 import * as midi from '../engine/midiSetup';
-import Checkbox from '@material-ui/core/Checkbox';
+
 
 let styles = () => ({
 	midiPortsListStyles: {
@@ -59,8 +59,6 @@ const Def = class MidiPortSelector extends React.Component {
 			midiOutPorts,
 			classes,
 		} = this.props;
-
-		let portChosen = false;
 
 		if (!midiOutPorts || midiOutPorts.length <= 0) { return null; }
 

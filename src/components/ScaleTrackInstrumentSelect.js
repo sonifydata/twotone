@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import { connect } from 'unistore/react';
-import { actions } from '../store';
+import { store, actions } from '../store';
 import num from '../util/num';
 
 import { DEFAULT_INSTRUMENT } from '../constants';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import WideSelect from './WideSelect';
+import MidiChannelSelector from './MidiChannelSelector'
+
 
 const styles = () => ({
 	dataSource: {
@@ -42,8 +44,11 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 		const oldTrack = this.props.track || {};
 		const oldConfig = oldTrack.config || {};
 		const oldScaleConfig = oldConfig.scale || {};
+		const oldMidiChannel = oldConfig.midiChannel || {};
 
 		const { name, value } = evt.target;
+
+		const { midiChannel } = store.getState();
 
 		const scale = {
 			...oldScaleConfig
@@ -52,7 +57,7 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 
 		const config = {
 			...oldConfig,
-			scale
+			scale, midiChannel
 		};
 
 		const track = {
@@ -126,6 +131,7 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				<MenuItem value="glockenspiel">Glockenspiel</MenuItem>
 				<MenuItem value="midiOut">Midi Out</MenuItem>
 			</WideSelect>
+			{ instrument == "midiOut" ? <MidiChannelSelector/> : null }
 		</React.Fragment>;
 	}
 };
