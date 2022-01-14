@@ -61,6 +61,11 @@ const tourSteps = [
 		title: 'Export Audio',
 		content: 'Export your project to an audio file in MP3 or Waveform (PCM) format.',
 		target: '[data-tour-id="export-audio"]'
+	},
+	{
+		title: 'Midi Output',
+		content: 'If midi is available in your browser, select which midi output to use. Now choose Midi Out from the track instrument selector and that track will send data as Midi notes',
+		target: '[data-tour-id="midiout-feature"]'
 	}
 
 ].map(step => ({
@@ -126,12 +131,7 @@ const Def = class Tour extends React.Component {
 		this.joyride = ref;
 	}
 
-	/*
-	Some targets may not be loaded when this component is first rendered.
-	So we force an update whenever the document changes to force Joyride
-	to re-scan for target elements.
-	todo: this can be made more efficient by checking for changes
-	*/
+
 	redraw = () => {
 		if (this.joyride) {
 			this.joyride.forceUpdate();

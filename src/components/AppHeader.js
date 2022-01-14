@@ -115,8 +115,10 @@ const Def = class AppHeader extends React.Component {
 		const status = midi.webMidiCheck();
 		const r = store.getState().webMidiAvailable || status;
 		if (r) {
+			const {midiPortSelectToggle} = store.getState() || true;
 			this.props.selectMidiPort();
 			store.setState( {midiOutPorts: midi.getMidiOutputNames()});
+			store.setState( {midiPortSelectToggle: !midiPortSelectToggle  })
 		}
 		logEvent('midi', 'get');
 
@@ -150,10 +152,13 @@ const Def = class AppHeader extends React.Component {
 			</Typography>
 
 			<React.Fragment>
-				<IconButton label="Open MIDI Settings"  color="inherit" onClick={this.handleChangeMidiPort} >
-					{ (store.getState().webMidiAvailable) ? <SettingsMidiGo/> : <SettingsMidiNo/> }
-				</IconButton>
-				<MidiPortSelector />
+				<span data-tour-id="midiout-feature" >
+					<IconButton  aria-label="Midi Settings" label={store.getState().midiOutPort || "Open MIDI Settings"  }  color="inherit" onClick={this.handleChangeMidiPort} >
+						{ (store.getState().webMidiAvailable) ? <SettingsMidiGo/> : <SettingsMidiNo/> }
+					</IconButton>
+				</span>
+				{ store.getState().midiPortSelectToggle ? <MidiPortSelector /> : null }
+
 			</React.Fragment>
 
 			<span className={classes.resetButton}>

@@ -11,8 +11,12 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
+
 function blockClick(event) {
     event.stopPropagation();
+}
+function handleClose(event) {
+    console.log(event);
 }
 
 const styles = theme => ({
@@ -21,17 +25,21 @@ const styles = theme => ({
     }
 });
 
-const Def = ({name, id, label, children, classes, ...props}) => <FormControl className={classes.root}>
+const Def = ({name, id, label, children, classes, ...props}) =>
+
+    <FormControl className={classes.root} >
     <InputLabel htmlFor={id}>{label}</InputLabel>
     <Select
         {...props}
         onClick={blockClick}
         name={label}
         input = {<Input id='midiOutUI' />}
+        autoWidth={true}
     >
         {children}
     </Select>
 </FormControl>;
+
 
 Def.propTypes = {
     classes: PropTypes.object.isRequired,
