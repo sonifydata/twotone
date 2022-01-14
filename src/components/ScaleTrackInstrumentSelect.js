@@ -124,7 +124,7 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				<MenuItem value="violin">Violin</MenuItem>
 				<MenuItem value="trumpet">Trumpet</MenuItem>
 				<MenuItem value="glockenspiel">Glockenspiel</MenuItem>
-				<MenuItem value="oscillator">Oscillator</MenuItem>
+				<MenuItem value="midiOut">Midi Out</MenuItem>
 			</WideSelect>
 		</React.Fragment>;
 	}

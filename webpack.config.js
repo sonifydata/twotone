@@ -456,8 +456,7 @@ const distConfig = {
 			}
 		}),
 		new InjectManifestPlugin({
-		//	theme_color: '#26c6da', // eslint-disable-line camelcase
-			theme_color: '#daa126', // eslint-disable-line camelcase
+			theme_color: '#26c6da', // eslint-disable-line camelcase
 			start_url: '../?utm_source=web_app_manifest', // eslint-disable-line camelcase
 			name: title,
 			description

@@ -1,4 +1,4 @@
-import bufferSource from 'soundq/src/sources/buffer';
+import bufferSource from '/src/soundq/src/sources/buffer';
 import {
 	getAudioBuffer
 } from '../../assets/audioLibrary';

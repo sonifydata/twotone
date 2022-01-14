@@ -2,12 +2,12 @@
 import eventEmitter from 'event-emitter';
 import allOff from 'event-emitter/all-off';
 
-import SoundQ from 'soundq/src/index';
-import destination from 'soundq/src/patches/destination';
+import SoundQ from '/src/soundq/src/index';
+import destination from '/src/soundq/src/patches/destination';
 import num from '../util/num';
 import trackTypes from './types';
 import getSpeechBuffer from './speech';
-import bufferSource from 'soundq/src/sources/buffer';
+import bufferSource from '/src/soundq/src/sources/buffer';
 import debounce from 'debounce';
 //import { Output, WebMidi } from 'webmidi';
 
@@ -34,6 +34,7 @@ function AudioDataEngine(context, options = {}) {
 	let baselineTime = 0;
 	let pauseTime = 0;
 	let tracksVolume = 1;
+	let trackNumber = 0;
 
 	let speechTitle = '';
 	let speechVoiceId = '';
@@ -92,6 +93,7 @@ function AudioDataEngine(context, options = {}) {
 			trackRef.stop.call(me);
 		}
 	}
+
 
 	function destroyTrack(id) {
 		const trackRef = trackRefs.get(id);
@@ -355,6 +357,7 @@ function AudioDataEngine(context, options = {}) {
 		const deleteTrackIds = Array.from(trackRefs.keys());
 		this.tracks.forEach(track => {
 			const { id } = track;
+			trackNumber = track.intensityField; // CAV: I believe this is the 'Track' number , trying to access it for MidiChannel assignment
 			const type = track.type;
 
 			if (!type || !trackTypes[type]) {
@@ -572,8 +575,8 @@ function AudioDataEngine(context, options = {}) {
 
 		currentTime:
     {
-		get: currentTime,
-		set(val) {
+    	get: currentTime,
+    	set(val) {
     		if (val !== 0 && (val >= duration || !rowDuration || !rowCount || val < 0)) {
     			/*
                 We might want to throw an error here.
@@ -662,7 +665,6 @@ function AudioDataEngine(context, options = {}) {
     {
     	get: () => analyser
     }
-
 	});
 }
 

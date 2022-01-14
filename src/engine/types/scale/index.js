@@ -1,8 +1,8 @@
-import oscillator from 'soundq/src/sources/oscillator';
-import samplerSource from 'soundq/src/sources/sampler';
-import gainEnvelope from 'soundq/src/patches/gainEnvelope';
-import repeater from 'soundq/src/sources/repeater';
-import { getKeyNoteFrequency } from 'soundq/src/util/scales';
+import midiOut from '/src/soundq/src/sources/midiOut';
+import samplerSource from '/src/soundq/src/sources/sampler';
+import gainEnvelope from '/src/soundq/src/patches/gainEnvelope';
+import repeater from '/src/soundq/src/sources/repeater';
+import { getKeyNoteFrequency } from '/src/soundq/src/util/scales';
 import {
 	instruments as samplerInstruments,
 	loadSamples
@@ -18,9 +18,9 @@ import {
 	DEFAULT_ARPEGGIO_MODE
 } from '../../../constants';
 
-import * as midi from '../../midiSetup';
-
-import { store } from '../../../store';
+// import * as midi from '../../midiSetup';
+//
+// import { store } from '../../../store';
 
 
 const instruments = {
@@ -28,7 +28,7 @@ const instruments = {
 	...synthInstruments
 };
 
-const oscillatorSourceDef = repeater(oscillator, gainEnvelope, {
+const oscillatorSourceDef = repeater(midiOut, gainEnvelope, {
 	attack: 0.03,
 	decay: 0.05,
 	release: 0.1
@@ -108,8 +108,6 @@ export default function scaleTrack(soundQ, destination) {
 
 		// sampler wants a midi note
 		const midiNote = Math.round(69 + 12 * Math.log2(frequency / 440));
-
-		midi.playMidiNote(midiNote, 150);
 
 		return {
 			note: midiNote
@@ -240,18 +238,12 @@ export default function scaleTrack(soundQ, destination) {
 
 				begin = Math.max(begin + beatOffset / tempoFactor, minRangeTime);
 
-				/*
-				todo: rewind `begin` to beginning of this row so we get
-				the middle of the attack
-				*/
-
 				if (end <= begin) {
 					return;
 				}
 
 				//TODO: inject midi here via optionsCallback
 				shot.start(contextStartTime + begin, optionsCallback);
-
 				shot.stop(contextStartTime + end);
 			});
 		},

@@ -115,7 +115,6 @@
 		"react-sortable-hoc": "^1.10.1",
 		"react-virtualized": "^9.21.1",
 		"serialize-error": "^4.1.0",
-		"soundq": "github:datavized/soundq",
 		"standardized-audio-context": "^21.2.1",
 		"to-id": "^2.0.0",
 		"unistore": "^3.4.1",

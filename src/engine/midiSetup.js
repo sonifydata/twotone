@@ -1,8 +1,11 @@
 import { store } from '../store';
 import { WebMidi } from 'webmidi';
+import {getCurrentTrackNumber} from '../store/actions';
 
 
-async function webMidiCheck() {
+
+
+export async function webMidiCheck() {
 	if (WebMidi.enabled) {
 		return true;
 	}
@@ -13,13 +16,18 @@ async function webMidiCheck() {
 		console.log('🙌🏻 YES, happy days! This browser supports WebMIDI!');
 		console.log('Using WebMidi ' + WebMidi.version);
 		const enabled = await enableWebMidi();
-		store.setState({webMidiAvailable: enabled});
-		store.setState({midiOutPorts: getMidiOutputNames() });
-		return true;
+		if (enabled) {
+			store.setState({webMidiAvailable: enabled});
+			store.setState({midiOutPorts: getMidiOutputNames()});
+
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 
-function enableWebMidi() {
+export function enableWebMidi() {
 
 	WebMidi
 		.enable()
@@ -37,35 +45,86 @@ function onWebMidiEnabled() {
 	WebMidi.inputs.forEach(input => console.log('⬅︎ MIDI In: \n' + input.manufacturer, input.name));
 	// Outputs
 	WebMidi.outputs.forEach(output => console.log('⮕ MIDI Out: \n' + output.manufacturer, output.name));
+
 }
 
-function getMidiOutputs() {
+export function getMidiOutputs() {
 	return store.getState().webMidiAvailable ? WebMidi.outputs : [];
 }
 
-function getOutputByName(portName) {
+export function getOutputByName(portName) {
 	return WebMidi.getOutputByName(portName);
 }
 
-function getMidiOutputNames() {
+export function getMidiOutputNames() {
 	const outs = [];
 	getMidiOutputs().forEach(o => outs.push(o.name));
 	return outs;
 }
 
+export function getCurrentMidiOutput() {
+	let o;
+	try {
+		o = getOutputByName(store.getState().midiOutPort);
+	} catch (e) {
+		o = undefined;
+	}
+	return o;
+}
 
-export function playMidiNote(noteValue, dur = 1.0, velocity = 0.5, channel = 1) {
+export function getWebMidiTime() {
+	return WebMidi.time;
+}
+
+export function scheduleMidiNoteEvent(
+	{	keyEvent = 'on',
+		schedulingTime = 0,
+		noteValue = 'C3',
+		duration = Infinity,
+		velocity = 0.8,
+		channel = 1 } = {}) {
+	//todo: allow the notes to get scheduled even though the port is offline
 	const output = getOutputByName(store.getState().midiOutPort);
+
+	if (output === undefined) {
+		return;
+	}
+
+	const sendChannel = output.channels[channel];
+
+	switch (keyEvent) {
+		case 'on':
+			sendChannel.playNote(noteValue, {time: schedulingTime, duration: duration, attack: velocity});
+			break;
+		case 'off':
+			sendChannel.stopNote(noteValue, {time: schedulingTime, duration: duration, attack: velocity});
+			break;
+	}
+}
+
+export function sendMidiNoteEvent(
+	{	keyEvent = 'on',
+		noteValue = 'C3',
+		duration = 500,
+		velocity = 0.8,
+		channel = 1 } = {}) {
+
+	channel = Math.max(1, channel);
+	const output = getOutputByName(store.getState().midiOutPort);
+
 	if (output === undefined) {
 		return;
 	}
 	const sendChannel = output.channels[channel];
-	sendChannel.playNote(noteValue, {duration: dur, attack: velocity});
 
+	switch (keyEvent) {
+		case 'on':
+			sendChannel.playNote(noteValue, {duration: duration, attack: velocity});
+			break;
+		case 'off':
+			sendChannel.stopNote(noteValue, {duration: duration, attack: velocity});
+			break;
+	}
 }
-
-
-
-export { webMidiCheck, enableWebMidi, getMidiOutputs, getMidiOutputNames, getOutputByName };
 
 

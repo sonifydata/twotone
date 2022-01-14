@@ -1,9 +1,9 @@
-import bufferSource from 'soundq/src/sources/buffer';
-// import granulizer from 'soundq/src/sources/granulizer';
-import repeater from 'soundq/src/sources/repeater';
-import compose from 'soundq/src/patches/compose';
-import panner from 'soundq/src/patches/panner';
-import trapezoid from 'soundq/src/patches/trapezoid';
+import bufferSource from '/src/soundq/src/sources/buffer';
+// import granulizer from '/src/soundq/src/sources/granulizer';
+import repeater from '/src/soundq/src/sources/repeater';
+import compose from '/src/soundq/src/patches/compose';
+import panner from '/src/soundq/src/patches/panner';
+import trapezoid from '/src/soundq/src/patches/trapezoid';
 
 const grain = compose([trapezoid, panner]);
 
