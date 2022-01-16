@@ -39,7 +39,7 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 const title = 'TwoTone';
 const websiteURL = 'https://twotone.io';
 const description = 'TwoTone Data Sonification';
-const eslintConfig = require('./.eslintrc.js');
+const eslintConfig = require('./.eslintrc.json');
 const port = '9000';
 const browsers = [
 	'>0.25%',
@@ -129,7 +129,7 @@ const config = {
 						ecmaFeatures: {
 							jsx: true
 						}
-					}
+					},
 				})
 			},
 

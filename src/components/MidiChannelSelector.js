@@ -27,16 +27,17 @@ const styles = (theme) => ({
         fontSize: 14,
         padding: 10,
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        color: theme.palette.secondary.light
     }
 });
 
 const ChannelInCircle = ({ fill, digit }) => (
 
-    <svg viewBox='0 0 15px 15px' fill={ fill }>
-        <circle cx='50%' cy='50%' r='50%'/>
-        <circle cx='50%' cy='50%' r='40%' fill='white'/>
-        <text x='50%' y='70%' textAnchor='middle' fontSize='16px' fill='black'>{digit}</text>
+    <svg viewBox='0 0 15 15' >
+        <circle cx='50%' cy='50%' r='50%' fill= { fill } opacity='66%'/>
+        <circle cx='50%' cy='50%' r='45%' fill = 'black' opacity='66%'/>
+        <text x='50%' y='70%' textAnchor='middle' fontSize='10px' opacity='80%' >{digit}</text>
     </svg>
 
 );
@@ -97,8 +98,9 @@ const Def = class MidiChannelSelector extends React.Component {
                              <IconButton
                                  aria-owns={midiChannelAnchorEl ? 'midi-channel-menu' : undefined}
                                  aria-haspopup="true"
-                                 label="Select Midi Channel" color='primary' onClick={this.handleClick}>
-                                 <SvgIcon><ChannelInCircle fill='cyan' digit={midiChannel}/></SvgIcon>
+                                 label="Select Midi Channel"
+                                 onClick={this.handleClick}>
+                                 <SvgIcon><ChannelInCircle fill='white' digit={midiChannel}/></SvgIcon>
                              </IconButton>
 
                              <Menu
@@ -163,5 +165,5 @@ const Def = class MidiChannelSelector extends React.Component {
 };
 
 const MidiChannelSelector =
-    connect([ 'midiOutPort', 'midiChannel', 'contextMenu'])(withStyles(styles)(Def));
+    connect([ 'midiOutPort', 'midiChannel', 'contextMenu'])(withStyles(styles, {withTheme: true})(Def));
 export default MidiChannelSelector;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import { connect } from 'unistore/react';
-import { store, actions } from '../store';
+import { actions } from '../store';
 import num from '../util/num';
 
 import { DEFAULT_INSTRUMENT } from '../constants';
@@ -11,15 +11,18 @@ import { DEFAULT_INSTRUMENT } from '../constants';
 import MenuItem from '@material-ui/core/MenuItem';
 import WideSelect from './WideSelect';
 import MidiChannelSelector from './MidiChannelSelector'
-import {SvgIcon} from "@material-ui/core";
 
 
-const styles = () => ({
+
+const styles = (theme) => ({
 	dataSource: {
 		flex: 0.6
 	},
 	instrument: {
 		flex: 0.4
+	},
+	midiHighlight: {
+		color: theme.palette.secondary.light
 	}
 });
 
@@ -98,9 +101,7 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				onChange={this.handleChangeIntensityField}
 				name="intensity-field"
 				id={'intensity-field-' + track.id}
-				classes={{
-					root: classes.dataSource
-				}}
+				classes={{ root: classes.dataSource }}
 			>
 				<MenuItem value="">
 					<em>None</em>
@@ -116,12 +117,8 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				id={'track-instrument-' + track.id}
 				value={instrument}
 				onChange={this.handleChangeConfig}
-				inputProps={{
-					name: 'instrument'
-				}}
-				classes={{
-					root: classes.instrument
-				}}
+				inputProps={{ name: 'instrument' }}
+				classes={{ root: classes.instrument }}
 			>
 				{/* todo: get this list from somewhere */}
 				<MenuItem value="piano">Piano</MenuItem>
@@ -134,13 +131,14 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				<MenuItem value="violin">Violin</MenuItem>
 				<MenuItem value="trumpet">Trumpet</MenuItem>
 				<MenuItem value="glockenspiel">Glockenspiel</MenuItem>
-				<MenuItem value="midiOut" id={'midiOutInst'+track.id}>Midi Out {midiChannel}</MenuItem>
+				<MenuItem value="midiOut" id={'midiOutInst'+track.id} classes={{
+					root: classes.midiHighlight}}>Midi Out {midiChannel}</MenuItem>
 			</WideSelect>
-			{ instrument == "midiOut" ? <MidiChannelSelector handleChannelChange={this.handleChannelChange} getMidiChannel={midiChannel} /> : null }
+			{ instrument === "midiOut" ? <MidiChannelSelector handleChannelChange={this.handleChannelChange} getMidiChannel={midiChannel} /> : null }
 		</React.Fragment>;
 	}
 };
 
 const ScaleTrackInstrumentSelect = 
-	connect(['data'], actions)(withStyles(styles)(Def));
+	connect(['data'], actions)(withStyles(styles, {withTheme: true})(Def));
 export default ScaleTrackInstrumentSelect;
