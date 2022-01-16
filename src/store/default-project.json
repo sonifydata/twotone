@@ -7,6 +7,7 @@
             "type": "scale",
             "intensityField": 1,
             "volume": 0.78,
+            "midiChannel": 1,
             "config":
             {
                 "clip":

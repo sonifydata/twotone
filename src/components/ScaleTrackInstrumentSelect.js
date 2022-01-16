@@ -11,6 +11,7 @@ import { DEFAULT_INSTRUMENT } from '../constants';
 import MenuItem from '@material-ui/core/MenuItem';
 import WideSelect from './WideSelect';
 import MidiChannelSelector from './MidiChannelSelector'
+import {SvgIcon} from "@material-ui/core";
 
 
 const styles = () => ({
@@ -22,13 +23,15 @@ const styles = () => ({
 	}
 });
 
+
 const Def = class ScaleTrackInstrumentSelect extends React.Component {
 
 	static propTypes = {
 		classes: PropTypes.object.isRequired,
 		track: PropTypes.object.isRequired,
 		setTrack: PropTypes.func.isRequired,
-		data: PropTypes.object
+		data: PropTypes.object,
+		midiChannel: PropTypes.number
 	}
 
 	handleChangeIntensityField = event => {
@@ -39,32 +42,32 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 		}), track.id);
 	}
 
+	handleChannelChange = evt => {
+		const { track, setTrack } = this.props;
+		const midiChannel = evt.value;
+		setTrack( Object.assign( {},   track, { midiChannel }), track.id);
+	}
+
+	getCurrentMidiChannel = () => this.props.track.midiChannel;
+
 	handleChangeConfig = evt => {
 		const { setTrack } = this.props;
 		const oldTrack = this.props.track || {};
 		const oldConfig = oldTrack.config || {};
 		const oldScaleConfig = oldConfig.scale || {};
-		const oldMidiChannel = oldConfig.midiChannel || {};
-
 		const { name, value } = evt.target;
-
-		const { midiChannel } = store.getState();
-
 		const scale = {
 			...oldScaleConfig
 		};
 		scale[name] = value;
-
 		const config = {
 			...oldConfig,
-			scale, midiChannel
+			scale
 		};
-
 		const track = {
 			...oldTrack,
 			config
 		};
-
 		setTrack(track, track.id);
 	}
 
@@ -75,9 +78,9 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 			data
 		} = this.props;
 
+
 		const config = track.config && track.config.scale || {};
 		const instrument = config.instrument || DEFAULT_INSTRUMENT;
-
 		// todo: support non-numeric fields
 		const fields = !data || !data.fields ?
 			[] :
@@ -85,6 +88,8 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				.map(({name, type, max, min}, i) => ({name, type, min, max, i}))
 				.filter(({type, max, min}) => type !== 'string' && max !== min);
 
+		let midiChannel=track.midiChannel || null;
+		console.log( 'midichannel:' + midiChannel);
 
 		return <React.Fragment>
 			<WideSelect
@@ -129,9 +134,9 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				<MenuItem value="violin">Violin</MenuItem>
 				<MenuItem value="trumpet">Trumpet</MenuItem>
 				<MenuItem value="glockenspiel">Glockenspiel</MenuItem>
-				<MenuItem value="midiOut">Midi Out</MenuItem>
+				<MenuItem value="midiOut" id={'midiOutInst'+track.id}>Midi Out {midiChannel}</MenuItem>
 			</WideSelect>
-			{ instrument == "midiOut" ? <MidiChannelSelector/> : null }
+			{ instrument == "midiOut" ? <MidiChannelSelector handleChannelChange={this.handleChannelChange} getMidiChannel={midiChannel} /> : null }
 		</React.Fragment>;
 	}
 };

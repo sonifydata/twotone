@@ -6,6 +6,7 @@
 import * as React from 'react';
 import Menu from '@material-ui/core/Menu';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { connect } from 'unistore/react';
@@ -13,103 +14,142 @@ import { store } from '../store'
 import withStyles from "@material-ui/core/styles/withStyles";
 import IconButton from './IconButton';
 import FiberSmartRecordOutlined from '@material-ui/icons/FiberSmartRecordOutlined';
+import {SvgIcon} from "@material-ui/core";
 
 
 const styles = (theme) => ({
     root: {
         color: 'antiquewhite',
         flex: 0.2,
-        margin: theme.spacing.unit
+        margin: theme.spacing.unit,
+    },
+    numberBox: {
+        fontSize: 14,
+        padding: 10,
+        display: 'flex',
+        justifyContent: 'center'
     }
 });
 
-store.setState( { contextMenu: null, midiChannel: -1 });
+const ChannelInCircle = ({ fill, digit }) => (
+
+    <svg viewBox='0 0 15px 15px' fill={ fill }>
+        <circle cx='50%' cy='50%' r='50%'/>
+        <circle cx='50%' cy='50%' r='40%' fill='white'/>
+        <text x='50%' y='70%' textAnchor='middle' fontSize='16px' fill='black'>{digit}</text>
+    </svg>
+
+);
+
+store.setState( { contextMenu: null });
 
 
 const Def = class MidiChannelSelector extends React.Component {
 
-        handleContextMenu = (event) => {
-            event.preventDefault();
-            if (store.getState().contextMenu === null) {
-                store.setState({ contextMenu: {mouseX: event.clientX - 2, mouseY: event.clientY - 4} } );
-            }
-        }
+    state = {
+        midiChannelAnchorEl: null,
+        midiChannel: this.props.getMidiChannel
+    };
 
-         handleClose = (e) => {
-            store.setState( { contextMenu: null} );
-             e.bubbles = false;
-        };
+    componentDidMount() {
+        this.setState(  {midiChannel:this.props.getMidiChannel} );
+    }
 
-         handleChange = (e) => {
-            store.setState({midiChannel: e.target.value} );
-            this.handleClose(e);
-        };
+    handleClose = () => {
+        this.setState( { midiChannelAnchorEl: null} );
+    };
 
-        handleOpen = (event) => {
-            if (store.getState().contextMenu === null) {
-                store.setState({ contextMenu: {mouseX: event.clientX - 2, mouseY: event.clientY - 4} } );
-            }
-        };
+    /**
+     * This handler stops the click through to track controls
+     * and passes the choice up to parent for linking into
+     * track config
+     * @param e is a click event containing new midi channel choice
+     */
+
+
+    handleChange= (event) => {
+        event.stopPropagation();
+        this.setState(  {midiChannel: event.currentTarget.value} );
+        this.props.handleChannelChange( event.currentTarget );
+        this.handleClose();
+    };
+
+
+
+    /**
+     * Button opens 16 channel menu
+     * @param event
+     */
+    handleClick = (event) => {
+        this.setState( { midiChannelAnchorEl: event.currentTarget });
+    };
+
 
          render() {
+             //todo: introduce some midi status checks before attempting to change channels
             const { classes } = this.props;
-             const {contextMenu } = store.getState();
-             const circleNumbers = [...Array(17).keys()];
+             const { midiChannelAnchorEl } = this.state;
+             const { midiChannel } = this.state;
              const channels = [...Array(16).keys()].filter((e, i) => i % 4 == 0);
              return (<React.Fragment>
 
-                         <div onContextMenu={this.handleContextMenu} style={{cursor: 'context-menu'}}>
-                             <IconButton label="Select Midi Channel" color='primary' onClick={this.handleOpen}>
-                                 <FiberSmartRecordOutlined />
+                         <div style={{cursor: 'context-menu'}}>
+                             <IconButton
+                                 aria-owns={midiChannelAnchorEl ? 'midi-channel-menu' : undefined}
+                                 aria-haspopup="true"
+                                 label="Select Midi Channel" color='primary' onClick={this.handleClick}>
+                                 <SvgIcon><ChannelInCircle fill='cyan' digit={midiChannel}/></SvgIcon>
                              </IconButton>
 
                              <Menu
-                                 style={{opacity: 0.9}}
-                                 key='mdiomenu'
-                                 open={contextMenu !== null}
+                                 id='midi-channel-menu'
+                                 key={'popUpCm'}
+                                 anchorEl={midiChannelAnchorEl}
+                                 open={Boolean (midiChannelAnchorEl)}
                                  onClose={this.handleClose}
-                                 anchorReference="anchorPosition"
-                                 anchorPosition={
-                                     contextMenu !== null
-                                         ? {top: contextMenu.mouseY, left: contextMenu.mouseX}
-                                         : undefined
-                                 }
+                                 style = {{
+                                         opacity: 0.9,
+                                     }}
                              >
-                                 <InputLabel id="canal" style={{fontSize: 12, fontWeight: 'bold'}}>Midi
+                                 <InputLabel key={'mc_popUpTitle'} id="canal" style={{fontSize: 12, fontWeight: 'bold'}}>Midi
                                      Channel</InputLabel>
                                  {
                                      channels.map(i =>
-                                         <Grid container spacing={8} columns={4}>
+                                         <Grid container key={'mc_grid_'+i} className={classes.root} spacing={8} columns={4}>
                                              <Grid item xs={2}>
                                                  <MenuItem
-                                                     style={{fontSize: 14}}
+                                                     name = 'midiChannel'
+                                                     className = {classes.numberBox}
+                                                     key={i+100}
                                                      onClick={this.handleChange}
-                                                     key={i}
-                                                     value={i + 1}>{circleNumbers[i + 1]}
+                                                     value={i + 1}>{i+1}
                                                  </MenuItem>
                                              </Grid>
                                              <Grid item xs={2}>
                                                  <MenuItem
-                                                     style={{fontSize: 14}}
+                                                     name = 'midiChannel'
+                                                     className = {classes.numberBox}
+                                                     key={i+200}
                                                      onClick={this.handleChange}
-                                                     key={i+4}
-                                                     value={i + 2}>{circleNumbers[i + 2]}
+                                                     value={i + 2}>{i+2}
                                                  </MenuItem>
                                              </Grid>
                                              <Grid item xs={2}>
                                                  <MenuItem
-                                                     style={{fontSize: 14}}
+                                                     name = 'midiChannel'
+                                                     className = {classes.numberBox}
+                                                     key={i+300}
                                                      onClick={this.handleChange}
-                                                     key={i+8}
-                                                     value={i + 3}>{circleNumbers[i + 3]}
+                                                     value={i + 3}>{i+3}
                                                  </MenuItem>
                                              </Grid>
-                                             <Grid item xs={2}>
+                                             <Grid item xs={2} >
                                                  <MenuItem
-                                                     style={{fontSize: 14}}
+                                                     name = 'midiChannel'
+                                                     className = {classes.numberBox}
+                                                     key={i+400}
                                                      onClick={this.handleChange}
-                                                     key={i + 12}
-                                                     value={i + 4}>{circleNumbers[i + 4]}
+                                                     value={i + 4}>{i+4}
                                                  </MenuItem>
                                              </Grid>
                                          </Grid>

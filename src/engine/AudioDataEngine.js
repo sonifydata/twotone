@@ -34,7 +34,6 @@ function AudioDataEngine(context, options = {}) {
 	let baselineTime = 0;
 	let pauseTime = 0;
 	let tracksVolume = 1;
-	let trackNumber = 0;
 
 	let speechTitle = '';
 	let speechVoiceId = '';
@@ -214,6 +213,8 @@ function AudioDataEngine(context, options = {}) {
 		}
 	}
 
+
+
 	function onEnded() {
 		resetTimerNode();
 		pause();
@@ -357,7 +358,7 @@ function AudioDataEngine(context, options = {}) {
 		const deleteTrackIds = Array.from(trackRefs.keys());
 		this.tracks.forEach(track => {
 			const { id } = track;
-			trackNumber = track.intensityField; // CAV: I believe this is the 'Track' number , trying to access it for MidiChannel assignment
+			const { midiChannel } = track;
 			const type = track.type;
 
 			if (!type || !trackTypes[type]) {
@@ -383,6 +384,7 @@ function AudioDataEngine(context, options = {}) {
 					gainNode,
 					destPatch,
 					type,
+					midiChannel,
 					playRanges: []
 				}, trackTypes[type](soundQ, destPatch));
 
@@ -475,7 +477,7 @@ function AudioDataEngine(context, options = {}) {
 			const d = data.normalized;
 			const rows = data.rows;
 			tracks.forEach((track, trackIndex) => {
-				const { filterRange, filterValues, id } = track;
+				const { filterRange, filterValues, id , midiChannel} = track;
 				const trackRef = trackRefs.get(id);
 				const { gainNode } = trackRef;
 
@@ -521,7 +523,7 @@ function AudioDataEngine(context, options = {}) {
 					}
 					trackRef.playRanges = playRanges;
 
-					trackRef.update.call(me, track, playRanges, trackIndex);
+					trackRef.update.call(me, track, playRanges, trackIndex, midiChannel)
 				}
 
 				const lastRange = trackRef.playRanges[trackRef.playRanges.length - 1] || null;
@@ -654,6 +656,7 @@ function AudioDataEngine(context, options = {}) {
     {
     	get: () => loaded
     },
+
 		tracksVolume:
     {
     	get: () => tracksVolume,

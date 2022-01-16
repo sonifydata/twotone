@@ -60,6 +60,7 @@ export default function scaleTrack(soundQ, destination) {
 	let duration = 0.4;
 	let tempoFactor = 1;
 	let beatOffset = 0;
+	let midiChannel = 1;
 
 	let instrumentId = '';
 	let instrument = null;
@@ -98,11 +99,11 @@ export default function scaleTrack(soundQ, destination) {
 
 		const sequenceIndex = getSequenceIndex(time);
 		const arpeggioNote = getArpeggioNote(note, sequenceIndex, tempoFactor);
-
 		const frequency = getKeyNoteFrequency(arpeggioNote, key, mode, startOctave);
 		if (sourceDef === oscillatorSourceDef) {
 			return {
-				frequency
+				frequency,
+				midiChannel
 			};
 		}
 
@@ -110,7 +111,8 @@ export default function scaleTrack(soundQ, destination) {
 		const midiNote = Math.round(69 + 12 * Math.log2(frequency / 440));
 
 		return {
-			note: midiNote
+			note: midiNote,
+			channel: midiChannel
 		};
 	};
 
@@ -121,7 +123,7 @@ export default function scaleTrack(soundQ, destination) {
 			const id = samplerInstruments[config.instrument || ''] ?
 				config.instrument :
 				'';
-
+			midiChannel = track.midiChannel;
 			if (instrumentId !== id) {
 				unloadSampler();
 				instrumentId = id;
@@ -176,6 +178,7 @@ export default function scaleTrack(soundQ, destination) {
 			tempoFactor = num(config.tempoFactor, 1);
 			beatOffset = num(config.beatOffset, 0);
 			getArpeggioNote = arpeggioGenerators[config.arpeggioMode] || arpeggioGenerators[DEFAULT_ARPEGGIO_MODE];
+			midiChannel = this.midiChannel;
 
 			interval = rowDuration / tempoFactor;
 			duration = interval + (instrument ? instrument.release : 0.1) + 0.01;
@@ -242,7 +245,6 @@ export default function scaleTrack(soundQ, destination) {
 					return;
 				}
 
-				//TODO: inject midi here via optionsCallback
 				shot.start(contextStartTime + begin, optionsCallback);
 				shot.stop(contextStartTime + end);
 			});

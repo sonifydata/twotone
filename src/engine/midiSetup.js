@@ -1,9 +1,5 @@
 import { store } from '../store';
 import { WebMidi } from 'webmidi';
-import {getCurrentTrackNumber} from '../store/actions';
-
-
-
 
 export async function webMidiCheck() {
 	if (WebMidi.enabled) {

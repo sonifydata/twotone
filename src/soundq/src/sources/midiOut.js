@@ -1,8 +1,8 @@
 /** CAV
-* replaced original 'midiOut' instrument with a tightly scheduled MIDI Out
+* replaced original 'oscillator' synth instrument with a tightly scheduled MIDI Out
  * attached to a zero audio context constant
  * as an attempt to match the same timing of the sampler instruments
-* todo: design a click or pulse synth with Tone.Js instead of original sine wave midiOut
+* todo: design a click or pulse synth with Tone.Js as a replacement for original sine wave synth instrument
 **/
 
 import audioNodeSource from './node';
@@ -11,7 +11,7 @@ import { WebMidi } from 'webmidi';
 
 export default function midiOut(controller) {
 	let frequency = 440;
-
+	let midiChannel = midiChannel;
 	const {
 		context
 	} = controller;
@@ -42,8 +42,8 @@ export default function midiOut(controller) {
 			startTime = time;
 			stopTime = Infinity;
 			frequency = options.frequency || 440;
+			midiChannel = options.midiChannel || 1;
 			midiAvailable = WebMidi.enabled;
-			midiNote = options.note || 60;
 
 		},
 		stop(time) {
@@ -87,15 +87,18 @@ export default function midiOut(controller) {
 				midi.scheduleMidiNoteEvent({
 					keyEvent: 'on',
 					schedulingTime: startMidi,
-					noteValue: midiNote
+					noteValue: midiNote,
+					channel: midiChannel
 				}
 				);
 
 				midi.scheduleMidiNoteEvent({
 					keyEvent: 'off',
-					duration: 5,
+					duration: 25,
+					velocity: 0,
 					schedulingTime: endMidi,
-					noteValue: midiNote
+					noteValue: midiNote,
+					channel: midiChannel
 				}
 				);
 
@@ -116,7 +119,7 @@ export default function midiOut(controller) {
 		finishEvent(soundEvent) {
 			// output.clear() is not implemented in base Midi API yet apparently
 			// currentOutput.clear();
-			if (midiAvailable && currentOutput ) {
+			if (midiAvailable && currentOutput) {
 				currentOutput.sendAllNotesOff();
 			}
 			if (nodeSource && nodeSource.finishEvent) {
