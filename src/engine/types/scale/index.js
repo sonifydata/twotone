@@ -1,8 +1,8 @@
-import midiOut from '/src/soundq/src/sources/midiOut';
-import samplerSource from '/src/soundq/src/sources/sampler';
-import gainEnvelope from '/src/soundq/src/patches/gainEnvelope';
-import repeater from '/src/soundq/src/sources/repeater';
-import { getKeyNoteFrequency } from '/src/soundq/src/util/scales';
+import midiOut from '../../../soundq/src/sources/midiOut';
+import samplerSource from '../../../soundq/src/sources/sampler';
+import gainEnvelope from '../../../soundq/src/patches/gainEnvelope';
+import repeater from '../../../soundq/src/sources/repeater';
+import { getKeyNoteFrequency } from '../../../soundq/src/util/scales';
 import {
 	instruments as samplerInstruments,
 	loadSamples

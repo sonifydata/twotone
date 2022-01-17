@@ -6,14 +6,13 @@
 import * as React from 'react';
 import Menu from '@material-ui/core/Menu';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { connect } from 'unistore/react';
 import { store } from '../store'
 import withStyles from "@material-ui/core/styles/withStyles";
 import IconButton from './IconButton';
-import FiberSmartRecordOutlined from '@material-ui/icons/FiberSmartRecordOutlined';
+
 import {SvgIcon} from "@material-ui/core";
 
 

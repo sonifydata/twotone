@@ -43,7 +43,7 @@ const configTrack = {
 	}
 };
 
-export default function createTrack(state, type = DEFAULT_TRACK_TYPE, trackData, midiChannel = 1) {
+export default function createTrack(state, type = DEFAULT_TRACK_TYPE, trackData) {
 	const tracks = [...state.tracks];
 
 	const id = `track:${type}@${Date.now()}`;

@@ -6,12 +6,12 @@
 **/
 
 import audioNodeSource from './node';
-import * as midi from '/src/engine/midiSetup';
+import * as midi from '../../../engine/midiSetup';
 import { WebMidi } from 'webmidi';
 
 export default function midiOut(controller) {
 	let frequency = 440;
-	let midiChannel = midiChannel;
+	let midiChannel = 1;
 	const {
 		context
 	} = controller;
@@ -42,7 +42,7 @@ export default function midiOut(controller) {
 			startTime = time;
 			stopTime = Infinity;
 			frequency = options.frequency || 440;
-			midiChannel = options.midiChannel || 1;
+			midiChannel = options.midiChannel || undefined;
 			midiAvailable = WebMidi.enabled;
 
 		},
@@ -84,25 +84,36 @@ export default function midiOut(controller) {
 				const startMidi = startTime * 1000 + audioContextOffsetSec * 1000;
 				const endMidi = stopTime * 1000 + audioContextOffsetSec * 1000;
 
-				midi.scheduleMidiNoteEvent({
-					keyEvent: 'on',
-					schedulingTime: startMidi,
-					noteValue: midiNote,
-					channel: midiChannel
+				// try to avoid garbage overlap settings
+				let keyEvent;
+				if (startMidi >= endMidi) {
+					keyEvent = 'flush';
+					midi.scheduleMidiNoteEvent(
+						{
+							keyEvent: keyEvent
+						});
+				} 
+				else {
+					keyEvent = 'on';
+					midi.scheduleMidiNoteEvent({
+						keyEvent: keyEvent,
+						schedulingTime: startMidi,
+						noteValue: midiNote,
+						channel: midiChannel
+					}
+					);
+
+					keyEvent = 'off';
+					midi.scheduleMidiNoteEvent({
+						keyEvent: keyEvent,
+						velocity: 0,
+						schedulingTime: endMidi,
+						noteValue: midiNote,
+						channel: midiChannel
+					}
+					);
 				}
-				);
-
-				midi.scheduleMidiNoteEvent({
-					keyEvent: 'off',
-					duration: 25,
-					velocity: 0,
-					schedulingTime: endMidi,
-					noteValue: midiNote,
-					channel: midiChannel
-				}
-				);
-
-
+				
 				return nodeSource.request(untilTime);
 			}
 			return null;
@@ -120,7 +131,7 @@ export default function midiOut(controller) {
 			// output.clear() is not implemented in base Midi API yet apparently
 			// currentOutput.clear();
 			if (midiAvailable && currentOutput) {
-				currentOutput.sendAllNotesOff();
+		//		currentOutput.sendAllNotesOff();
 			}
 			if (nodeSource && nodeSource.finishEvent) {
 				nodeSource.finishEvent(soundEvent);

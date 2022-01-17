@@ -1,15 +1,16 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 /* global SPEECH_API_KEY */
 import eventEmitter from 'event-emitter';
 import allOff from 'event-emitter/all-off';
 
-import SoundQ from '/src/soundq/src/index';
-import destination from '/src/soundq/src/patches/destination';
+import SoundQ from '../soundq/src/index';
+import destination from '../soundq/src/patches/destination';
 import num from '../util/num';
 import trackTypes from './types';
 import getSpeechBuffer from './speech';
-import bufferSource from '/src/soundq/src/sources/buffer';
+import bufferSource from '../soundq/src/sources/buffer';
 import debounce from 'debounce';
-//import { Output, WebMidi } from 'webmidi';
+import * as midi from './midiSetup';
 
 function AudioDataEngine(context, options = {}) {
 
@@ -319,6 +320,7 @@ function AudioDataEngine(context, options = {}) {
 			needNewPlayTiming = true;
 		}
 
+
 		const newSpeechTitle = this.speechTitleEnabled && this.speechTitle && this.speechTitle.trim() || '';
 		const newSpeechVoiceId = this.speechTitleEnabled && this.speechVoiceId || '';
 		if (newSpeechTitle !== speechTitle || newSpeechVoiceId !== speechVoiceId) {
@@ -354,7 +356,9 @@ function AudioDataEngine(context, options = {}) {
 		- update loading/state along the way
 		*/
 
+		//todo: remove (then maybe replace) all previous non-working speech stuff
 		let allLoaded = !SPEECH_API_KEY || !speechTitle || !!speechBuffer;
+
 		const deleteTrackIds = Array.from(trackRefs.keys());
 		this.tracks.forEach(track => {
 			const { id } = track;
@@ -384,7 +388,6 @@ function AudioDataEngine(context, options = {}) {
 					gainNode,
 					destPatch,
 					type,
-					midiChannel,
 					playRanges: []
 				}, trackTypes[type](soundQ, destPatch));
 
@@ -403,13 +406,15 @@ function AudioDataEngine(context, options = {}) {
 			}
 		});
 
-		if (speechTitle && !speechBuffer) {
-			if (wantToPlay) {
-				loadSpeechBufferNow();
-			} else {
-				loadSpeechBuffer();
-			}
-		}
+		//todo: remove (then maybe replace) all previous non-working speech stuff
+
+		// if (speechTitle && !speechBuffer) {
+		// 	if (wantToPlay) {
+		// 		loadSpeechBufferNow();
+		// 	} else {
+		// 		loadSpeechBuffer();
+		// 	}
+		// }
 
 		deleteTrackIds.forEach(destroyTrack);
 
@@ -470,6 +475,7 @@ function AudioDataEngine(context, options = {}) {
 			timerNode.stop(stopTime);
 
 			stopAllTracks();
+			midi.allNotesOff();
 
 			const effectStartTime = startTime - time; // relative to context
 			const trackStartTime = effectStartTime + speechDuration;
@@ -523,7 +529,7 @@ function AudioDataEngine(context, options = {}) {
 					}
 					trackRef.playRanges = playRanges;
 
-					trackRef.update.call(me, track, playRanges, trackIndex, midiChannel)
+					trackRef.update.call(me, track, playRanges, trackIndex)
 				}
 
 				const lastRange = trackRef.playRanges[trackRef.playRanges.length - 1] || null;
@@ -533,18 +539,18 @@ function AudioDataEngine(context, options = {}) {
 			});
 			needFilterUpdate = false;
 
-			if (speechShot) {
-				speechShot.stop();
-			}
-			if (speechBuffer) {
-				const speechOffset = time;
-				if (speechOffset < speechDuration) {
-					// todo: set volume!
-					speechShot.start(effectStartTime, {
-						offset: speechOffset
-					});
-				}
-			}
+			// if (speechShot) {
+			// 	speechShot.stop();
+			// }
+			// if (speechBuffer) {
+			// 	const speechOffset = time;
+			// 	if (speechOffset < speechDuration) {
+			// 		// todo: set volume!
+			// 		speechShot.start(effectStartTime, {
+			// 			offset: speechOffset
+			// 		});
+			// 	}
+			// }
 		}
 		needNewPlayTiming = false;
 
@@ -571,15 +577,13 @@ function AudioDataEngine(context, options = {}) {
 		clearTimeout(timeout);
 		mainGain.disconnect();
 		allOff(this);
+		midi.allNotesOff();
 	};
 
 	Object.defineProperties(this, {
 
 		currentTime:
-    {
-    	get: currentTime,
-    	set(val) {
-    		if (val !== 0 && (val >= duration || !rowDuration || !rowCount || val < 0)) {
+			{get: currentTime, set(val) {  if (val !== 0 && (val >= duration || !rowDuration || !rowCount || val < 0)) {
     			/*
                 We might want to throw an error here.
                 HTMLMediaElement would
@@ -604,8 +608,8 @@ function AudioDataEngine(context, options = {}) {
 
     		needNewPlayTiming = true;
     		this.update();
-    	}
-    },
+    		}
+			},
 		currentRow:
     {
     	// adjust for speech at beginning

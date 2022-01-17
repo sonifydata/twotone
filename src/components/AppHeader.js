@@ -79,7 +79,7 @@ const Def = class AppHeader extends React.Component {
 	}
 
 	componentDidMount() {
-		midi.webMidiCheck();
+		store.setState( {webMidiAvailable: midi.webMidiCheck()});
 	}
 
 	componentDidUpdate() {
@@ -120,7 +120,7 @@ const Def = class AppHeader extends React.Component {
 			store.setState( {midiOutPorts: midi.getMidiOutputNames()});
 			store.setState( {midiPortSelectToggle: !midiPortSelectToggle  })
 		}
-		logEvent('midi', 'get');
+		//logEvent('midi', 'get');
 
 	}
 
@@ -129,8 +129,10 @@ const Def = class AppHeader extends React.Component {
 			classes,
 			dataSource,
 			selectDataSource,
-			onDataToggle
+			onDataToggle,
 		} = this.props;
+
+		const { webMidiAvailable, midiOutPort } = store.getState();
 
 		const logo = <img src={twoToneLogo} alt={APP_TITLE} className={classes.logo}/>;
 
@@ -153,7 +155,7 @@ const Def = class AppHeader extends React.Component {
 
 			<React.Fragment>
 				<span data-tour-id="midiout-feature" >
-					<IconButton  aria-label="Midi Settings" label={store.getState().midiOutPort || "Open MIDI Settings"  }  color="inherit" onClick={this.handleChangeMidiPort} >
+					<IconButton  aria-label={(webMidiAvailable ? "Open MIDI Settings" : "WebMIDI is not available")} label={ midiOutPort || (webMidiAvailable ? "Open MIDI Settings" : "WebMIDI is not available")  }  color="inherit" onClick={this.handleChangeMidiPort} >
 						{ (store.getState().webMidiAvailable) ? <SettingsMidiGo/> : <SettingsMidiNo/> }
 					</IconButton>
 				</span>
@@ -178,7 +180,7 @@ const Def = class AppHeader extends React.Component {
 
 const AppHeader = withStyles(styles)(
 	connect([
-		'dataSource','midiOutPort','midiOutPorts'
+		'dataSource','midiOutPort','midiOutPorts','webMidiAvailable'
 	], actions)(Def)
 );
 export default AppHeader;

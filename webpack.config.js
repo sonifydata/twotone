@@ -41,7 +41,7 @@ const websiteURL = 'https://twotone.io';
 const description = 'TwoTone Data Sonification';
 const eslintConfig = require('./.eslintrc.json');
 const port = '9000';
-const browsers = [
+const browserslist = [
 	'>0.25%',
 	'last 4 versions',
 	'Firefox ESR',
@@ -175,7 +175,7 @@ const config = {
 											'transform-async-to-generator'
 										],
 										targets: {
-											browsers
+											browsers: browserslist
 										},
 										useBuiltIns: false,
 										modules: false
@@ -230,7 +230,6 @@ const config = {
 									plugins: () => [
 										require('postcss-flexbugs-fixes'),
 										autoprefixer({
-											browsers,
 											flexbox: 'no-2009'
 										})
 									]
