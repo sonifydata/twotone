@@ -18,6 +18,7 @@ import Shell from './Shell';
 import AppLoader from './AppLoader';
 import AppHeader from './AppHeader';
 
+import { store } from '../store';
 import Paper from '@material-ui/core/Paper';
 import Drawer from '@material-ui/core/Drawer';
 
@@ -31,10 +32,12 @@ import UpgradePrompt from './UpgradePrompt';
 import SectionLoader from './SectionLoader';
 import LoadFailure from './LoadFailure';
 import asyncComponent from './asyncComponent';
+
 const TrackList = asyncComponent(() => import('./TrackList'), {
 	load: SectionLoader,
 	fail: LoadFailure
 });
+
 const DataTableView = asyncComponent(() => import('./DataTableView'), {
 	load: SectionLoader,
 	fail: LoadFailure,
@@ -42,13 +45,6 @@ const DataTableView = asyncComponent(() => import('./DataTableView'), {
 });
 
 const Tour = asyncComponent(() => import('./Tour'));
-
-/*
-VUMeter todo:
-- replace with more modular section
-- load async, since spectrum viewer will be large
-*/
-import VUMeter from './VUMeter';
 
 const drawerWidth = '40%'; // todo: responsive
 
@@ -141,14 +137,13 @@ const Def = class App extends React.Component {
 		setConfig: PropTypes.func.isRequired,
 		loading: PropTypes.bool,
 		upgradeReady: PropTypes.bool,
-		config: PropTypes.object
+		config: PropTypes.object,
+		midiOutPort: PropTypes.string,
+		midiOutPorts: PropTypes.object,
 	}
 
-	playBlockClaim = Symbol()
-
-	state = {
-		activeDialog: '' // todo: need this from unistore so track components can use it
-	}
+	playBlockClaim = Symbol();
+	state = store.getState().activeDialog;
 
 	handleDataToggle = () => {
 		this.props.setConfig({
@@ -158,19 +153,22 @@ const Def = class App extends React.Component {
 
 	closeDialog = () => {
 		this.props.releasePlayback(this.playBlockClaim);
-		this.setState({
+		store.setState({
 			activeDialog: ''
 		});
 	}
 
 	selectDataSource = () => {
-		/*
-		todo: move this into dialog
-		*/
 		this.props.blockPlayback(this.playBlockClaim);
-		this.setState({
+		store.setState({
 			activeDialog: 'data'
 		});
+	}
+
+	selectMidiPort =  () => {
+			store.setState({
+				activeDialog: 'midi'
+			});
 	}
 
 	handleCreateTrack = type => {
@@ -202,11 +200,13 @@ const Def = class App extends React.Component {
 
 		const showData = config.showData && !!dataSource;
 
-		const { activeDialog } = this.state;
+		const { activeDialog } = store.getState();
 
 		const appHeader = <AppHeader
 			onDataToggle={this.handleDataToggle}
 			selectDataSource={this.selectDataSource}
+			selectMidiPort={this.selectMidiPort}
+			activeDialog={ ()=>this.activeDialog }
 		/>;
 
 		return <Shell header={appHeader}>
@@ -227,7 +227,6 @@ const Def = class App extends React.Component {
 							className={classes.generalControls}
 							selectDataSource={this.selectDataSource}
 						/>}
-						<VUMeter backgroundColor={this.props.theme.palette.background.paper}/>
 					</div>
 					<Drawer
 						variant="persistent"
@@ -252,12 +251,14 @@ const Def = class App extends React.Component {
 			{activeDialog === 'audio' && <AudioSelectDialog
 				open={true}
 				onClose={this.closeDialog}
+				//  cant find this.handleUpdateTrack anywhere CAV
 				onSelect={id => this.handleUpdateTrack({
 					audioId: id
 				})}
 				disableBackdropClick={false}
 				waiting={false}
 			/>}
+
 			{(activeDialog === 'data' || !dataSource) && <DataSelectDialog
 				open={true}
 				cancelable={!!dataSource}
@@ -266,16 +267,18 @@ const Def = class App extends React.Component {
 				disableBackdropClick={false}
 				waiting={false}
 			/>}
+
 			{showTour && <Tour
 				run={!loading && showTour && !!dataSource}
 			/>}
+
 			<UpgradePrompt upgradeReady={upgradeReady}/>
 		</Shell>;
 	}
 };
 
 const App = withStyles(styles, { withTheme: true })(
-	connect(['dataSource', 'dataSourceId', 'loading', 'config'], actions)(Def)
+	connect(['dataSource', 'dataSourceId', 'loading', 'config', 'midiOutPorts', 'midiOutPort', 'activeDialog' ], actions)(Def)
 );
 
 export default App;

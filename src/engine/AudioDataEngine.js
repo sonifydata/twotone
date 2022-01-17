@@ -2,13 +2,14 @@
 import eventEmitter from 'event-emitter';
 import allOff from 'event-emitter/all-off';
 
-import SoundQ from 'soundq/src/index';
-import destination from 'soundq/src/patches/destination';
+import SoundQ from '/src/soundq/src/index';
+import destination from '/src/soundq/src/patches/destination';
 import num from '../util/num';
 import trackTypes from './types';
 import getSpeechBuffer from './speech';
-import bufferSource from 'soundq/src/sources/buffer';
+import bufferSource from '/src/soundq/src/sources/buffer';
 import debounce from 'debounce';
+//import { Output, WebMidi } from 'webmidi';
 
 function AudioDataEngine(context, options = {}) {
 
@@ -65,6 +66,7 @@ function AudioDataEngine(context, options = {}) {
 		context
 	});
 
+
 	/*
 	This is really hacky and should probably be replaced
 	*/
@@ -90,6 +92,7 @@ function AudioDataEngine(context, options = {}) {
 			trackRef.stop.call(me);
 		}
 	}
+
 
 	function destroyTrack(id) {
 		const trackRef = trackRefs.get(id);
@@ -209,6 +212,8 @@ function AudioDataEngine(context, options = {}) {
 			timerNode = null;
 		}
 	}
+
+
 
 	function onEnded() {
 		resetTimerNode();
@@ -353,6 +358,7 @@ function AudioDataEngine(context, options = {}) {
 		const deleteTrackIds = Array.from(trackRefs.keys());
 		this.tracks.forEach(track => {
 			const { id } = track;
+			const { midiChannel } = track;
 			const type = track.type;
 
 			if (!type || !trackTypes[type]) {
@@ -378,6 +384,7 @@ function AudioDataEngine(context, options = {}) {
 					gainNode,
 					destPatch,
 					type,
+					midiChannel,
 					playRanges: []
 				}, trackTypes[type](soundQ, destPatch));
 
@@ -470,7 +477,7 @@ function AudioDataEngine(context, options = {}) {
 			const d = data.normalized;
 			const rows = data.rows;
 			tracks.forEach((track, trackIndex) => {
-				const { filterRange, filterValues, id } = track;
+				const { filterRange, filterValues, id , midiChannel} = track;
 				const trackRef = trackRefs.get(id);
 				const { gainNode } = trackRef;
 
@@ -515,7 +522,8 @@ function AudioDataEngine(context, options = {}) {
 						playRanges.push([0, duration]);
 					}
 					trackRef.playRanges = playRanges;
-					trackRef.update.call(me, track, playRanges, trackIndex);
+
+					trackRef.update.call(me, track, playRanges, trackIndex, midiChannel)
 				}
 
 				const lastRange = trackRef.playRanges[trackRef.playRanges.length - 1] || null;
@@ -566,87 +574,100 @@ function AudioDataEngine(context, options = {}) {
 	};
 
 	Object.defineProperties(this, {
-		currentTime: {
-			get: currentTime,
-			set(val) {
-				if (val !== 0 && (val >= duration || !rowDuration || !rowCount || val < 0)) {
-					/*
-					We might want to throw an error here.
-					HTMLMediaElement would
-					*/
-					return;
-				}
 
-				// adjust for speech at beginning
-				const introDuration = this.speechTitleEnabled && speechBuffer && speechBuffer.duration || 0;
-				const targetIntroProgress = introDuration ?
-					Math.max(0, Math.min(1, val / speechBuffer.duration)) :
-					1;
-				const targetRowProgress = targetIntroProgress < 1 ?
-					0 :
-					(val - targetIntroProgress * introDuration) / rowDuration;
-				baselineRowIndex = Math.floor(targetRowProgress);
-				baselineRowProgress = targetRowProgress - baselineRowIndex;
-				baselineIntroProgress = this.speechTitleEnabled ? targetIntroProgress : 1;
-				baselineTime = playing ?
-					context.currentTime :
-					pauseTime;
+		currentTime:
+    {
+    	get: currentTime,
+    	set(val) {
+    		if (val !== 0 && (val >= duration || !rowDuration || !rowCount || val < 0)) {
+    			/*
+                We might want to throw an error here.
+                HTMLMediaElement would
+                */
+    			return;
+    		}
 
-				needNewPlayTiming = true;
-				this.update();
-			}
-		},
-		currentRow: {
-			// adjust for speech at beginning
-			get: () => Math.max(0, Math.min(Math.floor(currentRowsProgress() * rowCount), rowCount - 1)),
-			set(val) {
-				// todo: D.R.Y.
-				if (val >= rowCount) {
-					/*
-					We might want to throw an error here.
-					HTMLMediaElement would
-					*/
-					return;
-				}
+    		// adjust for speech at beginning
+    		const introDuration = this.speechTitleEnabled && speechBuffer && speechBuffer.duration || 0;
+    		const targetIntroProgress = introDuration ?
+    			Math.max(0, Math.min(1, val / speechBuffer.duration)) :
+    			1;
+    		const targetRowProgress = targetIntroProgress < 1 ?
+    			0 :
+    			(val - targetIntroProgress * introDuration) / rowDuration;
+    		baselineRowIndex = Math.floor(targetRowProgress);
+    		baselineRowProgress = targetRowProgress - baselineRowIndex;
+    		baselineIntroProgress = this.speechTitleEnabled ? targetIntroProgress : 1;
+    		baselineTime = playing ?
+    			context.currentTime :
+    			pauseTime;
 
-				if (val < 0) {
-					baselineIntroProgress = 0;
-					baselineRowIndex = 0;
-					baselineRowProgress = 0;
-				} else {
-					baselineIntroProgress = 1;
-					baselineRowIndex = Math.floor(val);
-					baselineRowProgress = val - baselineRowIndex;
-				}
-				baselineTime = playing ?
-					context.currentTime :
-					pauseTime;
+    		needNewPlayTiming = true;
+    		this.update();
+    	}
+    },
+		currentRow:
+    {
+    	// adjust for speech at beginning
+    	get: () => Math.max(0, Math.min(Math.floor(currentRowsProgress() * rowCount), rowCount - 1)),
+    	set(val) {
+    		// todo: D.R.Y.
+    		if (val >= rowCount) {
+    			/*
+                We might want to throw an error here.
+                HTMLMediaElement would
+                */
+    			return;
+    		}
 
-				needNewPlayTiming = true;
-				this.update();
-			}
-		},
-		duration: {
-			get: () => duration
-		},
-		paused: {
-			get: () => !wantToPlay
-		},
-		playing: {
-			get: () => !playing
-		},
-		loaded: {
-			get: () => loaded
-		},
-		tracksVolume: {
-			get: () => tracksVolume,
-			set(val) {
-				tracksVolume = Math.max(0, val || 0);
-			}
-		},
-		analyser: {
-			get: () => analyser
-		}
+    		if (val < 0) {
+    			baselineIntroProgress = 0;
+    			baselineRowIndex = 0;
+    			baselineRowProgress = 0;
+    		} else {
+    			baselineIntroProgress = 1;
+    			baselineRowIndex = Math.floor(val);
+    			baselineRowProgress = val - baselineRowIndex;
+    		}
+
+
+
+    		baselineTime = playing ?
+    			context.currentTime :
+    			pauseTime;
+
+    		needNewPlayTiming = true;
+    		this.update();
+    	}
+    },
+		duration:
+    {
+    	get: () => duration
+    },
+		paused:
+    {
+    	get: () => !wantToPlay
+    },
+		playing:
+    {
+    	get: () => !playing
+    },
+		loaded:
+    {
+    	get: () => loaded
+    },
+
+		tracksVolume:
+    {
+    	get: () => tracksVolume,
+    	set(val) {
+    		tracksVolume = Math.max(0, val || 0);
+    	}
+    },
+		analyser:
+    {
+    	get: () => analyser
+    }
 	});
 }
 

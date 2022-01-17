@@ -19,6 +19,7 @@ node_modules
 # misc
 .DS_Store
 /report.html
+_config.yml
 
 npm-debug.log*
 yarn-debug.log*

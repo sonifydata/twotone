@@ -15,7 +15,7 @@ export const DEFAULT_START_OCTAVE = -1;
 export const DEFAULT_KEY = 'C';
 export const DEFAULT_MODE = 'major';
 export const DEFAULT_ARPEGGIO_MODE = 'ascending';
-export const DEFAULT_INSTRUMENT = 'oscillator';
+export const DEFAULT_INSTRUMENT = 'Piano';
 export const DEFAULT_CLIP_PLAY_MODE = 'loop';
 
 export const genders = ['Neutral', 'Female', 'Male'];

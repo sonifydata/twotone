@@ -2,15 +2,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'unistore/react';
-import { actions } from '../store';
+import { actions, store } from '../store';
 import { createConfirmation } from 'react-confirm';
 import logEvent from '../util/analytics';
-
+import * as midi from '../engine/midiSetup'
+import MidiPortSelector from './MidiPortSelector';
 /*
 Theme/Style stuff
 */
 import withStyles from '@material-ui/core/styles/withStyles';
-
 /*
 Material UI components
 */
@@ -19,6 +19,8 @@ import IconButton from './IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import HelpIcon from '@material-ui/icons/Help';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
+import SettingsMidiGo from '@material-ui/icons/SettingsInputSvideo'; 
+import SettingsMidiNo from '@material-ui/icons/SettingsInputSvideoTwoTone'; 
 import SpreadsheetIcon from '@material-ui/icons/List';
 import ConfirmationDialog from './ConfirmationDialog';
 
@@ -62,6 +64,7 @@ const styles = theme => ({
 	}
 });
 
+
 const Def = class AppHeader extends React.Component {
 	static propTypes = {
 		classes: PropTypes.object.isRequired,
@@ -69,7 +72,18 @@ const Def = class AppHeader extends React.Component {
 		setConfig: PropTypes.func.isRequired,
 		selectDataSource: PropTypes.func.isRequired,
 		dataSource: PropTypes.object,
-		onDataToggle: PropTypes.func
+		onDataToggle: PropTypes.func,
+		midiOutPort: PropTypes.string,
+		midiOutPorts: PropTypes.object,
+		midiPortSelector: PropTypes.func.isRequired,
+	}
+
+	componentDidMount() {
+		midi.webMidiCheck();
+	}
+
+	componentDidUpdate() {
+
 	}
 
 	handleResetData = evt => {
@@ -89,11 +103,25 @@ const Def = class AppHeader extends React.Component {
 		});
 	}
 
+
 	handleHelp = () => {
 		logEvent('tour', 'request');
 		this.props.setConfig({
 			showTour: true
 		});
+	}
+
+	handleChangeMidiPort = () => {
+		const status = midi.webMidiCheck();
+		const r = store.getState().webMidiAvailable || status;
+		if (r) {
+			const {midiPortSelectToggle} = store.getState() || true;
+			this.props.selectMidiPort();
+			store.setState( {midiOutPorts: midi.getMidiOutputNames()});
+			store.setState( {midiPortSelectToggle: !midiPortSelectToggle  })
+		}
+		logEvent('midi', 'get');
+
 	}
 
 	render() {
@@ -122,6 +150,17 @@ const Def = class AppHeader extends React.Component {
 					</React.Fragment> : null
 				}
 			</Typography>
+
+			<React.Fragment>
+				<span data-tour-id="midiout-feature" >
+					<IconButton  aria-label="Midi Settings" label={store.getState().midiOutPort || "Open MIDI Settings"  }  color="inherit" onClick={this.handleChangeMidiPort} >
+						{ (store.getState().webMidiAvailable) ? <SettingsMidiGo/> : <SettingsMidiNo/> }
+					</IconButton>
+				</span>
+				{ store.getState().midiPortSelectToggle ? <MidiPortSelector /> : null }
+
+			</React.Fragment>
+
 			<span className={classes.resetButton}>
 				<IconButton label="Reset Project" color="inherit" onClick={this.handleResetData}>
 					<DeleteIcon/>
@@ -139,7 +178,7 @@ const Def = class AppHeader extends React.Component {
 
 const AppHeader = withStyles(styles)(
 	connect([
-		'dataSource'
+		'dataSource','midiOutPort','midiOutPorts'
 	], actions)(Def)
 );
 export default AppHeader;

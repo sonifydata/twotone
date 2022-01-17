@@ -10,7 +10,7 @@ import {
 	DEFAULT_ARPEGGIO_MODE
 } from '../constants';
 import num from '../util/num';
-import { modes, keys } from 'soundq/src/util/scales';
+import { modes, keys } from '/src/soundq/src/util/scales';
 import { instruments as samplerInstruments } from '../engine/types/scale/samplerInstruments';
 import synthInstruments from '../engine/types/scale/synthInstruments';
 import capitalize from '../util/capitalize';
@@ -120,12 +120,6 @@ const Def = class ScaleTrackControls extends React.Component {
 		setTrack(track, track.id);
 	}
 
-	handleChangeBeatOffset = beatOffset => {
-		const { setTrack } = this.props;
-		const oldTrack = this.props.track || {};
-		const track = this.modifiedTrackConfig(oldTrack, 'beatOffset', beatOffset);
-		setTrack(track, track.id);
-	}
 
 	render() {
 		const {
@@ -136,7 +130,6 @@ const Def = class ScaleTrackControls extends React.Component {
 		const config = track.config && track.config.scale || {};
 		const scaleRange = num(config.scaleRange, DEFAULT_SCALE_RANGE);
 		const tempoFactor = num(config.tempoFactor, 1);
-		// const beatOffset = num(config.beatOffset, 0);
 		const arpeggioMode = config.arpeggioMode === undefined ? DEFAULT_ARPEGGIO_MODE : config.arpeggioMode || '';
 		const key = config.key || DEFAULT_KEY;
 		const mode = config.mode || DEFAULT_MODE;
@@ -165,7 +158,7 @@ const Def = class ScaleTrackControls extends React.Component {
 					onChange={this.handleChangeConfig}
 					inputProps={{
 						name: 'mode',
-						id: 'track-mdoe'
+						id: 'track-mode'
 					}}
 				>
 					{modes.map(m => <MenuItem value={m} key={m}>{capitalize(m)}</MenuItem>)}
@@ -236,19 +229,7 @@ const Def = class ScaleTrackControls extends React.Component {
 					{/*<MenuItem value="random">Random</MenuItem>*/}
 				</Select>
 			</FormControl> : null}
-			{/*<FormControl className={classes.keyControlGroup}>
-				<InputLabel htmlFor="track-beat-offset">Beat Offset</InputLabel>
-				<Slider
-					className={classes.slider}
-					name="beatOffset"
-					min={0}
-					max={Math.max(1, tempoFactor - 1)}
-					step={1}
-					disabled={tempoFactor === 1}
-					value={tempoFactor > 1 ? beatOffset : 0}
-					onChange={this.handleChangeBeatOffset}
-				/>
-			</FormControl>*/}
+
 		</div>;
 	}
 };

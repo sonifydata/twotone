@@ -44,7 +44,11 @@ const defaultState = Object.assign({
 	speechLanguage: '',
 	speechGender: '',
 	speechVoiceId: '',
-	tracksVolume: 1
+	tracksVolume: 1,
+	webMidiAvailable: false,
+	midiOutPort: '',
+	midiOutPorts: [],
+	activeDialog: ''
 }/*, defaultProject*/);
 
 const initialState = {
@@ -178,7 +182,7 @@ async function stateChanged(state) {
 		// todo: reset speech field and all track filter fields
 		// and currentTime
 		// actually, reset MOST of the state to default
-		loadDataSource(state);
+		await loadDataSource(state);
 	}
 }
 
@@ -197,6 +201,7 @@ async function restoreState() {
 		const { _rev, val } = doc;
 		stateRevisions.set(key, _rev);
 		newState[key] = val;
+		if (DEBUG) console.log('State change: '+newState[key]);
 	});
 
 	store.setState(newState);

@@ -1,8 +1,8 @@
-import oscillator from 'soundq/src/sources/oscillator';
-import samplerSource from 'soundq/src/sources/sampler';
-import gainEnvelope from 'soundq/src/patches/gainEnvelope';
-import repeater from 'soundq/src/sources/repeater';
-import { getKeyNoteFrequency } from 'soundq/src/util/scales';
+import midiOut from '/src/soundq/src/sources/midiOut';
+import samplerSource from '/src/soundq/src/sources/sampler';
+import gainEnvelope from '/src/soundq/src/patches/gainEnvelope';
+import repeater from '/src/soundq/src/sources/repeater';
+import { getKeyNoteFrequency } from '/src/soundq/src/util/scales';
 import {
 	instruments as samplerInstruments,
 	loadSamples
@@ -18,12 +18,17 @@ import {
 	DEFAULT_ARPEGGIO_MODE
 } from '../../../constants';
 
+// import * as midi from '../../midiSetup';
+//
+// import { store } from '../../../store';
+
+
 const instruments = {
 	...samplerInstruments,
 	...synthInstruments
 };
 
-const oscillatorSourceDef = repeater(oscillator, gainEnvelope, {
+const oscillatorSourceDef = repeater(midiOut, gainEnvelope, {
 	attack: 0.03,
 	decay: 0.05,
 	release: 0.1
@@ -55,6 +60,7 @@ export default function scaleTrack(soundQ, destination) {
 	let duration = 0.4;
 	let tempoFactor = 1;
 	let beatOffset = 0;
+	let midiChannel = 1;
 
 	let instrumentId = '';
 	let instrument = null;
@@ -70,6 +76,7 @@ export default function scaleTrack(soundQ, destination) {
 
 	function getRowIndex(time) {
 		const roundedNoteTime = Math.round(time / interval) * interval;
+
 		return Math.floor(roundedNoteTime / rowDuration) % data.rows.length;
 	}
 
@@ -92,28 +99,31 @@ export default function scaleTrack(soundQ, destination) {
 
 		const sequenceIndex = getSequenceIndex(time);
 		const arpeggioNote = getArpeggioNote(note, sequenceIndex, tempoFactor);
-
 		const frequency = getKeyNoteFrequency(arpeggioNote, key, mode, startOctave);
 		if (sourceDef === oscillatorSourceDef) {
 			return {
-				frequency
+				frequency,
+				midiChannel
 			};
 		}
 
 		// sampler wants a midi note
 		const midiNote = Math.round(69 + 12 * Math.log2(frequency / 440));
+
 		return {
-			note: midiNote
+			note: midiNote,
+			channel: midiChannel
 		};
 	};
 
 	const me = {
 		load(track) {
+
 			const config = track.config && track.config.scale || {};
 			const id = samplerInstruments[config.instrument || ''] ?
 				config.instrument :
 				'';
-
+			midiChannel = track.midiChannel;
 			if (instrumentId !== id) {
 				unloadSampler();
 				instrumentId = id;
@@ -132,23 +142,9 @@ export default function scaleTrack(soundQ, destination) {
 						if (id === instrumentId) {
 							const maxAmplitude = instrument.maxAmplitude || 1;
 							const sustain = 0.7 / maxAmplitude;
-							/*
-							todo: keep notes from cutting off if sample is shorter than note duration
-							- find different duration for each sample
-							- upgrade ADSR to ADHSR and use decay for release so we can finish fade out
-							  by the time the buffer ends
-							*/
-							// const minSampleDuration = Object.keys(sampleBuffers).reduce((prev, k) => {
-							// 	const buf = sampleBuffers[k];
-							// 	return Math.min(prev, buf.duration);
-							// }, Infinity);
+
 							const {release, gain} = instrument;
 							sourceDef = repeater(samplerSource(sampleBuffers), gainEnvelope, () => {
-								// customize envelope per instrument
-								// const shotDuration = shot.stopTime - shot.startTime;
-								// const duration = Math.min(shotDuration, minSampleDuration);
-								// const releaseTime = Math.max(0, duration - instrument.release);
-								// const release = shotDuration - releaseTime;
 								return {
 									attack: 0,
 									decay: 0,
@@ -157,6 +153,7 @@ export default function scaleTrack(soundQ, destination) {
 									gain
 								};
 							});
+
 							resolve();
 						}
 					});
@@ -174,13 +171,14 @@ export default function scaleTrack(soundQ, destination) {
 			fieldIndex = track.intensityField;
 			data = this.data;
 			rowDuration = this.rowDuration;
-
+			//console.log( data );
 			const config = track.config && track.config.scale || {};
 			scaleRange = num(config.scaleRange, DEFAULT_SCALE_RANGE);
 			startOctave = num(config.startOctave, DEFAULT_START_OCTAVE);
 			tempoFactor = num(config.tempoFactor, 1);
 			beatOffset = num(config.beatOffset, 0);
 			getArpeggioNote = arpeggioGenerators[config.arpeggioMode] || arpeggioGenerators[DEFAULT_ARPEGGIO_MODE];
+			midiChannel = this.midiChannel;
 
 			interval = rowDuration / tempoFactor;
 			duration = interval + (instrument ? instrument.release : 0.1) + 0.01;
@@ -219,34 +217,29 @@ export default function scaleTrack(soundQ, destination) {
 				});
 			}
 		},
-		start(cst) {
+		start: function (cst) {
 			contextStartTime = cst;
 
 			if (!(fieldIndex >= 0 && data && data.fields && fieldIndex < data.fields.length)) {
 				// nothing to play
 				return;
 			}
-
+			// shot seems to be the main sound event?
 			if (!shot) {
-				/*
-				todo: add a trapezoid window to fade in/out
-				todo: compose before destination
-				*/
+
 				shot = soundQ.shot(sourceDef, destination).set({
 					interval,
 					duration
 				});
+
+
 			}
 
 			const currentTime = soundQ.currentTime;
 			const minRangeTime = Math.max(0, currentTime - contextStartTime);
 			playRanges.forEach(([begin, end]) => {
-				begin = Math.max(begin + beatOffset / tempoFactor, minRangeTime);
 
-				/*
-				todo: rewind `begin` to beginning of this row so we get
-				the middle of the attack
-				*/
+				begin = Math.max(begin + beatOffset / tempoFactor, minRangeTime);
 
 				if (end <= begin) {
 					return;

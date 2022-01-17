@@ -1,5 +1,5 @@
 /* global DEBUG */
-import { getNoteMidi } from 'soundq/src/util/scales';
+import { getNoteMidi } from '/src/soundq/src/util/scales';
 import decodeAudioBuffer from '../../../util/media/decodeAudioBuffer';
 
 const instruments = {
@@ -344,6 +344,14 @@ const instruments = {
 			A3: require('../../../audio/samplers/electric-guitar/electric-guitar-A3.mp3'),
 			A2: require('../../../audio/samplers/electric-guitar/electric-guitar-A2.mp3')
 		}
+	},
+	midiOut: {
+		name: 'Midi Out',
+		minOctave: 0,
+		maxOctave: 7, // plus C8
+		release: 0.1,
+		maxAmplitude: 0.8,
+		gain: 0.5,
 	}
 };
 

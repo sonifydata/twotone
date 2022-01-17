@@ -12,6 +12,10 @@ export function play() {
 	}
 }
 
+export function  getCurrentTrackNumber() {
+ 	return	liveEngine.trackNumber;
+}
+
 export function setCurrentTime(state, currentTime) {
 	liveEngine.currentTime = currentTime;
 }

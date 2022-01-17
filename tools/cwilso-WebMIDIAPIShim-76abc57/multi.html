@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+	<title>Test of multiple inputs</title>
+	<script src="lib/WebMIDIAPI.js"></script>
+	<script>
+var midi=null;
+var inputs=null;
+var outputs=null;
+var input=null;
+var input2=null;
+var output=null;
+var log=null;
+
+function runTest() {
+	if (!log)
+		log = document.getElementById("log");
+	log.innerText = "Starting up MIDI...\n";
+	navigator.requestMIDIAccess( success, failure );
+}
+
+function handleMIDIMessage1( ev ) {
+	// testing - just reflect.
+	var l = ev.data.length;
+	var str = "Message on input 1:";
+
+	for (var i=0; i<l; i++)
+		str += " 0x" + ev.data[i].toString(16);
+	str += "\n";
+
+	log.innerText += str;
+}
+
+function handleMIDIMessage2( ev ) {
+	// testing - just reflect.
+	var l = ev.data.length;
+	var str = "Message on input 2:";
+
+	for (var i=0; i<l; i++)
+		str += " 0x" + ev.data[i].toString(16);
+	str += "\n";
+
+	log.innerText += str;
+}
+
+function success( m ) {
+	log.innerText += "MIDI ready!\n";
+	midi = m;
+
+	inputs = midi.getInputs();
+	log.innerText += inputs.length+" inputs:\n";
+	for (var i=0;i<inputs.length;i++)
+		log.innerText += i + ": " + inputs[i] + "\n";
+
+	if (inputs.length>=2) {
+		input1 = midi.getInput( inputs[0] );
+		input1.onmessage = handleMIDIMessage1;
+		log.innerText += "Hooked up first input.\n";
+		input2 = midi.getInput( 1 );
+		input2.addEventListener( "message", handleMIDIMessage2 );
+		log.innerText += "Hooked up second input.\n";
+	}
+
+	outputs = midi.getOutputs();
+	log.innerText += outputs.length+" outputs:\n";
+	for (var i=0;i<outputs.length;i++)
+		log.innerText += i + ": " + outputs[i] + "\n";
+
+	if (outputs.length) {
+		output = midi.getOutput( outputs[0] );
+		output.send( [0xb0, 0x00, 0x7f] );	// If the first device is a Novation Launchpad, this will light it up!
+	}
+}
+
+function failure( error ) {
+	alert( "Failed to initialize MIDI - " + ((error.code==1) ? "permission denied" : ("error code " + error.code)) );
+}
+</script>
+</head>
+
+<body>
+	<button onclick="runTest();">Test MIDI!</button>
+	<pre id="log">
+	</pre>
+	<div id="MIDIPlugin" style="position:absolute; visibility:hidden"></div>
+</body>
+</html>

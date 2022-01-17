@@ -1,3 +1,5 @@
+// deprecating the VUMeter.. CAV
+
 import React from 'react';
 import { connect } from 'unistore/react';
 import liveEngine from '../engine/live';
@@ -137,5 +139,5 @@ const Def = class VUMeter extends React.Component {
 const VUMeter = withStyles(styles)(
 	connect(['paused'])(Def)
 );
-// const VUMeter = Def;
+
 export default VUMeter;

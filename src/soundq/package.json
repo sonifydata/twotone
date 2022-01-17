@@ -1,0 +1,102 @@
+{
+  "_args": [
+    [
+      "github:datavized/soundq",
+      "/Users/cristianvogel/Desktop/Programming/twotone"
+    ]
+  ],
+  "_from": "github:datavized/soundq",
+  "_id": "soundq@github:datavized/soundq#0d88f1ae1068440ad084351cca218a74d77992ab",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/soundq",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "github:datavized/soundq",
+    "rawSpec": "github:datavized/soundq",
+    "saveSpec": "github:datavized/soundq",
+    "fetchSpec": null,
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "github:datavized/soundq#0d88f1ae1068440ad084351cca218a74d77992ab",
+  "_spec": "github:datavized/soundq",
+  "_where": "/Users/cristianvogel/Desktop/Programming/twotone",
+  "author": {
+    "name": "Brian Chirls",
+    "email": "brian@chirls.com",
+    "url": "http://chirls.com"
+  },
+  "browser": true,
+  "dependencies": {
+    "event-emitter": "^0.3.5"
+  },
+  "description": "",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.5.5",
+    "autoprefixer": "^9.6.1",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "^8.0.6",
+    "case-sensitive-paths-webpack-plugin": "^2.2.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.2.0",
+    "datavized-code-style": "github:datavized/code-style",
+    "eslint": "^6.3.0",
+    "eslint-config-crockford": "^2.0.0",
+    "eslint-loader": "^3.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.16.0",
+    "fast-async": "^6.3.8",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.9.0",
+    "postcss-flexbugs-fixes": "^4.1.0",
+    "postcss-loader": "^3.0.0",
+    "raw-loader": "^3.1.0",
+    "react-dev-utils": "^9.0.3",
+    "style-loader": "^1.0.0",
+    "url-loader": "^2.1.0",
+    "web-audio-test-api": "^0.5.2",
+    "webpack": "^4.39.3",
+    "webpack-build-notifier": "^1.1.1",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "files": [
+    "src/",
+    "build/"
+  ],
+  "jest": {
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ]
+  },
+  "license": "MIT",
+  "main": "./build/soundq.js",
+  "module": "./build/soundq.module.js",
+  "name": "soundq",
+  "private": false,
+  "scripts": {
+    "build": "NODE_ENV=production webpack",
+    "dev": "NODE_ENV=development webpack",
+    "lint": "eslint ./; true",
+    "lint:fix": "eslint --fix ./; true",
+    "start": "NODE_ENV=development webpack-dev-server",
+    "test": "jest --notify --watchAll"
+  },
+  "version": "0.3.0"
+}

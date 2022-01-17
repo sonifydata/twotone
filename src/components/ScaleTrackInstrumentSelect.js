@@ -10,15 +10,22 @@ import { DEFAULT_INSTRUMENT } from '../constants';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import WideSelect from './WideSelect';
+import MidiChannelSelector from './MidiChannelSelector'
 
-const styles = () => ({
+
+
+const styles = (theme) => ({
 	dataSource: {
 		flex: 0.6
 	},
 	instrument: {
 		flex: 0.4
+	},
+	midiHighlight: {
+		color: theme.palette.secondary.light
 	}
 });
+
 
 const Def = class ScaleTrackInstrumentSelect extends React.Component {
 
@@ -26,7 +33,8 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 		classes: PropTypes.object.isRequired,
 		track: PropTypes.object.isRequired,
 		setTrack: PropTypes.func.isRequired,
-		data: PropTypes.object
+		data: PropTypes.object,
+		midiChannel: PropTypes.number
 	}
 
 	handleChangeIntensityField = event => {
@@ -37,29 +45,32 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 		}), track.id);
 	}
 
+	handleChannelChange = evt => {
+		const { track, setTrack } = this.props;
+		const midiChannel = evt.value;
+		setTrack( Object.assign( {},   track, { midiChannel }), track.id);
+	}
+
+	getCurrentMidiChannel = () => this.props.track.midiChannel;
+
 	handleChangeConfig = evt => {
 		const { setTrack } = this.props;
 		const oldTrack = this.props.track || {};
 		const oldConfig = oldTrack.config || {};
 		const oldScaleConfig = oldConfig.scale || {};
-
 		const { name, value } = evt.target;
-
 		const scale = {
 			...oldScaleConfig
 		};
 		scale[name] = value;
-
 		const config = {
 			...oldConfig,
 			scale
 		};
-
 		const track = {
 			...oldTrack,
 			config
 		};
-
 		setTrack(track, track.id);
 	}
 
@@ -70,9 +81,9 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 			data
 		} = this.props;
 
+
 		const config = track.config && track.config.scale || {};
 		const instrument = config.instrument || DEFAULT_INSTRUMENT;
-
 		// todo: support non-numeric fields
 		const fields = !data || !data.fields ?
 			[] :
@@ -80,6 +91,8 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				.map(({name, type, max, min}, i) => ({name, type, min, max, i}))
 				.filter(({type, max, min}) => type !== 'string' && max !== min);
 
+		let midiChannel=track.midiChannel || null;
+		console.log( 'midichannel:' + midiChannel);
 
 		return <React.Fragment>
 			<WideSelect
@@ -88,15 +101,15 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				onChange={this.handleChangeIntensityField}
 				name="intensity-field"
 				id={'intensity-field-' + track.id}
-				classes={{
-					root: classes.dataSource
-				}}
+				classes={{ root: classes.dataSource }}
 			>
 				<MenuItem value="">
 					<em>None</em>
 				</MenuItem>
 				{fields
-					.map(({name, i}) => <MenuItem value={i} key={i}>{name}</MenuItem>)}
+					.map( ( {name, i} ) =>
+						<MenuItem value={i} key={i}>{name}</MenuItem>)
+				}
 			</WideSelect>
 			<WideSelect
 				label="Instrument"
@@ -104,12 +117,8 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				id={'track-instrument-' + track.id}
 				value={instrument}
 				onChange={this.handleChangeConfig}
-				inputProps={{
-					name: 'instrument'
-				}}
-				classes={{
-					root: classes.instrument
-				}}
+				inputProps={{ name: 'instrument' }}
+				classes={{ root: classes.instrument }}
 			>
 				{/* todo: get this list from somewhere */}
 				<MenuItem value="piano">Piano</MenuItem>
@@ -122,11 +131,14 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				<MenuItem value="violin">Violin</MenuItem>
 				<MenuItem value="trumpet">Trumpet</MenuItem>
 				<MenuItem value="glockenspiel">Glockenspiel</MenuItem>
-				<MenuItem value="oscillator">Oscillator</MenuItem>
+				<MenuItem value="midiOut" id={'midiOutInst'+track.id} classes={{
+					root: classes.midiHighlight}}>Midi Out {midiChannel}</MenuItem>
 			</WideSelect>
+			{ instrument === "midiOut" ? <MidiChannelSelector handleChannelChange={this.handleChannelChange} getMidiChannel={midiChannel} /> : null }
 		</React.Fragment>;
 	}
 };
 
-const ScaleTrackInstrumentSelect = connect(['data'], actions)(withStyles(styles)(Def));
+const ScaleTrackInstrumentSelect = 
+	connect(['data'], actions)(withStyles(styles, {withTheme: true})(Def));
 export default ScaleTrackInstrumentSelect;
