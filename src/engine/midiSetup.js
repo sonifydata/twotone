@@ -120,7 +120,6 @@ export function allNotesOff() {
 		const { midiOutPort } = store.getState();
 		if (midiOutPort) {
 			getCurrentMidiOutput().sendAllNotesOff();
-			//debounce.clear();
 		}
 	}
 }

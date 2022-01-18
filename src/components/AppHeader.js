@@ -26,6 +26,7 @@ import ConfirmationDialog from './ConfirmationDialog';
 
 import twoToneLogo from '../images/two-tone-logo.svg';
 
+
 const confirm = createConfirmation(ConfirmationDialog);
 
 const styles = theme => ({
@@ -79,7 +80,7 @@ const Def = class AppHeader extends React.Component {
 	}
 
 	componentDidMount() {
-		store.setState( {webMidiAvailable: midi.webMidiCheck()});
+		midi.webMidiCheck();
 	}
 
 	componentDidUpdate() {
@@ -174,6 +175,7 @@ const Def = class AppHeader extends React.Component {
 			<IconButton onClick={onDataToggle} label="Show Data" color="inherit">
 				<SpreadsheetIcon/>
 			</IconButton>
+
 		</React.Fragment>;
 	}
 };
