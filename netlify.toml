@@ -24,7 +24,7 @@
 [context.production]
   publish = "build/"
   command = "npm run build"
-  environment = { ACCESS_TOKEN = "super secret", NODE_VERSION = "14.15.3" }
+  environment = { NODE_VERSION = "14.15.3" }
 
 # Deploy Preview context: all deploys generated from a pull/merge request will
 # inherit these settings.

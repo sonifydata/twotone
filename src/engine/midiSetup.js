@@ -1,8 +1,7 @@
+
 import { store } from '../store';
 import { WebMidi } from 'webmidi';
 import { debounce } from 'debounce';
-
-
 
 export async function webMidiCheck() {
 	if (WebMidi.enabled) {
@@ -10,7 +9,14 @@ export async function webMidiCheck() {
 		return true;
 	}
 	if (!('requestMIDIAccess' in navigator)) {
-		console.log('☹️ WebMIDI is not supported in this browser.');
+		alert(
+			`	WebMIDI is not available in this browser!
+			
+			Please try using Chrome, Edge or 
+			the Jazz plug in for FireFox.
+			
+			TwoTone MIDI functions will be disabled`)
+		store.setState({webMidiAvailable: false});
 		return false;
 	} else {
 		console.log('🙌🏻 YES, happy days! This browser supports WebMIDI!');
