@@ -7,13 +7,18 @@ export function pause() {
 
 export function play() {
 	const { canPlay } = store.getState();
+	const { midiOutPort, webMidiAvailable } = store.getState();
+	if ( webMidiAvailable && !midiOutPort ) {
+		alert( 'Please select a valid MIDI out port');
+	}
+
 	if (canPlay) {
 		liveEngine.play();
 	}
 }
 
 export function  getCurrentTrackNumber() {
- 	return	liveEngine.trackNumber;
+	return	liveEngine.trackNumber;
 }
 
 export function setCurrentTime(state, currentTime) {

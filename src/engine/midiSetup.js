@@ -1,8 +1,12 @@
 import { store } from '../store';
 import { WebMidi } from 'webmidi';
+import { debounce } from 'debounce';
+
+
 
 export async function webMidiCheck() {
 	if (WebMidi.enabled) {
+		store.setState({webMidiAvailable: true});
 		return true;
 	}
 	if (!('requestMIDIAccess' in navigator)) {
@@ -15,7 +19,6 @@ export async function webMidiCheck() {
 		if (enabled) {
 			store.setState({webMidiAvailable: enabled});
 			store.setState({midiOutPorts: getMidiOutputNames()});
-
 			return true;
 		} else {
 			return false;
@@ -41,7 +44,7 @@ function onWebMidiEnabled() {
 	WebMidi.inputs.forEach(input => console.log('⬅︎ MIDI In: \n' + input.manufacturer, input.name));
 	// Outputs
 	WebMidi.outputs.forEach(output => console.log('⮕ MIDI Out: \n' + output.manufacturer, output.name));
-
+	store.setState( { webMidiAvailable: WebMidi.enabled });
 }
 
 export function getMidiOutputs() {
@@ -78,49 +81,41 @@ export function scheduleMidiNoteEvent(
 		noteValue = 'C3',
 		duration = Infinity,
 		velocity = 0.8,
-		channel = 1 } = {}) {
-	//todo: allow the notes to get scheduled even though the port is offline
-	const output = getOutputByName(store.getState().midiOutPort);
+		channel } = {}) {
+	const options = {time: schedulingTime, duration: duration, attack: velocity, release: 0};
 
+	if (channel === undefined) {
+		return;
+	}
+	const output = getOutputByName(store.getState().midiOutPort);
 	if (output === undefined) {
 		return;
 	}
 
 	const sendChannel = output.channels[channel];
+	const noteOnFunc = () => sendChannel.playNote(noteValue, options);
+	const noteOffFunc = () => sendChannel.stopNote(noteValue, options);
 
 	switch (keyEvent) {
 		case 'on':
-			sendChannel.playNote(noteValue, {time: schedulingTime, duration: duration, attack: velocity});
+			debounce(noteOnFunc(), 100);
 			break;
 		case 'off':
-			sendChannel.stopNote(noteValue, {time: schedulingTime, duration: duration, attack: velocity});
+			debounce (noteOffFunc(), 50);
 			break;
+		default:
+			debounce.clear();
 	}
 }
 
-export function sendMidiNoteEvent(
-	{	keyEvent = 'on',
-		noteValue = 'C3',
-		duration = 500,
-		velocity = 0.8,
-		channel = 1 } = {}) {
-
-	channel = Math.max(1, channel);
-	const output = getOutputByName(store.getState().midiOutPort);
-
-	if (output === undefined) {
-		return;
-	}
-	const sendChannel = output.channels[channel];
-
-	switch (keyEvent) {
-		case 'on':
-			sendChannel.playNote(noteValue, {duration: duration, attack: velocity});
-			break;
-		case 'off':
-			sendChannel.stopNote(noteValue, {duration: duration, attack: velocity});
-			break;
+export function allNotesOff() {
+	const { webMidiAvailable } = store.getState();
+	if (webMidiAvailable) {
+		const { midiOutPort } = store.getState();
+		if (midiOutPort) {
+			getCurrentMidiOutput().sendAllNotesOff();
+			//debounce.clear();
+		}
 	}
 }
-
 

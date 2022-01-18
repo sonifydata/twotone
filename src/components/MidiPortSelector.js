@@ -18,7 +18,7 @@ let styles = () => ({
 })
 
 
-let { midiOutPorts, midiOutPort } = store.getState();
+let { midiOutPorts, midiOutPort, webMidiAvailable } = store.getState();
 
 
 const Def = class MidiPortSelector extends React.Component {
@@ -36,7 +36,7 @@ const Def = class MidiPortSelector extends React.Component {
 	handleChangeMidiPort = (event) => {
 
 		const midiPortSelected = event.target.value >= 0 ? event.target.value: -1;
-		const { webMidiAvailable } = store.getState();
+		webMidiAvailable = store.getState().webMidiAvailable;
 		if (!webMidiAvailable) { return }
 		else {
 			const l =  midi.getMidiOutputNames();

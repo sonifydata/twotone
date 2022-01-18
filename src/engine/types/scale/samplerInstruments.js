@@ -1,5 +1,5 @@
 /* global DEBUG */
-import { getNoteMidi } from '/src/soundq/src/util/scales';
+import { getNoteMidi } from '../../../soundq/src/util/scales';
 import decodeAudioBuffer from '../../../util/media/decodeAudioBuffer';
 
 const instruments = {

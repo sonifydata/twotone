@@ -91,8 +91,7 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				.map(({name, type, max, min}, i) => ({name, type, min, max, i}))
 				.filter(({type, max, min}) => type !== 'string' && max !== min);
 
-		let midiChannel=track.midiChannel || null;
-		console.log( 'midichannel:' + midiChannel);
+		let midiChannel=track.midiChannel;
 
 		return <React.Fragment>
 			<WideSelect
@@ -132,7 +131,7 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				<MenuItem value="trumpet">Trumpet</MenuItem>
 				<MenuItem value="glockenspiel">Glockenspiel</MenuItem>
 				<MenuItem value="midiOut" id={'midiOutInst'+track.id} classes={{
-					root: classes.midiHighlight}}>Midi Out {midiChannel}</MenuItem>
+					root: classes.midiHighlight}}>Midi Out {midiChannel || null}</MenuItem>
 			</WideSelect>
 			{ instrument === "midiOut" ? <MidiChannelSelector handleChannelChange={this.handleChannelChange} getMidiChannel={midiChannel} /> : null }
 		</React.Fragment>;
