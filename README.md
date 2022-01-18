@@ -16,7 +16,7 @@ The data uploaded to TwoTone are processed fully in the web browser: no server-s
 
 ## Who uses TwoTone?
 
-TwoTone is a playful technology and easy to use, but allows for output to industry-standard formats so that users can export their compositions for use in professional projects.
+TwoTone is a playful technology and easy to use, but allows for output to industry-standard formats including live MIDI output enabling  users to apply their compositions for use in professional projects.
 
 The software can be used by journalists, data professionals and researchers as an exploratory tool; or by artists, musicians, media makers and composers as a creative tool. It can also be used to share data with the blind and visually impaired, to help understand data in new ways, totally through the sense of hearing.
 
