@@ -33,6 +33,8 @@ import SectionLoader from './SectionLoader';
 import LoadFailure from './LoadFailure';
 import asyncComponent from './asyncComponent';
 
+
+
 const TrackList = asyncComponent(() => import('./TrackList'), {
 	load: SectionLoader,
 	fail: LoadFailure
@@ -217,7 +219,7 @@ const Def = class App extends React.Component {
 					})}>
 						<div className={classes.tracks}>
 							{dataSource && <TrackList/>}
-							{/* todo: make this smaller*/}
+
 							<AddTrackButton
 								className={classes.addTrackButton}
 								onClick={this.handleCreateTrack}

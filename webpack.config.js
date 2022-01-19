@@ -38,6 +38,7 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 // configuration
 const title = 'TwoTone';
 const websiteURL = 'https://twotone.io';
+const feedbackForm = websiteURL + '/feedbackForm.html';
 const description = 'TwoTone Data Sonification';
 const eslintConfig = require('./.eslintrc.json');
 const port = '9000';
@@ -329,7 +330,8 @@ const devConfig = {
 			COMMIT_HASH: `'dev'`,
 			APP_TITLE: JSON.stringify(title),
 			APP_WEBSITE_URL: JSON.stringify(websiteURL),
-			SPEECH_API_KEY: JSON.stringify(process.env.SPEECH_API_KEY)
+			SPEECH_API_KEY: JSON.stringify(process.env.SPEECH_API_KEY),
+			FEEDBACK_FORM: JSON.stringify(feedbackForm),
 		}),
 		new WebpackBuildNotifierPlugin({
 			title: path.basename(__dirname),
