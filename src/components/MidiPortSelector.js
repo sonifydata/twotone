@@ -11,7 +11,7 @@ import WideSelectMidi from './WideSelectMidi';
 import * as midi from '../engine/midiSetup';
 
 
-let styles = () => ({
+const styles = () => ({
 	midiPortsListStyles: {
 		flex: 0.2
 	}
@@ -44,10 +44,10 @@ const Def = class MidiPortSelector extends React.Component {
 		}
 
 		midiOutPorts  = store.getState().midiOutPorts;
-			if (midiOutPorts.length > 0) {
-				midiOutPort = midiOutPorts[midiPortSelected];
-				store.setState( {midiOutPort: midiOutPort}  );
-			}
+		if (midiOutPorts.length > 0) {
+			midiOutPort = midiOutPorts[midiPortSelected];
+			store.setState( {midiOutPort: midiOutPort}  );
+		}
 
 		store.setState( { midiPortSelectToggle: false } );
 	}
@@ -62,35 +62,31 @@ const Def = class MidiPortSelector extends React.Component {
 
 		if (!midiOutPorts || midiOutPorts.length <= 0) { return null; }
 
-		const fields = Object.fromEntries(
-		  midiOutPorts.map((port, i) => [ i, {
-		    id: port
-		  }])
-		);
-		
-	return <React.Fragment>
-		<WideSelectMidi
-			onClose = { this.handleClose }
-			onChange = { this.handleChangeMidiPort }
-			label = { midiOutPort || 'Set Midi Destination' }
-			value = { midiOutPort }
-			id = 'midi-menu'
-			classes={{
-				root: classes.midiPortsListStyles
-			}}>
+		const fields = Object.fromEntries(midiOutPorts.map((port, i) => [ i, {id: port}]));
+
+		return <React.Fragment>
+			<WideSelectMidi
+				onClose = { this.handleClose }
+				onChange = { this.handleChangeMidiPort }
+				label = { midiOutPort || 'Set Midi Destination' }
+				value = { midiOutPort }
+				id = 'midi-menu'
+				classes={{
+					root: classes.midiPortsListStyles
+				}}>
 				{ Object.entries(fields)
-					.map( (port, i)  => ( 
-						<MenuItem key={port[1].id + '_'+(i.toString())}
+					.map( (port, i)  =>
+						<MenuItem key={port[1].id + '_'+i.toString()}
 								  value={i}
-								  aria-label={"Port " + i.toString()}
+								  aria-label={'Port ' + i.toString()}
 								  dense={true}
 						> {port[1].id} </MenuItem>
-				))}
-		</WideSelectMidi>
-	</React.Fragment>
+					)}
+			</WideSelectMidi>
+		</React.Fragment>
 	}
 };
 
-const MidiPortSelector = 
+const MidiPortSelector =
 	connect(['midiOutPort', 'midiOutPorts'], actions)(withStyles(styles)(Def));
 export default MidiPortSelector;

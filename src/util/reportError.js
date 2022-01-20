@@ -5,7 +5,7 @@ function errorString(obj) {
 	if (str === '[object Object]') {
 		try {
 			str = JSON.stringify(obj);
-		} catch (e) {}
+		} catch (e) { console.log('error in stack parser:'+ e)}
 	}
 
 	return str;
@@ -24,7 +24,7 @@ export default function reportError(event, stackLevel = 0) {
 	let errorDetails = null;
 	try {
 		errorDetails = ErrorStackParser.parse(error);
-	} catch (e) {}
+	} catch (e) { console.log('error in stack parser: '+ e)}
 
 	if (errorDetails && errorDetails.length) {
 		const stackTop = errorDetails[Math.min(stackLevel, errorDetails.length - 1)];

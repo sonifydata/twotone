@@ -1,5 +1,5 @@
-import compose from '/src/soundq/src/patches/compose';
-import trapezoid from '/src/soundq/src/patches/trapezoid';
+import compose from '../../soundq/src/patches/compose';
+import trapezoid from '../../soundq/src/patches/trapezoid';
 import { getBufferRef, freeBufferRef } from './buffers';
 import { DEFAULT_CLIP_PLAY_MODE } from '../../constants';
 

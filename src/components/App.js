@@ -168,9 +168,9 @@ const Def = class App extends React.Component {
 	}
 
 	selectMidiPort =  () => {
-			store.setState({
-				activeDialog: 'midi'
-			});
+		store.setState({
+			activeDialog: 'midi'
+		});
 	}
 
 	handleCreateTrack = type => {

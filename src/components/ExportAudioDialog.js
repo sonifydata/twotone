@@ -293,7 +293,7 @@ const Def = class ExportAudioDialog extends React.Component {
 				<Button onClick={this.cancel} color="secondary">
 					Cancel
 				</Button>
-				<Button onClick={this.exportAudio} color="secondary" autoFocus disabled={exporting}>
+				<Button onClick={this.exportAudio} color="secondary"  disabled={exporting}>
 					Export
 				</Button>
 			</DialogActions>

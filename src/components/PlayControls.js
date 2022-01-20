@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'unistore/react';
-import { actions , store} from '../store';
+import { actions } from '../store';
 import formatData from '../util/formatData';
 import formatTime from '../util/formatTime';
 

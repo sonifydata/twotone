@@ -92,7 +92,7 @@ export default function midiOut(controller) {
 						{
 							keyEvent: keyEvent
 						});
-				} 
+				}
 				else {
 					keyEvent = 'on';
 					midi.scheduleMidiNoteEvent({
@@ -113,7 +113,7 @@ export default function midiOut(controller) {
 					}
 					);
 				}
-				
+
 				return nodeSource.request(untilTime);
 			}
 			return null;
@@ -131,7 +131,7 @@ export default function midiOut(controller) {
 			// output.clear() is not implemented in base Midi API yet apparently
 			// currentOutput.clear();
 			if (midiAvailable && currentOutput) {
-		//		currentOutput.sendAllNotesOff();
+				//		currentOutput.sendAllNotesOff();
 			}
 			if (nodeSource && nodeSource.finishEvent) {
 				nodeSource.finishEvent(soundEvent);

@@ -201,7 +201,7 @@ async function restoreState() {
 		const { _rev, val } = doc;
 		stateRevisions.set(key, _rev);
 		newState[key] = val;
-		if (DEBUG) console.log('State change: '+newState[key]);
+		if (DEBUG) {console.log('State change: '+newState[key]);}
 	});
 
 	store.setState(newState);

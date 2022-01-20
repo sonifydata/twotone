@@ -105,7 +105,7 @@ const Def = class AlbumCover extends React.Component {
 
 		return <div className={className} {...props}>
 			{imageURL ?
-				<img src={imageURL} width={width} height={height}/> :
+				<img src={imageURL} width={width} height={height} alt='album art'/> :
 				<AlbumIcon className={classes.albumIcon} style={{
 					width,
 					height

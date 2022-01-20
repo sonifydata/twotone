@@ -337,7 +337,7 @@ const Def = class RecordAudioDialog extends React.Component {
 				<Button onClick={this.cancel} color="secondary">
 					Cancel
 				</Button>
-				<Button onClick={this.onSave} color="secondary" autoFocus disabled={recording || !blob}>
+				<Button onClick={this.onSave} color="secondary"  disabled={recording || !blob}>
 					Save
 				</Button>
 			</DialogActions>

@@ -30,7 +30,7 @@ function createOfflineContext(options) {
 	try {
 		const context = new OfflineAudioContext(options);
 		return context;
-	} catch (e) {}
+	} catch (e) { console.log('Offline rendering error:' + e)}
 
 	const {
 		numberOfChannels,
