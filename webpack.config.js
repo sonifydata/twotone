@@ -166,7 +166,7 @@ const config = {
 						},
 						loader: 'babel-loader',
 						options: {
-							babelrc: false,
+							// babelrc: false,
 							presets: [
 								[
 									'@babel/env',
@@ -187,6 +187,7 @@ const config = {
 							plugins: [
 								...babelPlugins,
 								'@babel/plugin-proposal-class-properties',
+								['@babel/plugin-syntax-jsx'],
 								['@babel/plugin-proposal-object-rest-spread', { useBuiltIns: true }],
 								['@babel/plugin-transform-react-jsx', { useBuiltIns: true }],
 								['@babel/plugin-transform-runtime', {

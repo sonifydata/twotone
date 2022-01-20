@@ -8,7 +8,7 @@ export function pause() {
 export function play() {
 	const { canPlay } = store.getState();
 	const { midiOutPort, webMidiAvailable } = store.getState();
-	if ( webMidiAvailable && (midiOutPort === '')  ) {
+	if ( webMidiAvailable && midiOutPort === ''  ) {
 		alert( 'Please select a valid MIDI out port.');
 	}
 
