@@ -57,7 +57,7 @@ class FeedbackForm extends React.Component {
             </div>
 
             <div className="container is-fluid pt-6 hero is-dark">
-                <form name="feedbackForm" data-netlify="true" netlify-honeypot="bot-field"  method="POST" onSubmit={this.handleSubmit} >
+                <form name="form-name" value="feedbackForm" method="POST" onSubmit={this.handleSubmit} >
                     <input aria-hidden="true" type="hidden" name="feedbackForm" value="feedbackForm" />
                     <div className="field">
                         <label className="has-text-light">Name</label>
