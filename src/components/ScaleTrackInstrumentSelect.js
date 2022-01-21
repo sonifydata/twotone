@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import { connect } from 'unistore/react';
-import { actions } from '../store';
+import { actions , store } from '../store';
 import num from '../util/num';
 
 import { DEFAULT_INSTRUMENT } from '../constants';
@@ -130,10 +130,18 @@ const Def = class ScaleTrackInstrumentSelect extends React.Component {
 				<MenuItem value="violin">Violin</MenuItem>
 				<MenuItem value="trumpet">Trumpet</MenuItem>
 				<MenuItem value="glockenspiel">Glockenspiel</MenuItem>
-				<MenuItem value="midiOut" id={'midiOutInst'+track.id} classes={{
-					root: classes.midiHighlight}}>Midi Out {midiChannel || null}</MenuItem>
+				{
+					store.getState().webMidiAvailable ?
+						<MenuItem value="midiOut" id={'midiOutInst'+track.id} classes={{
+							root: classes.midiHighlight}}>Midi Out {midiChannel || null}</MenuItem>
+						: null
+				}
 			</WideSelect>
-			{ instrument === 'midiOut' ? <MidiChannelSelector handleChannelChange={this.handleChannelChange} getMidiChannel={midiChannel} /> : null }
+			{
+				instrument === 'midiOut' && store.getState().webMidiAvailable ?
+					<MidiChannelSelector handleChannelChange={this.handleChannelChange} getMidiChannel={midiChannel} />
+					: null
+			}
 		</React.Fragment>;
 	}
 };

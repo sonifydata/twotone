@@ -40,6 +40,7 @@
     "no-iterator": 2,
     "no-loop-func": 2,
     "no-misleading-character-class": 2,
+    "no-mixed-spaces-and-tabs": ["off", "smart-tabs"],
     "no-new": 2,
     "no-plusplus": 0,
     "no-restricted-globals": ["error", "event"],

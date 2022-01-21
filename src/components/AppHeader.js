@@ -17,10 +17,10 @@ import SettingsMidiNo from '@material-ui/icons/SettingsInputSvideoTwoTone';
 import SpreadsheetIcon from '@material-ui/icons/List';
 import ConfirmationDialog from './ConfirmationDialog';
 import Dialog from '@material-ui/core/Dialog';
-import Send from '@material-ui/icons/Send';
 import {Slide, SvgIcon} from '@material-ui/core';
 import FeedbackForm from './FeedbackForm';
 import twoToneLogo from '../images/two-tone-logo.svg';
+import formLogo from '../images/svg/FeedbackForm.svg';
 
 const confirm = createConfirmation(ConfirmationDialog);
 
@@ -52,7 +52,13 @@ const styles = theme => ({
 	},
 	logo: {
 		height: 48,
-		marginRight: theme.spacing.unit
+		marginRight: theme.spacing.unit,
+		cursor: 'pointer'
+	},
+	formIcon: {
+		height: 36,
+		marginRight: theme.spacing.unit,
+		cursor: 'pointer'
 	},
 	'@media (max-height: 445px)': {
 		title: {
@@ -86,11 +92,13 @@ const Def = class AppHeader extends React.Component {
 		webMidiAvailable: PropTypes.bool.isRequired,
 		midiOutPorts: PropTypes.object,
 		midiPortSelector: PropTypes.func.isRequired,
-		handleForm: PropTypes.func.isRequired
+		handleForm: PropTypes.func.isRequired,
+		handleFormClose: PropTypes.func.isRequired,
+		selectMidiPort: PropTypes.func.isRequired
 	}
 
 	componentDidMount() {
-		midi.webMidiCheck();
+		midi.webMidiCheck().then(r => console.log('WebMidi check:'+r));
 		store.setState( {formOpen: false});
 	}
 
@@ -150,18 +158,15 @@ const Def = class AppHeader extends React.Component {
 		} = this.props;
 
 		const { webMidiAvailable, midiOutPort } = store.getState();
-
 		const logo = <img src={twoToneLogo} alt={APP_TITLE} className={classes.logo}/>;
-
+		const formIcon = <img src={formLogo} alt='send feedback form' className={classes.formIcon}/>;
 		return <React.Fragment>
-
-
 			<Typography className={classes.title} variant="h6" color="inherit" component="h1">
 				{APP_WEBSITE_URL ? <a href={APP_WEBSITE_URL} target="_blank" rel="noopener noreferrer">
 					{logo}
 				</a> : logo}
-				<IconButton  style={{transform: 'rotate(-45deg)'}}  label="Support and Feedback" aria-label="Open feedback form" color="inherit" onClick={this.handleForm}>
-					<Send/>
+				<IconButton  label="Support and Feedback" aria-label="Open feedback form" color="inherit" onClick={this.handleForm}>
+					{formIcon}
 				</IconButton>
 
 				<div style={{flex:0.1}}>⋯</div>

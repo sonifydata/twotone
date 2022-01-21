@@ -31,6 +31,7 @@ import ReactDOM from 'react-dom';
 import onNewServiceWorker from './util/onNewServiceWorker';
 
 import './index.css';
+import './extraStyles.css';
 import Main from './components/Main';
 
 if (DEBUG) {

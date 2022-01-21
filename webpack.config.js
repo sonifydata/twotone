@@ -464,11 +464,13 @@ const distConfig = {
 			description
 		}),
 		serviceWorkerPlugin,
-		new BundleAnalyzerPlugin({
-			openAnalyzer: false,
-			analyzerMode: 'static',
-			reportFilename: '../report.html'
-		})
+		// CAV: removing this... don't know what it is
+		// new BundleAnalyzerPlugin({
+		// 	openAnalyzer: false,
+		// 	analyzerMode: 'static',
+		// 	reportFilename: '../report.html'
+		// })
+
 		// new UnusedFilesWebpackPlugin({
 		// 	patterns: [
 		// 		'src/**/*.*',

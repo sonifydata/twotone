@@ -33,6 +33,7 @@ class FeedbackForm extends React.Component {
 			.catch(error => alert(error));
 
 		e.preventDefault();
+		this.handleFormClose(e);
 	};
 
 	handleChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -55,8 +56,9 @@ class FeedbackForm extends React.Component {
 			</div>
 
 			<div className="container is-fluid pt-6 hero is-dark">
-				<form name="form-name" value="feedbackForm" method="POST" onSubmit={this.handleSubmit} >
-					<input aria-hidden="true" type="hidden" name="form-name" value="feedbackForm" />
+				{/*<form name="form-name" value="feedbackForm" method="POST" onSubmit={this.handleSubmit} >*/}
+				{/*	<input aria-hidden="true" type="hidden" name="form-name" value="feedbackForm" />*/}
+				<form name="form-name" value="feedbackForm" onSubmit={this.handleSubmit} >
 					<div className="field">
 						<label className="has-text-light">Name</label>
 						<div className="control">
