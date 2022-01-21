@@ -38,7 +38,6 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 // configuration
 const title = 'TwoTone';
 const websiteURL = 'https://twotone.io';
-const feedbackForm = websiteURL + '/feedbackForm.html';
 const description = 'TwoTone Data Sonification';
 const eslintConfig = require('./.eslintrc.json');
 const port = '9000';
@@ -331,8 +330,7 @@ const devConfig = {
 			COMMIT_HASH: `'dev'`,
 			APP_TITLE: JSON.stringify(title),
 			APP_WEBSITE_URL: JSON.stringify(websiteURL),
-			SPEECH_API_KEY: JSON.stringify(process.env.SPEECH_API_KEY),
-			FEEDBACK_FORM: JSON.stringify(feedbackForm),
+			SPEECH_API_KEY: JSON.stringify(process.env.SPEECH_API_KEY)
 		}),
 		new WebpackBuildNotifierPlugin({
 			title: path.basename(__dirname),
@@ -384,15 +382,6 @@ const distConfig = {
 		alias: {
 			// workaround for https://github.com/aadsm/jsmediatags/issues/116
 			jsmediatags: 'jsmediatags/dist/jsmediatags.min.js'
-
-			/*
-			doesn't work:
-			https://github.com/NervJS/nerv/issues/81
-			*/
-			// 'react': 'nervjs',
-			// 'react-dom': 'nervjs',
-			// // Not necessary unless you consume a module using `createClass`
-			// 'create-react-class': 'nerv-create-class'
 		}
 	},
 	plugins: [
@@ -410,7 +399,6 @@ const distConfig = {
 			background: '#303030',
 			persistentCache: true,
 			version: VERSION,
-			// inject: true,
 			title: 'TwoTone',
 			appDescription: description
 		}),
@@ -442,22 +430,22 @@ const distConfig = {
 			description,
 			minify: {
 				removeComments: true,
-				removeCommentsFromCDATA: true,
-				removeCDATASectionsFromCDATA: true,
-				collapseWhitespace: true,
+				// removeCommentsFromCDATA: true,
+				// removeCDATASectionsFromCDATA: true,
+				// collapseWhitespace: true,
 				//	collapseBooleanAttributes: true,
 				//	removeAttributeQuotes: true,
 				//	removeRedundantAttributes: true,
-				useShortDoctype: true,
+				// useShortDoctype: true,
 				//	removeEmptyAttributes: true,
 				//	removeScriptTypeAttributes: true,
 				// lint: true,
 				caseSensitive: true,
-				minifyJS: true,
-				minifyCSS: true
+				//minifyJS: true,
+				//minifyCSS: true
 			}
 		}),
-		// CAV: removing this...?
+		// CAV: might remove this...?
 		// don't know what it is
 		new InjectManifestPlugin({
 			theme_color: '#26c6da', // eslint-disable-line camelcase
