@@ -59,6 +59,7 @@ class FeedbackForm extends React.Component {
 				{/*<form name="form-name" value="feedbackForm" method="POST" onSubmit={this.handleSubmit} >*/}
 				{/*	<input aria-hidden="true" type="hidden" name="form-name" value="feedbackForm" />*/}
 				<form onSubmit={this.handleSubmit} name="feedbackForm">
+					<input type="hidden" name="form-name" value="feedbackForm" />
 					<div className="field">
 						<label className="has-text-light">Name</label>
 						<div className="control">
