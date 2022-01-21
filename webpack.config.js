@@ -445,18 +445,20 @@ const distConfig = {
 				removeCommentsFromCDATA: true,
 				removeCDATASectionsFromCDATA: true,
 				collapseWhitespace: true,
-				collapseBooleanAttributes: true,
-				removeAttributeQuotes: true,
-				removeRedundantAttributes: true,
+				//	collapseBooleanAttributes: true,
+				//	removeAttributeQuotes: true,
+				//	removeRedundantAttributes: true,
 				useShortDoctype: true,
-				removeEmptyAttributes: true,
-				removeScriptTypeAttributes: true,
+				//	removeEmptyAttributes: true,
+				//	removeScriptTypeAttributes: true,
 				// lint: true,
 				caseSensitive: true,
 				minifyJS: true,
 				minifyCSS: true
 			}
 		}),
+		// CAV: removing this...?
+		// don't know what it is
 		new InjectManifestPlugin({
 			theme_color: '#26c6da', // eslint-disable-line camelcase
 			start_url: '../?utm_source=web_app_manifest', // eslint-disable-line camelcase
@@ -464,7 +466,9 @@ const distConfig = {
 			description
 		}),
 		serviceWorkerPlugin,
-		// CAV: removing this... don't know what it is
+		// CAV: removing this...
+		// don't know what it is
+
 		// new BundleAnalyzerPlugin({
 		// 	openAnalyzer: false,
 		// 	analyzerMode: 'static',
