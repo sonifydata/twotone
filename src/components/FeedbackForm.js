@@ -42,6 +42,16 @@ class FeedbackForm extends React.Component {
 		const { name, email, messageText, subject, browserInfo } = this.state;
 		return <React.Fragment>
 
+			{
+				/*
+					input fields:
+					name
+					email
+					subject
+					browserInfo
+					messageText
+				*/
+			}
 			<div className="container is-fluid pt-6 hero is-primary">
 				<IconButton label="Close Form"
 					color="inherit"
@@ -56,31 +66,47 @@ class FeedbackForm extends React.Component {
 			</div>
 
 			<div className="container is-fluid pt-6 hero is-dark">
-				{/*<form name="form-name" value="feedbackForm" method="POST" onSubmit={this.handleSubmit} >*/}
-				{/*	<input aria-hidden="true" type="hidden" name="form-name" value="feedbackForm" />*/}
-				<form onSubmit={this.handleSubmit} name="feedbackForm">
-					<input aria-hidden="true" type="hidden" name="form-name" value="feedbackForm"/>
+				<form
+					name="feedbackForm"
+					method="POST"
+					onSubmit={this.handleSubmit} >
+					<input
+						name="form-name"
+						value="feedbackForm"
+						aria-hidden="true"
+						type="hidden" />
 					<div className="field">
 						<label className="has-text-light">Name</label>
 						<div className="control">
-							<input className="input" type="text" placeholder="Your name" name="name" value={name} onChange={this.handleChange}/>
+							<input
+								name="name"
+								className="input"
+								type="text"
+								placeholder="Your name"
+								value={name} onChange={this.handleChange}/>
 						</div>
 					</div>
 
 					<div className="field">
 						<label className="has-text-light">Email</label>
 						<div className="control has-icons-left">
-							<input className="input is-primary" type="email" placeholder="Email input " name="email" value={email} onChange={this.handleChange}/>
+							<input
+								name="email"
+								className="input is-primary"
+								type="email"
+								placeholder="Email input "
+								value={email} onChange={this.handleChange}/>
 						</div>
 						<p className="help is-primary">Please enter a valid email address.</p>
 					</div>
-
-
 					<div className="field pt-4">
 						<label className="has-text-light">Subject</label>
 						<div className="control">
 							<div className="select">
-								<select name="subject" value={subject} onChange={this.handleChange}>
+								<select
+									name="subject"
+									value={subject}
+									onChange={this.handleChange}>
 									<option>Beta Testing</option>
 									<option>Bug report</option>
 									<option>Feature request</option>
@@ -93,14 +119,24 @@ class FeedbackForm extends React.Component {
 					<div className="field">
 						<label className="has-text-light">Technical Information</label>
 						<div className="control">
-							<input className="input" type="text" placeholder="Browser and operating system" name="browserInfo" value={browserInfo} onChange={this.handleChange}/>
+							<input
+								name="browserInfo"
+								className="input"
+								type="text"
+								placeholder="Browser and operating system"
+								value={browserInfo} onChange={this.handleChange}/>
 						</div>
 					</div>
 
 					<div className="field pt-4">
 						<label className="has-text-light">Message</label>
 						<div className="control">
-							<textarea className="textarea" placeholder="Your message" name="messageText" value={messageText} onChange={this.handleChange}/>
+							<textarea
+								name="messageText"
+								className="textarea"
+								placeholder="Your message"
+								value={messageText}
+								onChange={this.handleChange}/>
 						</div>
 					</div>
 
