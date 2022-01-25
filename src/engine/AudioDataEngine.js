@@ -243,7 +243,7 @@ function AudioDataEngine(context, options = {}) {
 		}
 	};
 
-	const loadSpeechBuffer = debounce(loadSpeechBufferNow, 600);
+	//const loadSpeechBuffer = debounce(loadSpeechBufferNow, 600);
 
 	eventEmitter(this);
 
@@ -362,7 +362,6 @@ function AudioDataEngine(context, options = {}) {
 		const deleteTrackIds = Array.from(trackRefs.keys());
 		this.tracks.forEach(track => {
 			const { id } = track;
-			const { midiChannel } = track;
 			const type = track.type;
 
 			if (!type || !trackTypes[type]) {
@@ -483,7 +482,7 @@ function AudioDataEngine(context, options = {}) {
 			const d = data.normalized;
 			const rows = data.rows;
 			tracks.forEach((track, trackIndex) => {
-				const { filterRange, filterValues, id , midiChannel} = track;
+				const { filterRange, filterValues, id } = track;
 				const trackRef = trackRefs.get(id);
 				const { gainNode } = trackRef;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'unistore/react';
-import { actions , store} from '../store';
+import { actions , store } from '../store';
 import formatData from '../util/formatData';
 import formatTime from '../util/formatTime';
 
@@ -128,7 +128,7 @@ const Def = class PlayControls extends React.Component {
 	}
 
 	keyPress = evt => {
-		if (evt.keyCode === 32 && !controlElementTypes.find(E => evt.target instanceof E)) {
+		if (evt.keyCode === 32 && store.getState().activeDialog === '' && !controlElementTypes.find(E => evt.target instanceof E)) {
 			const { pause, play, paused } = this.props;
 			if (paused) {
 				play();

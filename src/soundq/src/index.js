@@ -584,7 +584,7 @@ function SoundQ(options = {}) {
 		if (patch.output) {
 			try {
 				patch.output.disconnect(context.destination);
-			} catch (e) {}
+			} catch (e) { console.log('patch error: '+ e)}
 		}
 
 		const expired = typeof patch.expired === 'function' ?

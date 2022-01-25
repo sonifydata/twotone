@@ -20,7 +20,7 @@ const styles = theme => ({
 		top: 0,
 		width: '100%',
 		height: '100%',
-		overflowY: 'scroll',
+		// overflowY: 'scroll',
 		'& > div': {
 			// make room to scroll so add button doesn't cover track controls
 			paddingBottom: 64

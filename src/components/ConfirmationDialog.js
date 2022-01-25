@@ -64,7 +64,7 @@ const Def = class ConfirmationDialog extends React.Component {
 				<Button onClick={cancel} color="secondary">
 					{no}
 				</Button>
-				<Button onClick={proceed} color="secondary" autoFocus>
+				<Button onClick={proceed} color="secondary" >
 					{yes}
 				</Button>
 			</DialogActions>

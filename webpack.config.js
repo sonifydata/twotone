@@ -165,7 +165,7 @@ const config = {
 						},
 						loader: 'babel-loader',
 						options: {
-							babelrc: false,
+							// babelrc: false,
 							presets: [
 								[
 									'@babel/env',
@@ -186,6 +186,7 @@ const config = {
 							plugins: [
 								...babelPlugins,
 								'@babel/plugin-proposal-class-properties',
+								['@babel/plugin-syntax-jsx'],
 								['@babel/plugin-proposal-object-rest-spread', { useBuiltIns: true }],
 								['@babel/plugin-transform-react-jsx', { useBuiltIns: true }],
 								['@babel/plugin-transform-runtime', {
@@ -381,15 +382,6 @@ const distConfig = {
 		alias: {
 			// workaround for https://github.com/aadsm/jsmediatags/issues/116
 			jsmediatags: 'jsmediatags/dist/jsmediatags.min.js'
-
-			/*
-			doesn't work:
-			https://github.com/NervJS/nerv/issues/81
-			*/
-			// 'react': 'nervjs',
-			// 'react-dom': 'nervjs',
-			// // Not necessary unless you consume a module using `createClass`
-			// 'create-react-class': 'nerv-create-class'
 		}
 	},
 	plugins: [
@@ -407,7 +399,6 @@ const distConfig = {
 			background: '#303030',
 			persistentCache: true,
 			version: VERSION,
-			// inject: true,
 			title: 'TwoTone',
 			appDescription: description
 		}),
@@ -439,21 +430,23 @@ const distConfig = {
 			description,
 			minify: {
 				removeComments: true,
-				removeCommentsFromCDATA: true,
-				removeCDATASectionsFromCDATA: true,
-				collapseWhitespace: true,
-				collapseBooleanAttributes: true,
-				removeAttributeQuotes: true,
-				removeRedundantAttributes: true,
-				useShortDoctype: true,
-				removeEmptyAttributes: true,
-				removeScriptTypeAttributes: true,
+				// removeCommentsFromCDATA: true,
+				// removeCDATASectionsFromCDATA: true,
+				// collapseWhitespace: true,
+				//	collapseBooleanAttributes: true,
+				//	removeAttributeQuotes: true,
+				//	removeRedundantAttributes: true,
+				// useShortDoctype: true,
+				//	removeEmptyAttributes: true,
+				//	removeScriptTypeAttributes: true,
 				// lint: true,
 				caseSensitive: true,
-				minifyJS: true,
-				minifyCSS: true
+				//minifyJS: true,
+				//minifyCSS: true
 			}
 		}),
+		// CAV: might remove this...?
+		// don't know what it is
 		new InjectManifestPlugin({
 			theme_color: '#26c6da', // eslint-disable-line camelcase
 			start_url: '../?utm_source=web_app_manifest', // eslint-disable-line camelcase
@@ -461,11 +454,15 @@ const distConfig = {
 			description
 		}),
 		serviceWorkerPlugin,
-		new BundleAnalyzerPlugin({
-			openAnalyzer: false,
-			analyzerMode: 'static',
-			reportFilename: '../report.html'
-		})
+		// CAV: removing this...
+		// don't know what it is
+
+		// new BundleAnalyzerPlugin({
+		// 	openAnalyzer: false,
+		// 	analyzerMode: 'static',
+		// 	reportFilename: '../report.html'
+		// })
+
 		// new UnusedFilesWebpackPlugin({
 		// 	patterns: [
 		// 		'src/**/*.*',

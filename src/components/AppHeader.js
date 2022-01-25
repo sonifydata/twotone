@@ -7,25 +7,20 @@ import { createConfirmation } from 'react-confirm';
 import logEvent from '../util/analytics';
 import * as midi from '../engine/midiSetup'
 import MidiPortSelector from './MidiPortSelector';
-/*
-Theme/Style stuff
-*/
 import withStyles from '@material-ui/core/styles/withStyles';
-/*
-Material UI components
-*/
 import Typography from '@material-ui/core/Typography';
 import IconButton from './IconButton';
-import EditIcon from '@material-ui/icons/Edit';
 import HelpIcon from '@material-ui/icons/Help';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
-import SettingsMidiGo from '@material-ui/icons/SettingsInputSvideo'; 
-import SettingsMidiNo from '@material-ui/icons/SettingsInputSvideoTwoTone'; 
+import SettingsMidiGo from '@material-ui/icons/SettingsInputSvideo';
+import SettingsMidiNo from '@material-ui/icons/SettingsInputSvideoTwoTone';
 import SpreadsheetIcon from '@material-ui/icons/List';
 import ConfirmationDialog from './ConfirmationDialog';
-
+import Dialog from '@material-ui/core/Dialog';
+import {Slide, SvgIcon} from '@material-ui/core';
+import FeedbackForm from './FeedbackForm';
 import twoToneLogo from '../images/two-tone-logo.svg';
-
+import formLogo from '../images/svg/FeedbackForm.svg';
 
 const confirm = createConfirmation(ConfirmationDialog);
 
@@ -39,15 +34,31 @@ const styles = theme => ({
 			display: 'flex'
 		}
 	},
+
+	modalStyle: {
+		position: 'absolute',
+		boxShadow: theme.shadows[5],
+		padding: theme.spacing.unit * 4,
+		outline: 'none',
+		overflow: 'hidden',
+		minWidth: 150,
+	},
 	titleText: {
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',
 		whiteSpace: 'nowrap',
 		cursor: 'pointer'
+
 	},
 	logo: {
 		height: 48,
-		marginRight: theme.spacing.unit
+		marginRight: theme.spacing.unit,
+		cursor: 'pointer'
+	},
+	formIcon: {
+		height: 36,
+		marginRight: theme.spacing.unit,
+		cursor: 'pointer'
 	},
 	'@media (max-height: 445px)': {
 		title: {
@@ -65,6 +76,9 @@ const styles = theme => ({
 	}
 });
 
+function Transition(props) {
+	return <Slide direction="up" {...props} />;
+}
 
 const Def = class AppHeader extends React.Component {
 	static propTypes = {
@@ -75,12 +89,17 @@ const Def = class AppHeader extends React.Component {
 		dataSource: PropTypes.object,
 		onDataToggle: PropTypes.func,
 		midiOutPort: PropTypes.string,
+		webMidiAvailable: PropTypes.bool.isRequired,
 		midiOutPorts: PropTypes.object,
 		midiPortSelector: PropTypes.func.isRequired,
+		handleForm: PropTypes.func.isRequired,
+		handleFormClose: PropTypes.func.isRequired,
+		selectMidiPort: PropTypes.func.isRequired
 	}
 
 	componentDidMount() {
-		midi.webMidiCheck();
+		midi.webMidiCheck().then(r => console.log('WebMidi check:'+r));
+		store.setState( {formOpen: false});
 	}
 
 	componentDidUpdate() {
@@ -104,6 +123,11 @@ const Def = class AppHeader extends React.Component {
 		});
 	}
 
+	handleForm = evt => {
+		evt.stopPropagation();
+		store.setState({ formOpen: true, activeDialog: 'form' });
+		console.log( 'Form request open...' + store.getState().formOpen);
+	}
 
 	handleHelp = () => {
 		logEvent('tour', 'request');
@@ -130,34 +154,57 @@ const Def = class AppHeader extends React.Component {
 			classes,
 			dataSource,
 			selectDataSource,
-			onDataToggle,
+			onDataToggle
 		} = this.props;
 
 		const { webMidiAvailable, midiOutPort } = store.getState();
-
 		const logo = <img src={twoToneLogo} alt={APP_TITLE} className={classes.logo}/>;
-
+		const formIcon = <img src={formLogo} alt='send feedback form' className={classes.formIcon}/>;
 		return <React.Fragment>
 			<Typography className={classes.title} variant="h6" color="inherit" component="h1">
 				{APP_WEBSITE_URL ? <a href={APP_WEBSITE_URL} target="_blank" rel="noopener noreferrer">
 					{logo}
 				</a> : logo}
+				<IconButton  label="Support and Feedback" aria-label="Open feedback form" color="inherit" onClick={this.handleForm}>
+					{formIcon}
+				</IconButton>
+
+				<div style={{flex:0.1}}>⋯</div>
+
 				{dataSource ?
 					<React.Fragment>
-						<span className={classes.titleText} onClick={selectDataSource}>
-							{dataSource.metadata.title}
-						</span>
-						<IconButton label="Select Data Source" color="inherit" onClick={selectDataSource} data-tour-id="upload-data">
-							<EditIcon/>
-						</IconButton>
+						<div style={{ flex: 0.8, justifyContent: 'center', alignItems: 'center' }}>
+							<IconButton label="Select Data Source" color="inherit" onClick={selectDataSource} data-tour-id="upload-data">
+								<SvgIcon>
+									<path d="M0 0h24v24H0V0z" fill="none"/>
+									<path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11z"/>
+								</SvgIcon>
+							</IconButton>
+							<span className={classes.titleText} onClick={selectDataSource}>
+								{dataSource.metadata.title}
+							</span>
+						</div>
+
+						<Dialog
+							fullWidth = {true}
+							maxWidth = 'lg'
+							TransitionComponent={Transition}
+							// classes={classes.modalStyle}
+							open = { store.getState().formOpen || false }
+							onClose={this.props.handleFormClose}
+							aria-label='Feedback form full screen dialog'
+						>
+							<FeedbackForm/>
+						</Dialog>
+
 					</React.Fragment> : null
 				}
 			</Typography>
 
 			<React.Fragment>
 				<span data-tour-id="midiout-feature" >
-					<IconButton  aria-label={(webMidiAvailable ? "Open MIDI Settings" : "WebMIDI is not available")} label={ midiOutPort || (webMidiAvailable ? "Open MIDI Settings" : "WebMIDI is not available")  }  color="inherit" onClick={this.handleChangeMidiPort} >
-						{ (store.getState().webMidiAvailable) ? <SettingsMidiGo/> : <SettingsMidiNo/> }
+					<IconButton  aria-label={(webMidiAvailable ? 'Open MIDI Settings' : 'WebMIDI is not available')} label={ midiOutPort || (webMidiAvailable ? 'Open MIDI Settings' : 'WebMIDI is not available')  }  color="inherit" onClick={this.handleChangeMidiPort} >
+						{ store.getState().webMidiAvailable ? <SettingsMidiGo/> : <SettingsMidiNo/> }
 					</IconButton>
 				</span>
 				{ store.getState().midiPortSelectToggle ? <MidiPortSelector /> : null }

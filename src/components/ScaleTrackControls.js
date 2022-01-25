@@ -10,7 +10,7 @@ import {
 	DEFAULT_ARPEGGIO_MODE
 } from '../constants';
 import num from '../util/num';
-import { modes, keys } from '/src/soundq/src/util/scales';
+import { modes, keys } from '../../src/soundq/src/util/scales';
 import { instruments as samplerInstruments } from '../engine/types/scale/samplerInstruments';
 import synthInstruments from '../engine/types/scale/synthInstruments';
 import capitalize from '../util/capitalize';
