@@ -195,6 +195,7 @@ npm run build
 ## Built With
 - [React](https://reactjs.org/)
 - [Material UI](https://material-ui.com/)
+- [WebMIDI.JS](https://webmidijs.org/)
 
 ## Core Team
 TwoTone is a Sonify project built with support from Google News Initiative. The app was originally developed by Datavized Technologies with support from [Google News Initiative](https://newsinitiative.withgoogle.com) and key advisor [Alberto Cairo](http://www.thefunctionalart.com/).
