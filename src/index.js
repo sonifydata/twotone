@@ -4,7 +4,7 @@ import reportError from './util/reportError';
 import './util/analytics';
 
 /*
-Temporarily override toFixed
+From BRIAN: Temporarily override toFixed
 We're seeing a lot of errors logged, but don't have an exact file and line.
 I think it's somewhere in a dependency. This override should force better logging.
 
@@ -28,7 +28,7 @@ Number.prototype.toFixed = function (digits = 0) {
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import onNewServiceWorker from './util/onNewServiceWorker';
+// import onNewServiceWorker from './util/onNewServiceWorker';
 
 import './index.css';
 import './extraStyles.css';
@@ -88,66 +88,75 @@ if (module.hot) {
 	};
 	render();
 }
+/**
+ *
+ * From CAV: removed all this event listener stuff until I understand what it is there for
+ * seems to have been a cause for the failing deployment symptoms according to a rather emotional
+ * exchange with Netlify support https://answers.netlify.com/t/trying-forms-on-react-deploy/50391/26
+ *
+ */
 
-if (!module.hot || DEBUG_SERVICE_WORKER) {
-	if ('serviceWorker' in navigator) {
-		if (DEBUG) {
-			navigator.serviceWorker.addEventListener('message', evt => {
-				console.log('serviceWorker message', evt);
-			});
 
-			navigator.serviceWorker.addEventListener('controllerchange', evt => {
-				console.log('controllerchange', evt);
-			});
-		}
-
-		// Use the window load event to keep the page load performant
-		window.addEventListener('load', () => {
-			navigator.serviceWorker.register('/sw.js').then(reg => {
-				// check once an hour
-				setInterval(() => reg.update(), 1000 * 60 * 60);
-
-				onNewServiceWorker(reg, () => {
-					upgradeReady = true;
-					render();
-				});
-
-				if (DEBUG) {
-					if (reg.installing) {
-						console.log('Service worker installing');
-					} else if (reg.waiting) {
-						console.log('Service worker installed');
-					} else if (reg.active) {
-						console.log('Service worker active');
-					}
-
-					reg.addEventListener('updatefound', () => {
-						// If updatefound is fired, it means that there's
-						// a new service worker being installed.
-						const installingWorker = reg.installing;
-						console.log('A new service worker is being installed:',
-							installingWorker);
-
-						// You can listen for changes to the installing service worker's
-						// state via installingWorker.onstatechange
-						if (installingWorker) {
-							installingWorker.addEventListener('statechange', evt => {
-								console.log('service worker statechange', evt);
-							});
-						}
-					});
-				}
-			}).catch(error => {
-				if (DEBUG) {
-					console.log('Service worker registration failed', error);
-				}
-			});
-		});
-	}
-} else if (navigator.serviceWorker) {
-	navigator.serviceWorker.getRegistrations().then(registrations => {
-		for (const registration of registrations) {
-			registration.unregister();
-		}
-	});
-}
+//
+// if (!module.hot || DEBUG_SERVICE_WORKER) {
+// 	if ('serviceWorker' in navigator) {
+// 		if (DEBUG) {
+// 			navigator.serviceWorker.addEventListener('message', evt => {
+// 				console.log('serviceWorker message', evt);
+// 			});
+//
+// 			navigator.serviceWorker.addEventListener('controllerchange', evt => {
+// 				console.log('controllerchange', evt);
+// 			});
+// 		}
+//
+// 		// Use the window load event to keep the page load performant
+// 		window.addEventListener('load', () => {
+// 			navigator.serviceWorker.register('/sw.js').then(reg => {
+// 				// check once an hour
+// 				setInterval(() => reg.update(), 1000 * 60 * 60);
+//
+// 				onNewServiceWorker(reg, () => {
+// 					upgradeReady = true;
+// 					render();
+// 				});
+//
+// 				if (DEBUG) {
+// 					if (reg.installing) {
+// 						console.log('Service worker installing');
+// 					} else if (reg.waiting) {
+// 						console.log('Service worker installed');
+// 					} else if (reg.active) {
+// 						console.log('Service worker active');
+// 					}
+//
+// 					reg.addEventListener('updatefound', () => {
+// 						// If updatefound is fired, it means that there's
+// 						// a new service worker being installed.
+// 						const installingWorker = reg.installing;
+// 						console.log('A new service worker is being installed:',
+// 							installingWorker);
+//
+// 						// You can listen for changes to the installing service worker's
+// 						// state via installingWorker.onstatechange
+// 						if (installingWorker) {
+// 							installingWorker.addEventListener('statechange', evt => {
+// 								console.log('service worker statechange', evt);
+// 							});
+// 						}
+// 					});
+// 				}
+// 			}).catch(error => {
+// 				if (DEBUG) {
+// 					console.log('Service worker registration failed', error);
+// 				}
+// 			});
+// 		});
+// 	}
+// } else if (navigator.serviceWorker) {
+// 	navigator.serviceWorker.getRegistrations().then(registrations => {
+// 		for (const registration of registrations) {
+// 			registration.unregister();
+// 		}
+// 	});
+// }
