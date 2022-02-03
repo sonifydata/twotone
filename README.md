@@ -1,9 +1,4 @@
 # TwoTone
-▶︎▶︎
-_10th December 2021_
-This project is now maintained at https://github.com/sonifydata/twotone 
-▶︎▶︎
-
 
 [TwoTone](https://twotone.io/) is an open-source web tool for generating music from data. The app is a [Sonify](https://sonify.io) project built with support from Google News Initiative. It was originally developed by Datavized Technologies with support from [Google News Initiative](https://newsinitiative.withgoogle.com) and key advisor [Alberto Cairo](http://www.thefunctionalart.com/).
 
