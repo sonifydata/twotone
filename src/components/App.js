@@ -55,7 +55,7 @@ const styles = (theme) => ({
 		flex: 1,
 		display: 'flex',
 		flexDirection: 'column',
-		overflow: 'hidden'
+		overflow: 'scroll'
 	},
 	main: {
 		flex: 1,
@@ -65,10 +65,11 @@ const styles = (theme) => ({
 	},
 	editor: {
 		display: 'flex',
+		overflowY: 'overlay',
 		flexDirection: 'column',
 		width: '100%',
 		marginRight: '-' + drawerWidth,
-		overflow: 'hidden' // so we don't get weird drop shadows on sides
+		//overflow: 'hidden' // so we don't get weird drop shadows on sides
 	},
 	contentShift: {
 		marginRight: 0/*,

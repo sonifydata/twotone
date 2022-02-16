@@ -94,8 +94,9 @@ if (module.hot) {
  * seems to have been a cause for the failing deployment symptoms according to a rather emotional
  * exchange with Netlify support https://answers.netlify.com/t/trying-forms-on-react-deploy/50391/26
  *
+ * The removal of serviceWorker seems to have affected performance involving audio loading and export
+ * looking into this
  */
-
 
 //
 // if (!module.hot || DEBUG_SERVICE_WORKER) {
