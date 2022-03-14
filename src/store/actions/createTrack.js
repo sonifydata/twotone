@@ -1,6 +1,6 @@
 import { DEFAULT_TRACK_TYPE } from '../../constants';
 
-const instrumentKeys = ['piano', 'bass', 'organ', 'electricGuitar', 'mandolin', 'marimba', 'glockenspiel', 'harp', 'trumpet', ''];
+const instrumentKeys = ['piano', 'bass', 'organ', 'electricGuitar', 'mandolin', 'marimba', 'glockenspiel', 'harp', 'trumpet' ];
 
 const trackTypes = {
 	scale: {
@@ -65,25 +65,28 @@ export default function createTrack(state, type = DEFAULT_TRACK_TYPE, trackData)
 	const intensityField = availableFields.size ?
 		numericFieldIndexes.find(i => availableFields.has(i)) :
 		numericFieldIndexes.length ? numericFieldIndexes[numericFieldIndexes.length - 1] : -1;
+	console.log('numericFieldIndexes.length ' + numericFieldIndexes.length)
 
 	// type-specific track configuration
 	const getConfig = configTrack[type];
 	const autoTrackData = getConfig ? getConfig(state, trackData) : null;
 
-	const newTrack = {
-		intensityField: hasIntensity && intensityField === undefined ? -1 : intensityField,
-		filterField: -1,
-		...trackData,
-		...autoTrackData,
-		type,
-		id,
-		midiChannel: 1
-	};
+	// guard against more Tracks than data fields
+	if (tracks.length < numericFieldIndexes.length) {
+		const newTrack = {
+			intensityField: hasIntensity && intensityField === undefined ? -1 : intensityField,
+			filterField: -1,
+			...trackData,
+			...autoTrackData,
+			type,
+			id,
+			midiChannel: 1
+		};
 
-	console.log( autoTrackData );
-
-	tracks.push(newTrack);
-
+		tracks.push(newTrack);
+	} else {
+		alert( 'There are no more data columns in the set.')
+	}
 	return {
 		tracks
 	};
