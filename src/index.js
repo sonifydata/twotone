@@ -28,7 +28,9 @@ Number.prototype.toFixed = function (digits = 0) {
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import onNewServiceWorker from './util/onNewServiceWorker';
+
+// service worker related... see below
+import onNewServiceWorker from './util/onNewServiceWorker';
 
 import './index.css';
 import './extraStyles.css';
@@ -96,68 +98,72 @@ if (module.hot) {
  *
  * The removal of serviceWorker seems to have affected performance involving audio loading and export
  * looking into this
+ *
+ * 14th March 22
+ * getting some weird behaviour on deploy, so putting this service worker stuff back in
+ *
  */
 
-//
-// if (!module.hot || DEBUG_SERVICE_WORKER) {
-// 	if ('serviceWorker' in navigator) {
-// 		if (DEBUG) {
-// 			navigator.serviceWorker.addEventListener('message', evt => {
-// 				console.log('serviceWorker message', evt);
-// 			});
-//
-// 			navigator.serviceWorker.addEventListener('controllerchange', evt => {
-// 				console.log('controllerchange', evt);
-// 			});
-// 		}
-//
-// 		// Use the window load event to keep the page load performant
-// 		window.addEventListener('load', () => {
-// 			navigator.serviceWorker.register('/sw.js').then(reg => {
-// 				// check once an hour
-// 				setInterval(() => reg.update(), 1000 * 60 * 60);
-//
-// 				onNewServiceWorker(reg, () => {
-// 					upgradeReady = true;
-// 					render();
-// 				});
-//
-// 				if (DEBUG) {
-// 					if (reg.installing) {
-// 						console.log('Service worker installing');
-// 					} else if (reg.waiting) {
-// 						console.log('Service worker installed');
-// 					} else if (reg.active) {
-// 						console.log('Service worker active');
-// 					}
-//
-// 					reg.addEventListener('updatefound', () => {
-// 						// If updatefound is fired, it means that there's
-// 						// a new service worker being installed.
-// 						const installingWorker = reg.installing;
-// 						console.log('A new service worker is being installed:',
-// 							installingWorker);
-//
-// 						// You can listen for changes to the installing service worker's
-// 						// state via installingWorker.onstatechange
-// 						if (installingWorker) {
-// 							installingWorker.addEventListener('statechange', evt => {
-// 								console.log('service worker statechange', evt);
-// 							});
-// 						}
-// 					});
-// 				}
-// 			}).catch(error => {
-// 				if (DEBUG) {
-// 					console.log('Service worker registration failed', error);
-// 				}
-// 			});
-// 		});
-// 	}
-// } else if (navigator.serviceWorker) {
-// 	navigator.serviceWorker.getRegistrations().then(registrations => {
-// 		for (const registration of registrations) {
-// 			registration.unregister();
-// 		}
-// 	});
-// }
+
+if (!module.hot || DEBUG_SERVICE_WORKER) {
+	if ('serviceWorker' in navigator) {
+		if (DEBUG) {
+			navigator.serviceWorker.addEventListener('message', evt => {
+				console.log('serviceWorker message', evt);
+			});
+
+			navigator.serviceWorker.addEventListener('controllerchange', evt => {
+				console.log('controllerchange', evt);
+			});
+		}
+
+		// Use the window load event to keep the page load performant
+		window.addEventListener('load', () => {
+			navigator.serviceWorker.register('/sw.js').then(reg => {
+				// check once an hour
+				setInterval(() => reg.update(), 1000 * 60 * 60);
+
+				onNewServiceWorker(reg, () => {
+					upgradeReady = true;
+					render();
+				});
+
+				if (DEBUG) {
+					if (reg.installing) {
+						console.log('Service worker installing');
+					} else if (reg.waiting) {
+						console.log('Service worker installed');
+					} else if (reg.active) {
+						console.log('Service worker active');
+					}
+
+					reg.addEventListener('updatefound', () => {
+						// If updatefound is fired, it means that there's
+						// a new service worker being installed.
+						const installingWorker = reg.installing;
+						console.log('A new service worker is being installed:',
+							installingWorker);
+
+						// You can listen for changes to the installing service worker's
+						// state via installingWorker.onstatechange
+						if (installingWorker) {
+							installingWorker.addEventListener('statechange', evt => {
+								console.log('service worker statechange', evt);
+							});
+						}
+					});
+				}
+			}).catch(error => {
+				if (DEBUG) {
+					console.log('Service worker registration failed', error);
+				}
+			});
+		});
+	}
+} else if (navigator.serviceWorker) {
+	navigator.serviceWorker.getRegistrations().then(registrations => {
+		for (const registration of registrations) {
+			registration.unregister();
+		}
+	});
+}
