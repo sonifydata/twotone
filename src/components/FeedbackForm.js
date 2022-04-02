@@ -144,10 +144,10 @@ class FeedbackForm extends React.Component {
 						<div className="control">
 							<button className="button is-primary" aria-label="Submit" type="submit">Submit</button>
 						</div>
-						<div className="control">
-							<button className="button is-primary is-light" aria-label="Done"
-								onClick={this.handleFormClose}>Done</button>
-						</div>
+						{/*<div className="control">*/}
+						{/*	<button className="button is-primary is-light" aria-label="Done"*/}
+						{/*		onClick={this.handleFormClose}>Done</button>*/}
+						{/*</div>*/}
 					</div>
 				</form>
 				<footer className='footer' id='formFooter'>

@@ -55,17 +55,17 @@ const styles = (theme) => ({
 		flex: 1,
 		display: 'flex',
 		flexDirection: 'column',
-		overflow: 'scroll'
+		overflowY: 'scroll'
 	},
 	main: {
 		flex: 1,
 		minHeight: 0,
 		display: 'flex',
-		overflow: 'hidden' // so we don't get weird drop shadows on sides
+		overflowX: 'hidden'
 	},
 	editor: {
 		display: 'flex',
-		overflowY: 'overlay',
+		overflowY: 'scroll',
 		flexDirection: 'column',
 		width: '100%',
 		marginRight: '-' + drawerWidth,
@@ -90,9 +90,9 @@ const styles = (theme) => ({
 		position: 'relative'
 	},
 	addTrackButton: {
-		position: 'absolute',
-		bottom: theme.spacing.unit * 1,
-		right: theme.spacing.unit * 2
+		position: 'fixed',
+		bottom: theme.spacing.unit * 15,
+		right: theme.spacing.unit * 5
 	},
 	playBar: {
 		width: '100%',
@@ -103,7 +103,8 @@ const styles = (theme) => ({
 			lighten(theme.palette.background.paper, 0.05)
 	},
 	playControls: {
-		flex: 1
+		flex: 1,
+		position: 'relative'
 	},
 	drawerDocked: {
 		width: drawerWidth
