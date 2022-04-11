@@ -241,6 +241,8 @@ const Def = class AssetSelectDialog extends React.Component {
 
 		const id = this.props.id || 'select-dialog';
 
+
+
 		return <Dialog
 			id={id}
 			aria-labelledby={id + '-title'}

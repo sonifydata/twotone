@@ -65,11 +65,10 @@ const styles = (theme) => ({
 	},
 	editor: {
 		display: 'flex',
-		overflowY: 'scroll',
+		//overflowY: 'scroll',   // flashing scrollbars bug
 		flexDirection: 'column',
 		width: '100%',
 		marginRight: '-' + drawerWidth,
-		//overflow: 'hidden' // so we don't get weird drop shadows on sides
 	},
 	contentShift: {
 		marginRight: 0/*,

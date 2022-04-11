@@ -305,6 +305,8 @@ const Def = class DataSelectDialog extends React.Component {
 			<Table className={classes.table}>
 				<TableBody className={classNames(classes.tableSection, classes.tableBody)}>{assets.map(({id, ...assetData}) => {
 					const { title } = assetData.metadata;
+					const isNew = assetData.recentlyAdded ? ' NEW ▶︎ ' : '';
+					const rowCount = assetData.metadata.rows || null;
 					const selected = id === selectedId;
 					const textColor = selected ?
 						'secondary' :
@@ -317,8 +319,9 @@ const Def = class DataSelectDialog extends React.Component {
 						onDoubleClick={() => this.handleDoubleClickListItem(id)}
 					>
 						<TableCell className={classes.colTitle} title={title}>
-							<SpreadsheetIcon className={classes.spreadsheetIcon}/>
+							<SpreadsheetIcon className={classes.spreadsheetIcon}/>{isNew}
 							<Typography className={classes.dataTitle} color={textColor}>{title}</Typography>
+							<Typography variant="caption">{rowCount} rows</Typography>
 						</TableCell>
 						<TableCell className={classes.deleteCell}>
 							{!assetData.permanent ? <IconButton onClick={evt => this.onDelete(id, evt)} label="Delete">

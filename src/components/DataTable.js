@@ -35,10 +35,9 @@ const styles = theme => ({
 		}
 	},
 
-	// temporary hack
 	hidden: {
-		width: 0//,
-		// display: 'none'
+		//width: 0,  // causing divide by zero error?
+		 display: 'none'
 	}
 });
 
