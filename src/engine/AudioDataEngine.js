@@ -7,10 +7,10 @@ import SoundQ from '../soundq/src/index';
 import destination from '../soundq/src/patches/destination';
 import num from '../util/num';
 import trackTypes from './types';
-import getSpeechBuffer from './speech';
-import bufferSource from '../soundq/src/sources/buffer';
-import debounce from 'debounce';
+// import getSpeechBuffer from './speech';
+// import bufferSource from '../soundq/src/sources/buffer';
 import * as midi from './midiSetup';
+
 
 function AudioDataEngine(context, options = {}) {
 
@@ -69,7 +69,7 @@ function AudioDataEngine(context, options = {}) {
 
 
 	/*
-	This is really hacky and should probably be replaced
+	BRIAN: This is really hacky and should probably be replaced
 	*/
 	let timeout = 0;
 	let emittingTimeUpdate = false;
@@ -91,9 +91,9 @@ function AudioDataEngine(context, options = {}) {
 	function stopTrack(trackRef) {
 		if (trackRef.stop) {
 			trackRef.stop.call(me);
+			midi.allNotesOff()
 		}
 	}
-
 
 	function destroyTrack(id) {
 		const trackRef = trackRefs.get(id);
@@ -114,6 +114,7 @@ function AudioDataEngine(context, options = {}) {
 
 	function stopAllTracks() {
 		trackRefs.forEach(stopTrack);
+		midi.allNotesOff()
 		if (speechShot) {
 			speechShot.stop();
 		}
@@ -129,6 +130,7 @@ function AudioDataEngine(context, options = {}) {
 			// rewind if at the end
 			if (duration - currentTime() < 0.1) {
 				me.currentTime = 0;
+				midi.allNotesOff();
 			}
 
 			const rowsProgress = currentRowsProgress();
@@ -151,7 +153,7 @@ function AudioDataEngine(context, options = {}) {
 			playing = false;
 			pauseTime = context.currentTime;
 			resetTimerNode();
-
+			midi.allNotesOff();
 			stopAllTracks();
 
 			me.update();
@@ -200,15 +202,15 @@ function AudioDataEngine(context, options = {}) {
 	}
 
 	function currentTime() {
-		const speechDuration = me.speechTitleEnabled && speechBuffer && speechBuffer.duration || 0;
+		 const speechDuration = me.speechTitleEnabled && speechBuffer && speechBuffer.duration || 0;
 		const dataDuration = rowDuration * rowCount;
-		return currentIntroProgress() * speechDuration + currentRowsProgress() * dataDuration;
+		 return currentIntroProgress() * speechDuration + currentRowsProgress() * dataDuration;
 	}
 
 	function resetTimerNode() {
 		if (timerNode) {
-			timerNode.onended = null;
-			// timerNode.stop();
+			//timerNode.onended = null;
+			 timerNode.stop();
 			timerNode.disconnect();
 			timerNode = null;
 		}
@@ -224,25 +226,25 @@ function AudioDataEngine(context, options = {}) {
 		me.emit('pause');
 	}
 
-	const loadSpeechBufferNow = () => {
-		const title = speechTitle;
-		if (SPEECH_API_KEY && speechTitle && !speechBuffer) {
-			getSpeechBuffer(speechTitle, this.speechVoiceId).then(buffer => {
-				if (title === speechTitle && speechBuffer !== buffer) {
-					if (speechShot) {
-						speechShot.destroy();
-						speechShot = null;
-					}
-					speechBuffer = buffer;
-					speechShot = soundQ.shot(bufferSource(buffer));
-					needNewPlayTiming = true;
-					baselineIntroProgress = 0;
-					this.update();
-				}
-			});
-		}
-	};
-
+	// old speech implementation from Brian
+	// const loadSpeechBufferNow = () => {
+	// 	const title = speechTitle;
+	// 	if (SPEECH_API_KEY && speechTitle && !speechBuffer) {
+	// 		getSpeechBuffer(speechTitle, this.speechVoiceId).then(buffer => {
+	// 			if (title === speechTitle && speechBuffer !== buffer) {
+	// 				if (speechShot) {
+	// 					speechShot.destroy();
+	// 					speechShot = null;
+	// 				}
+	// 				speechBuffer = buffer;
+	// 				speechShot = soundQ.shot(bufferSource(buffer));
+	// 				needNewPlayTiming = true;
+	// 				baselineIntroProgress = 0;
+	// 				this.update();
+	// 			}
+	// 		});
+	// 	}
+	// };
 	//const loadSpeechBuffer = debounce(loadSpeechBufferNow, 600);
 
 	eventEmitter(this);
@@ -284,9 +286,7 @@ function AudioDataEngine(context, options = {}) {
 			}
 			play();
 		});
-
 		me.emit('play');
-
 		return playPromise;
 	};
 
@@ -316,7 +316,7 @@ function AudioDataEngine(context, options = {}) {
 			playing = false;
 			baselineTime = 0;
 			pauseTime = 0;
-
+			midi.allNotesOff();
 			needNewPlayTiming = true;
 		}
 
@@ -356,7 +356,7 @@ function AudioDataEngine(context, options = {}) {
 		- update loading/state along the way
 		*/
 
-		//todo: remove (then maybe replace) all previous non-working speech stuff
+		//  todo: CAV remove (then maybe replace) all previous non-working speech stuff
 		let allLoaded = !SPEECH_API_KEY || !speechTitle || !!speechBuffer;
 
 		const deleteTrackIds = Array.from(trackRefs.keys());

@@ -1,4 +1,22 @@
 export default [
+	{
+		id: "esch22-sound-of-data-b40-traffic-data-xlsx:2706-1909-trafficstatus-b40:18:360:application-vnd-openxmlformats-officedocument-spreadsheetml-sheet:32309:1651140220673",
+		fileName: "SOUND OF DATA Luxembourg B40 Traffic Data",
+		type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+		size: 32309,
+		lastModified: 1651140220673,
+		permanent: true,
+		recentlyAdded: true,
+		metadata: {
+			title: "ESCH22_SOUND_OF_DATA_B40_Traffic_Data",
+			fields: 18,
+			rows: 360
+		},
+		imported: 1651172695636,
+		attachments: {
+			data: ()=> import('./sound-of-data-b40-trafficstatus.json')
+		}
+	},
 
 	{
 		id: 'tables2insect-kraghede-1997-2018-2-csv:sheet1:14:1449:text-csv:61125:1640825010748',

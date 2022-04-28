@@ -115,7 +115,7 @@ const styles = (theme) => ({
 		'&$drawerDocked': {
 			'@media (max-width: 650px)': {
 				minWidth: drawerWidth,
-				width: 300,
+				width: '35%',
 				maxWidth: '100%'
 			}
 		}

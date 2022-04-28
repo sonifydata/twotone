@@ -189,7 +189,6 @@ const Def = class AppHeader extends React.Component {
 							fullWidth = {true}
 							maxWidth = 'lg'
 							TransitionComponent={Transition}
-							// classes={classes.modalStyle}
 							open = { store.getState().formOpen || false }
 							onClose={this.props.handleFormClose}
 							aria-label='Feedback form full screen dialog'
@@ -203,7 +202,9 @@ const Def = class AppHeader extends React.Component {
 
 			<React.Fragment>
 				<span data-tour-id="midiout-feature" >
-					<IconButton  aria-label={(webMidiAvailable ? 'Open MIDI Settings' : 'WebMIDI is not available')} label={ midiOutPort || (webMidiAvailable ? 'Open MIDI Settings' : 'WebMIDI is not available')  }  color="inherit" onClick={this.handleChangeMidiPort} >
+					<IconButton  aria-label={(webMidiAvailable ? 'Open MIDI Settings' : 'WebMIDI is not available')}
+								 label={ midiOutPort || (webMidiAvailable ? 'Open MIDI Settings' : 'WebMIDI is not available')  }
+								 color="inherit" onClick={this.handleChangeMidiPort} >
 						{ store.getState().webMidiAvailable ? <SettingsMidiGo/> : <SettingsMidiNo/> }
 					</IconButton>
 				</span>

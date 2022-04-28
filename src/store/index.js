@@ -105,7 +105,7 @@ async function loadDataSource(state) {
 		const data = await getData(dataSourceId, 'data');
 		if (pendingDataSourceId !== dataSourceId) {
 			return;
-		}
+		} else { console.log( data )}
 
 		/*
 		auto-configure project
