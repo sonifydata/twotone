@@ -17,7 +17,7 @@ import MuiTable from 'mui-virtualized-table';
 const styles = theme => ({
 	root: {
 		height: 'calc(100vh)',
-
+		width: '99%',  // CAV: fixes the flickering scroll bars bug
 		// table header
 		'& .topRightGrid': {
 			backgroundColor: theme.palette.background.default
@@ -36,7 +36,7 @@ const styles = theme => ({
 	},
 
 	hidden: {
-		//width: 0,  // causing divide by zero error?
+		 width: 0,
 		 display: 'none'
 	}
 });
