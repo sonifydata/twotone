@@ -1,7 +1,29 @@
 export default [
 	{
+		id: "covid-lux-time-series-080222-xlsx:sheet1:33:1037:application-vnd-openxmlformats-officedocument-spreadsheetml-sheet:480026:1651140223145",
+		fileName: "COVID_Lux_time_series_080222.xlsx",
+		type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+		size: 480026,
+		lastModified: 1651140223145,
+		permanent: true,
+		recentlyAdded: true,
+		metadata: {
+			title: "SOUND OF DATA Luxembourg COVID time series 08-02-22",
+			props: {
+				CreatedDate: "2020-04-01T13:22:00.000Z",
+				ModifiedDate: "2022-02-10T07:24:51.000Z",
+			},
+			fields: 33,
+			rows: 1037
+		},
+		imported: 1651174635981,
+		attachments: {
+			data: ()=> import('./sound-of-data-covid-080222.json')
+		}
+	},
+	{
 		id: "esch22-sound-of-data-b40-traffic-data-xlsx:2706-1909-trafficstatus-b40:18:360:application-vnd-openxmlformats-officedocument-spreadsheetml-sheet:32309:1651140220673",
-		fileName: "SOUND OF DATA Luxembourg B40 Traffic Data",
+		fileName: "SOUND OF DATA  B40 Traffic Data",
 		type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 		size: 32309,
 		lastModified: 1651140220673,
