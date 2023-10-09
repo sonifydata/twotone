@@ -9,11 +9,15 @@
 		{
 			"name": "Cristian Vogel",
 			"url": "https://github.com/cristianvogel"
-		}
+		},
+		{
+			"name": "Brian Chirls",
+			"url": "https://github.com/brianchirls"
+	}
 	],
 	"main": "index.js",
 	"engines": {
-		"node": "^13.0.0"
+		"node": "^14.0.0"
 	},
 	"scripts": {
 		"lint": "eslint ./; true",

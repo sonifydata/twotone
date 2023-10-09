@@ -151,41 +151,6 @@ When multiple notes are played per row, this allows for an [arpeggio](https://en
 
 This setting is only available when Track Tempo is set to more than 1.
 
-## Developing
-
-You can run your own build of TwoTone. You can make changes to customize for your own purposes, and contributions are welcome if you make any improvements or bug fixes.
-
-### Requirements
-- [git](https://git-scm.com/book/en/Getting-Started-Installing-Git)
-- [node.js/npm](https://www.npmjs.com/get-npm)
-
-### Installation
-
-Clone the TwoTone git repository from the command line:
-```sh
-git clone https://github.com/datavized/twotone.git
-```
-
-Navigate to the TwoTone repository directory
-```sh
-cd twotone
-```
-
-Install dependencies
-```sh
-npm install
-```
-### Build
-
-To run in development mode, which will run a local web server on port 9000 and automatically rebuild when any source code files are changed.
-```sh
-npm run start
-```
-
-To compile a production build
-```sh
-npm run build
-```
 
 ## Built With
 - [React](https://reactjs.org/)
@@ -197,9 +162,6 @@ TwoTone is a Sonify project built with support from Google News Initiative. The 
 
 If you want to know more about TwoTone, how it works and future developments, write to us at contact@sonify.io. For any specific request or comment we suggest you use Github or send us an email.
 
-## Contributing
-
-We welcome and appreciate contributions, in the form of code pull requests, bug reports, feature requests or additions to our gallery. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our [Code of Conduct](CODE_OF_CONDUCT.md) and submission process. By participating, you are expected to uphold this code. Please report unacceptable behavior to support@sonify.io.
 
 ## License
 
