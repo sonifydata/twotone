@@ -1,4 +1,4 @@
-📌 ## As of mid-2023 , development on TwoTone has been paused.
+## 📌  As of mid-2023 , development on TwoTone has been paused.
 
 # TwoTone
 
