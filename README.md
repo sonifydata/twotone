@@ -1,5 +1,7 @@
 ## 📌  As of mid-2023 , development on TwoTone has been paused.
 
+## You can still run the latest MIDI out beta version at https://twotone-midiout-beta.netlify.app/
+
 # TwoTone
 
 [TwoTone](https://twotone.io/) is an open-source web tool for generating music from data. The app is a [Sonify](https://sonify.io) project built with support from Google News Initiative. It was originally developed by Datavized Technologies with support from [Google News Initiative](https://newsinitiative.withgoogle.com) and key advisor [Alberto Cairo](http://www.thefunctionalart.com/).
