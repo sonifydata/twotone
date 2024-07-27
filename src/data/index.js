@@ -4,7 +4,7 @@ export default [
 		permanent: true,
 		recentlyAdded: true,
 		metadata: {
-			title: 'SimCorp official share price 2003-2023',
+			title: 'SimCorp official share history 2003-2023',
 			source: 'https://www.simcorp.com/en/investor/share-information',
 			rows: 2000,
 		},
