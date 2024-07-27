@@ -9,13 +9,13 @@ export async function webMidiCheck() {
 		return true;
 	}
 	if (!('requestMIDIAccess' in navigator)) {
-		alert(
-			`	WebMIDI is not available in this browser!
+		// alert(
+		// 	`	WebMIDI is not available in this browser!
 			
-			Please try using Chrome, Edge or 
-			the Jazz plug in for FireFox.
+		// 	Please try using Chrome, Edge or 
+		// 	the Jazz plug in for FireFox.
 			
-			TwoTone MIDI functions will be disabled`)
+		// 	TwoTone MIDI functions will be disabled`)
 		store.setState({webMidiAvailable: false});
 		return false;
 	} else {
