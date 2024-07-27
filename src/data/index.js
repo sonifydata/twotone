@@ -1,4 +1,17 @@
 export default [
+	{ 
+		id: 'ShareHistory-SIM-20030603-20231010',
+		permanent: true,
+		recentlyAdded: true,
+		metadata: {
+			title: 'SimCorp official share price 2003-2023',
+			source: 'https://www.simcorp.com/en/investor/share-information',
+			rows: 2000,
+		},
+		attachments: {
+			data: () => import('./simCorp-official-stockprice-2003-2023.json')
+		}
+	},
 	{
 		id: "covid-lux-time-series-080222-xlsx:sheet1:33:1037:application-vnd-openxmlformats-officedocument-spreadsheetml-sheet:480026:1651140223145",
 		fileName: "COVID_Lux_time_series_080222.xlsx",
@@ -10,7 +23,7 @@ export default [
 		metadata: {
 			title: "SOUND OF DATA Luxembourg COVID time series 08-02-22",
 			props: {
-				CreatedDate: "2020-04-01T13:22:00.000Z",
+				CreatedDate: "2020-npm 04-01T13:22:00.000Z",
 				ModifiedDate: "2022-02-10T07:24:51.000Z",
 			},
 			fields: 33,
